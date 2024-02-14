@@ -12,19 +12,20 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="/static/css/themes/pico.min.css" />
 
     {{ block "css" .}}
     <!-- prettier-ignore -->
     {{ end }}
   </head>
   <body>
-    {{ block "content" .}}
+    <div class="container">
+      <header></header>
+      <main>{{ block "content" .}}{{ end }}</main>
+      <footer></footer>
+    </div>
 
-    {{ end }}
-
-    {{ block "js" .}}
-
-    {{ end }}
+    {{ block "js" .}}{{ end }}
   </body>
 </html>
 

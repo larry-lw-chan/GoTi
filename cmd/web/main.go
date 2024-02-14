@@ -12,7 +12,15 @@ import (
 func main() {
 	// Define Routes Here
 	r := chi.NewRouter()
+
+	// Middleware
 	r.Use(middleware.Logger)
+
+	// Static File Server
+	fs := http.FileServer(http.Dir("static"))
+	r.Handle("/static/*", http.StripPrefix("/static/", fs))
+
+	// Routes
 	r.Get("/", handlers.HomePage)
 	r.Get("/about", handlers.AboutPage)
 
