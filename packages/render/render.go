@@ -1,4 +1,4 @@
-package utils
+package render
 
 import (
 	"log"
@@ -11,7 +11,7 @@ var tmplLayout = "./templates/layouts/base.layout.tmpl"
 
 var tmplNav = "./templates/partials/nav.partial.tmpl"
 
-func Render(w http.ResponseWriter, tmpl string, data interface{}) {
+func Html(w http.ResponseWriter, tmpl string, data interface{}) {
 	tmpl = tmplPath + tmpl
 	t := template.Must(template.ParseFiles(tmpl, tmplNav, tmplLayout))
 

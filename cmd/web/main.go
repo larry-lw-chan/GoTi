@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/larry-lw-chan/go-tiny/handlers"
+	"github.com/larry-lw-chan/go-tiny/packages/handlers"
 )
 
 func main() {
@@ -23,6 +23,7 @@ func main() {
 	// Routes
 	r.Get("/", handlers.HomePage)
 	r.Get("/about", handlers.AboutPage)
+	r.Get("/contact", handlers.ContactPage)
 
 	// Start Server
 	fmt.Println("Server is running at :3000")

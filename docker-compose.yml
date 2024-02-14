@@ -1,0 +1,11 @@
+version: "3"
+services:
+  dev:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 80:3000
+    volumes:
+      - .:/app
