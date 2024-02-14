@@ -12,19 +12,27 @@
       integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
       crossorigin="anonymous"
     />
+    <!-- Eventually we will allow custom Pico themes editing a config file -->
     <link rel="stylesheet" href="/static/css/themes/pico.min.css" />
+    <link rel="stylesheet" href="/static/css/global.css" />
 
     {{ block "css" .}}
     <!-- prettier-ignore -->
     {{ end }}
   </head>
   <body>
-    <div class="container">
-      <header></header>
-      <main>{{ block "content" .}}{{ end }}</main>
-      <footer></footer>
-    </div>
+    <header>
+      <nav>
+        {{template "navigation" .}}
+      </nav>
+    </header>
 
+    <main class="container">{{ block "content" .}}{{ end }}</main>
+
+    <footer>Copyright 2024 Larry LW Chan</footer>
+
+    <!-- All JS Scripts Here -->
+    <script src="/static/scripts/htmx.min.js"></script>
     {{ block "js" .}}{{ end }}
   </body>
 </html>
