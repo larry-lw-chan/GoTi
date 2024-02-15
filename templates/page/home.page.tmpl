@@ -1,35 +1,24 @@
 {{ template "base" . }}
 
 {{ define "content" }}
-<h1>This is the homepage</h1>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ipsa vel
-  maxime soluta ratione dolore iste assumenda dolorum quasi eligendi cupiditate
-  eum alias, tempore accusantium vitae placeat tenetur expedita explicabo.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ipsa vel
-  maxime soluta ratione dolore iste assumenda dolorum quasi eligendi cupiditate
-  eum alias, tempore accusantium vitae placeat tenetur expedita explicabo.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ipsa vel
-  maxime soluta ratione dolore iste assumenda dolorum quasi eligendi cupiditate
-  eum alias, tempore accusantium vitae placeat tenetur expedita explicabo.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ipsa vel
-  maxime soluta ratione dolore iste assumenda dolorum quasi eligendi cupiditate
-  eum alias, tempore accusantium vitae placeat tenetur expedita explicabo.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ipsa vel
-  maxime soluta ratione dolore iste assumenda dolorum quasi eligendi cupiditate
-  eum alias, tempore accusantium vitae placeat tenetur expedita explicabo.
-</p>
-<p>
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Impedit ipsa vel
-  maxime soluta ratione dolore iste assumenda dolorum quasi eligendi cupiditate
-  eum alias, tempore accusantium vitae placeat tenetur expedita explicabo.
-</p>
+<section class="hero">
+  <h1>Social Networking app that runs on peanuts</h1>
+  <p>
+    Your home feed should be filled with what matters to you most, not what a
+    corporation thinks you should see. Radically different social media, back in
+    the hands of the people.
+  </p>
+</section>
+{{ end }}
+
+{{ define "style" }}
+<style>
+  .hero {
+    padding: 3rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 3rem;
+  }
+</style>
 {{ end }}

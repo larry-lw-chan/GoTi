@@ -1,3 +1,11 @@
+/* Body Styling */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
 /* Header Styling */
 header {
     background-color: var(--pico-primary-background);
@@ -30,6 +38,7 @@ main {
 /* Footer Styling */
 footer {
     font-size: 1rem;
+    margin-top: auto;
 }
 
 footer .legal {

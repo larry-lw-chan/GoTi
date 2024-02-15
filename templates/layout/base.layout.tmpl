@@ -11,9 +11,6 @@
     <!-- Eventually we will allow custom Pico themes editing a config file -->
     <link rel="stylesheet" href="/static/css/themes/pico.min.css" />
     <link rel="stylesheet" href="/static/css/global.css" />
-    {{ block "css" .}}
-    <!-- prettier-ignore -->
-    {{ end }}
   </head>
   <body>
     <header>
@@ -37,9 +34,12 @@
       </div>
     </footer>
 
+    <!-- All Style Scripts Here -->
+    {{ block "style" .}}{{ end }}
+
     <!-- All JS Scripts Here -->
     <script src="/static/scripts/htmx.min.js"></script>
-    {{ block "js" .}}{{ end }}
+    {{ block "script" .}}{{ end }}
   </body>
 </html>
 
