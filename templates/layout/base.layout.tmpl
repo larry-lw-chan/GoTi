@@ -1,29 +1,41 @@
 {{ define "base" }}
 
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homepage</title>
+    <link rel="icon" href="/static/images/favicon.svg" type="image/x-icon" />
+
     <!-- Eventually we will allow custom Pico themes editing a config file -->
     <link rel="stylesheet" href="/static/css/themes/pico.min.css" />
     <link rel="stylesheet" href="/static/css/global.css" />
-
     {{ block "css" .}}
     <!-- prettier-ignore -->
     {{ end }}
   </head>
   <body>
     <header>
-      <nav>
+      <nav class="primary-nav container">
+        <div class="logo">
+          <a href="/">
+            <img src="/static/images/logo.svg" alt="Logo" />
+          </a>
+        </div>
         {{template "navigation" .}}
       </nav>
     </header>
 
-    <main class="container">{{ block "content" .}}{{ end }}</main>
+    <main>
+      <div class="container">{{ block "content" .}}{{ end }}</div>
+    </main>
 
-    <footer>Copyright 2024 Larry LW Chan</footer>
+    <footer class="container">
+      <div class="legal">
+        <span class="copyright">Copyright &copy;2024 Larry LW Chan</span>
+      </div>
+    </footer>
 
     <!-- All JS Scripts Here -->
     <script src="/static/scripts/htmx.min.js"></script>

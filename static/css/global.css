@@ -1,5 +1,38 @@
-/* App Global CSS Styling Here */
+/* Header Styling */
+header {
+    background-color: var(--pico-primary-background);
+}
 
-@media only screen and (prefers-color-scheme: dark) {
-    
+header > nav {
+    justify-content: space-between;
+}
+
+header .logo img {
+    height: 3.8rem;
+}
+
+header .primary-nav ul {
+    gap: 2rem;
+}
+
+header .primary-nav a {
+    color: white;
+    font-size: 1.1rem;
+}
+
+/* Main Styling */
+main {
+
+}
+
+
+
+/* Footer Styling */
+footer {
+    font-size: 1rem;
+}
+
+footer .legal {
+    font-size: 0.8rem;
+    color: var(--pico-muted-color);
 }
