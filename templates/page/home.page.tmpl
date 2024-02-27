@@ -1,24 +1,95 @@
 {{ template "base" . }}
 
 {{ define "content" }}
-<section class="hero">
-  <h1>A Social Network that runs on peanuts</h1>
-  <p>
-    Your home feed should be filled with what matters to you most, not what a
-    corporation thinks you should see. Radically different social media, back in
-    the hands of the people.
-  </p>
-</section>
+<div class="homepage">
+  <section class="hero">
+    <h1>Your social network</h1>
+    <p>
+      Goti is social networking designed for self hosting. Efficient with only
+      things that matter.
+    </p>
+  </section>
+  <article class="login">
+    <form>
+      <fieldset>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          autocomplete="email"
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          autocomplete="password"
+        />
+      </fieldset>
+      <button>Login</button>
+    </form>
+    <div class="password">
+      <a href="/forgot-password">Forgot password?</a>
+    </div>
+    <hr />
+    <div class="register">
+      <a href="/register">
+        <button class="secondary">Create new account</button>
+      </a>
+    </div>
+  </article>
+</div>
 {{ end }}
 
 {{ define "style" }}
 <style>
   .hero {
-    padding: 3rem;
+    margin-bottom: 3rem;
     text-align: center;
   }
   .hero h1 {
     font-size: 3rem;
+  }
+
+  .hero p {
+    font-size: 1.5rem;
+  }
+
+  .login {
+    background-color: var(--pico-contrast-background);
+  }
+
+  .login input {
+    background-color: var(--pico-contrast-background);
+    color: var(--pico-contrast-inverse);
+  }
+
+  .login button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .password {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  @media (min-width: 1024px) {
+    .homepage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .hero {
+      flex: 400;
+      text-align: left;
+    }
+
+    .login {
+      flex: 300;
+    }
   }
 </style>
 {{ end }}

@@ -30,15 +30,14 @@ header .primary-nav a {
 
 /* Main Styling */
 main {
-
+    
 }
-
-
 
 /* Footer Styling */
 footer {
     font-size: 1rem;
     margin-top: auto;
+    text-align: center;
 }
 
 footer .legal {
