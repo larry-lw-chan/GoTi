@@ -1,46 +1,85 @@
 /* Body Styling */
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
 
 /* Header Styling */
 header {
-    background-color: var(--pico-primary-background);
+  background-color: var(--pico-primary-background);
 }
 
 header > nav {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 header .logo img {
-    height: 3.8rem;
+  height: 3.8rem;
 }
 
-header .primary-nav ul {
-    gap: 2rem;
+/* Navagation Styling */
+#hamburger {
+  margin-top: 0.75rem;
 }
 
-header .primary-nav a {
+#hamburger .bar1,
+#hamburger .bar2,
+#hamburger .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: var(--pico-primary-inverse);
+  margin: 6px 0;
+  transition: 0.25s;
+}
+
+/* Rotate first bar */
+.change .bar1 {
+  transform: translate(0, 11px) rotate(-45deg);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+  transform: translate(0, -11px) rotate(45deg);
+}
+
+.primary ul {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  #hamburger {
+    display: None;
+  }
+
+  .navigation ul {
+    display: flex;
+    gap: 3vw;
+  }
+
+  .navigation a {
     color: white;
     font-size: 1.1rem;
+  }
 }
 
 /* Main Styling */
 main {
-    
 }
 
 /* Footer Styling */
 footer {
-    font-size: 1rem;
-    margin-top: auto;
-    text-align: center;
+  font-size: 1rem;
+  margin-top: auto;
+  text-align: center;
 }
 
 footer .legal {
-    font-size: 0.8rem;
-    color: var(--pico-muted-color);
+  font-size: 0.8rem;
+  color: var(--pico-muted-color);
 }

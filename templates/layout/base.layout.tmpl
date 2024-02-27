@@ -14,7 +14,7 @@
   </head>
   <body>
     <header>
-      <nav class="primary-nav container">
+      <nav class="primary container">
         <div class="logo">
           <a href="/">
             <img src="/static/images/logo.svg" alt="Logo" />
@@ -38,6 +38,7 @@
     {{ block "style" .}}{{ end }}
 
     <!-- All JS Scripts Here -->
+    <script src="/static/scripts/global.js"></script>
     <script src="/static/scripts/htmx.min.js"></script>
     {{ block "script" .}}{{ end }}
   </body>
