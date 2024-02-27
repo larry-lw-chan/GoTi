@@ -22,3 +22,6 @@ go.work
 
 # Air Temp Folder
 tmp
+
+# Mac Dependency Removal
+ .DS_Store
