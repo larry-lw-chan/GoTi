@@ -1,6 +1,6 @@
 window.onload = function () {
   // Hamburger Menu Toggle
-  document.getElementById("hamburger").addEventListener("click", function () {
+  document.getElementById("primary-nav").addEventListener("click", function () {
     this.classList.toggle("change");
   });
 };

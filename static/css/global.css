@@ -1,3 +1,9 @@
+/* Global Variables */
+:root {
+  --header-height: 5.5rem;
+  --transition-speed: 0.2s;
+}
+
 /* Body Styling */
 body {
   min-height: 100vh;
@@ -6,31 +12,36 @@ body {
 }
 
 /* Header Styling */
-header {
+body > header {
   background-color: var(--pico-primary-background);
+  position: fixed;
+  width: 100vw;
+  height: var(--header-height);
+  padding-block: 0;
 }
 
 header > nav {
-  justify-content: space-between;
+  position: relative;
 }
 
 header .logo img {
   height: 3.8rem;
+  margin-top: var(--pico-block-spacing-vertical);
 }
 
 /* Navagation Styling */
-#hamburger {
-  margin-top: 0.75rem;
+.hamburger {
+  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
 }
 
-#hamburger .bar1,
-#hamburger .bar2,
-#hamburger .bar3 {
+.hamburger .bar1,
+.hamburger .bar2,
+.hamburger .bar3 {
   width: 35px;
   height: 5px;
   background-color: var(--pico-primary-inverse);
   margin: 6px 0;
-  transition: 0.25s;
+  transition: var(--transition-speed);
 }
 
 /* Rotate first bar */
@@ -48,21 +59,65 @@ header .logo img {
   transform: translate(0, -11px) rotate(45deg);
 }
 
-.primary ul {
-  display: none;
+/* Overlay Menu Toggling */
+#primary-nav ul {
+  position: absolute;
+  display: block;
+  background-color: var(--pico-primary-background);
+  margin: 0;
+  padding: var(--header-height) 0 0 2rem;
+  top: 0;
+  left: 100vw;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  transition: var(--transition-speed);
 }
 
-@media (min-width: 768px) {
-  #hamburger {
+#primary-nav.change ul {
+  transition: var(--transition-speed);
+  left: 0;
+}
+
+#primary-nav li {
+  display: block;
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+#primary-nav li a {
+  color: white;
+}
+
+#primary-nav li a:hover {
+  color: var(--pico-primary-hover);
+  text-decoration: none;
+}
+
+@media (min-width: 576px) {
+  .hamburger {
     display: None;
   }
 
-  .navigation ul {
+  #primary-nav ul {
     display: flex;
     gap: 3vw;
+    position: relative;
+    z-index: 0;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
   }
 
-  .navigation a {
+  #primary-nav li {
+    display: inline;
+  }
+
+  #primary-nav a {
     color: white;
     font-size: 1.1rem;
   }
@@ -70,6 +125,7 @@ header .logo img {
 
 /* Main Styling */
 main {
+  margin-top: var(--header-height);
 }
 
 /* Footer Styling */
