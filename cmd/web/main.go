@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/larry-lw-chan/go-tiny/packages/data"
+	"github.com/larry-lw-chan/go-tiny/packages/models"
 	"github.com/larry-lw-chan/go-tiny/packages/router"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
 	// Connect Database
-	db := data.Connect()
+	db := models.Connect()
 	defer db.Close() // Defer close the database connection
 
 	// Get Routes
