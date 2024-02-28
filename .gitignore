@@ -24,4 +24,4 @@ go.work
 tmp
 
 # Mac Dependency Removal
- .DS_Store
+.DS_Store

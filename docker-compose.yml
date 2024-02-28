@@ -4,7 +4,7 @@ services:
     restart: on-failure
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - 80:3000
     volumes:
