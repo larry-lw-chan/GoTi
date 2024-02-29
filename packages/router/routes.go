@@ -32,6 +32,7 @@ func Routes() *chi.Mux {
 	r.Get("/", handlers.HomePage)
 	r.Get("/about", handlers.AboutPage)
 	r.Get("/contact", handlers.ContactPage)
+	r.Get("/privacy", handlers.PrivacyPage)
 
 	// Authentication Routes
 	r.Get("/login", handlers.Login)

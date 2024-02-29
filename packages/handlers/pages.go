@@ -17,3 +17,7 @@ func AboutPage(w http.ResponseWriter, r *http.Request) {
 func ContactPage(w http.ResponseWriter, r *http.Request) {
 	render.Html(w, "contact.page.tmpl", nil)
 }
+
+func PrivacyPage(w http.ResponseWriter, r *http.Request) {
+	render.Html(w, "privacy.page.tmpl", nil)
+}

@@ -2,14 +2,14 @@
 -- +goose StatementBegin
 CREATE TABLE Users (
 	"id"	INTEGER NOT NULL UNIQUE,
+	"username"	TEXT NOT NULL UNIQUE,
 	"email"	TEXT NOT NULL UNIQUE,
 	"password"	TEXT NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
-INSERT INTO users VALUES
-(0, 'test1@gmail.com', '123456'),
-(1, 'test2@gmail.com', '123456');
+INSERT INTO users 
+VALUES(0, 'Testy', 'test1@gmail.com', '123456');
 -- +goose StatementEnd
 
 -- +goose Down

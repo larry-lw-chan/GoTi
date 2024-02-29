@@ -1,5 +1,68 @@
 {{ template "base" . }}
 
 {{ define "content" }}
-<h1>This is the register page</h1>
+<article class="register">
+  <div class="heading">
+    <h1>Let's get you setup</h1>
+    <p>
+      Let's get you set up on goti. We just need a few details from you to get
+      started.
+    </p>
+  </div>
+  <form action="/register">
+    <fieldset>
+      <input type="text" name="username" placeholder="Username" />
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        autocomplete="email"
+      />
+
+      <input type="password" name="password" placeholder="Password" />
+      <input
+        type="password"
+        name="confirm-password"
+        placeholder="Confirm Password"
+      />
+    </fieldset>
+    <fieldset>
+      <label for="privacy">
+        <input type="checkbox" name="privacy" id="privacy" />
+        I have read and agree to the
+        <a href="/privacy" target="_blank">privacy policy</a> *
+      </label>
+    </fieldset>
+    <button>Login</button>
+  </form>
+</article>
+{{ end }}
+
+{{ define "style" }}
+<style>
+  .register {
+    background-color: var(--pico-contrast-background);
+  }
+
+  .register input {
+    background-color: var(--pico-contrast-background);
+    color: var(--pico-contrast-inverse);
+  }
+
+  .register button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .register h1,
+  .register p,
+  .register label {
+    color: var(--pico-contrast-inverse);
+  }
+
+  .register input[type="checkbox"]:checked {
+    background-color: var(--pico-primary);
+  }
+</style>
 {{ end }}
