@@ -18,7 +18,14 @@
     </header>
 
     <main>
-      <div class="container">{{ block "content" .}}{{ end }}</div>
+      <div class="container">
+        {{ if .Flash }}
+        <div class="flash">
+          {{ .Flash }}
+        </div>
+        {{ end }}
+        {{ block "content" .}}{{ end }}
+      </div>
     </main>
 
     <footer class="container">

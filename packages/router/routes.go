@@ -37,6 +37,7 @@ func Routes() *chi.Mux {
 	// Authentication Routes
 	r.Get("/login", handlers.Login)
 	r.Get("/register", handlers.Register)
+	r.Post("/register", handlers.RegisterPost)
 	r.Get("/forgot-password", handlers.ForgotPassword)
 
 	// Return the Router
