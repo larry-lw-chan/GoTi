@@ -28,6 +28,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func RegisterPost(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
 	// Testing to see if the form is being submitted
 	utils.SetFlash(w, utils.FlashFailed, []byte("Registration Failed!"))
 	http.Redirect(w, r, "/register", http.StatusSeeOther)
