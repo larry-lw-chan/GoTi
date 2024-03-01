@@ -19,11 +19,12 @@
 
     <main>
       <div class="container">
-        {{ if .Flash }}
-        <div class="flash">
-          {{ .Flash }}
+        {{ if .Flash.Message }}
+        <div class="flash {{ .Flash.Type }}">
+          {{ .Flash.Message }}
         </div>
         {{ end }}
+
         {{ block "content" .}}{{ end }}
       </div>
     </main>

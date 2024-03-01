@@ -6,12 +6,33 @@ import (
 	"time"
 )
 
+// Flash types
+const (
+	FlashSuccess = "success"
+	FlashFailed  = "failed"
+)
+
+type Flash struct {
+	Type    string
+	Message string
+}
+
 func SetFlash(w http.ResponseWriter, name string, value []byte) {
 	c := &http.Cookie{Name: name, Value: encode(value)}
 	http.SetCookie(w, c)
 }
 
-func GetFlash(w http.ResponseWriter, r *http.Request, name string) ([]byte, error) {
+func GetFlash(w http.ResponseWriter, r *http.Request, name string) *Flash {
+	flash := &Flash{}
+	value, _ := GetFlashValue(w, r, name)
+	if value != nil {
+		flash.Type = name
+		flash.Message = string(value)
+	}
+	return flash
+}
+
+func GetFlashValue(w http.ResponseWriter, r *http.Request, name string) ([]byte, error) {
 	c, err := r.Cookie(name)
 	if err != nil {
 		switch err {
@@ -25,8 +46,10 @@ func GetFlash(w http.ResponseWriter, r *http.Request, name string) ([]byte, erro
 	if err != nil {
 		return nil, err
 	}
+	// Got value from cookie so expiring it not to show again
 	dc := &http.Cookie{Name: name, MaxAge: -1, Expires: time.Unix(1, 0)}
 	http.SetCookie(w, dc)
+
 	return value, nil
 }
 

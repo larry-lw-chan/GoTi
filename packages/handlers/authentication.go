@@ -18,17 +18,17 @@ func ForgotPassword(w http.ResponseWriter, r *http.Request) {
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	flash, err := utils.GetFlash(w, r, "Failed")
-	if err != nil {
-		render.Html(w, "register.page.tmpl", nil)
-	} else {
-		data["Flash"] = string(flash)
+	flash := utils.GetFlash(w, r, utils.FlashFailed)
+	if flash != nil {
+		data["Flash"] = flash
 		render.Html(w, "register.page.tmpl", data)
+	} else {
+		render.Html(w, "register.page.tmpl", nil)
 	}
 }
 
 func RegisterPost(w http.ResponseWriter, r *http.Request) {
 	// Testing to see if the form is being submitted
-	utils.SetFlash(w, "Failed", []byte("Registration Failed!"))
+	utils.SetFlash(w, utils.FlashFailed, []byte("Registration Failed!"))
 	http.Redirect(w, r, "/register", http.StatusSeeOther)
 }
