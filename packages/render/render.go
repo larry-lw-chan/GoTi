@@ -21,7 +21,7 @@ func getTmplFiles(tmplFile string) []string {
 	return tmplFiles
 }
 
-func Html(w http.ResponseWriter, tmplFile string, data any) {
+func Template(w http.ResponseWriter, tmplFile string, data any) {
 	tmplFiles := getTmplFiles(tmplFile)
 	tmpl := template.Must(template.ParseFiles(tmplFiles...))
 

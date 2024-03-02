@@ -7,17 +7,17 @@ import (
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
-	render.Html(w, "home.page.tmpl", nil)
+	render.Template(w, "home.page.tmpl", nil)
 }
 
 func AboutPage(w http.ResponseWriter, r *http.Request) {
-	render.Html(w, "about.page.tmpl", nil)
+	render.Template(w, "about.page.tmpl", nil)
 }
 
 func ContactPage(w http.ResponseWriter, r *http.Request) {
-	render.Html(w, "contact.page.tmpl", nil)
+	render.Template(w, "contact.page.tmpl", nil)
 }
 
 func PrivacyPage(w http.ResponseWriter, r *http.Request) {
-	render.Html(w, "privacy.page.tmpl", nil)
+	render.Template(w, "privacy.page.tmpl", nil)
 }
