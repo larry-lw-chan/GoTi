@@ -1,8 +1,10 @@
-package models
+package users
 
 import (
 	"fmt"
 	"log"
+
+	"github.com/larry-lw-chan/go-tiny/database"
 )
 
 type User struct {
@@ -12,7 +14,9 @@ type User struct {
 }
 
 func Test() {
-	if err = db.Ping(); err != nil {
+	db := database.DB
+
+	if err := db.Ping(); err != nil {
 		log.Fatalf("Cannot ping database because %s", err)
 	}
 

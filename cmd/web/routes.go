@@ -6,7 +6,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/larry-lw-chan/go-tiny/packages/handlers"
+	"github.com/larry-lw-chan/go-tiny/packages/pages"
+	"github.com/larry-lw-chan/go-tiny/packages/users"
 )
 
 func Routes() *chi.Mux {
@@ -29,16 +30,16 @@ func Routes() *chi.Mux {
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	// Routes
-	r.Get("/", handlers.HomePage)
-	r.Get("/about", handlers.AboutPage)
-	r.Get("/contact", handlers.ContactPage)
-	r.Get("/privacy", handlers.PrivacyPage)
+	r.Get("/", pages.HomePageHandler)
+	r.Get("/about", pages.AboutPageHandler)
+	r.Get("/contact", pages.ContactPageHandler)
+	r.Get("/privacy", pages.PrivacyPageHandler)
 
 	// Authentication Routes
-	r.Get("/login", handlers.Login)
-	r.Get("/register", handlers.Register)
-	r.Post("/register", handlers.RegisterPost)
-	r.Get("/forgot-password", handlers.ForgotPassword)
+	r.Get("/login", users.LoginHandler)
+	r.Get("/register", users.RegisterHandler)
+	r.Post("/register", users.RegisterPostHandler)
+	r.Get("/forgot-password", users.ForgotPasswordHandler)
 
 	// Return the Router
 	return r

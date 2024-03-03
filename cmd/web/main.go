@@ -11,7 +11,6 @@ import (
 func main() {
 	db := database.Connect() // Connect Database
 	defer db.Close()         // Defer close the database connection
-	database.Inject(db)      // Inject the database connection to allow global access
 
 	// Start Server
 	r := Routes() // Get Routes

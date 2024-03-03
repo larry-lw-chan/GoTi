@@ -1,4 +1,4 @@
-package utils
+package debug
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 )
 
 // Logger is a simple wrapper for log.Println - Debugging purposes
-func Logger(input string) {
+func Print(input string) {
 	logger := log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime)
 	logger.Println(input)
 }

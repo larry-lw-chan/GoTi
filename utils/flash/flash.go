@@ -1,4 +1,4 @@
-package utils
+package flash
 
 import (
 	"encoding/base64"
@@ -8,8 +8,8 @@ import (
 
 // Flash types
 const (
-	FlashSuccess = "success"
-	FlashFailed  = "failed"
+	SUCCESS = "success"
+	FAILED  = "failed"
 )
 
 type Flash struct {
@@ -17,12 +17,12 @@ type Flash struct {
 	Message string
 }
 
-func SetFlash(w http.ResponseWriter, name string, value []byte) {
+func Set(w http.ResponseWriter, name string, value []byte) {
 	c := &http.Cookie{Name: name, Value: encode(value)}
 	http.SetCookie(w, c)
 }
 
-func GetFlash(w http.ResponseWriter, r *http.Request, name string) *Flash {
+func Get(w http.ResponseWriter, r *http.Request, name string) *Flash {
 	flash := &Flash{}
 	value, _ := GetFlashValue(w, r, name)
 	if value != nil {

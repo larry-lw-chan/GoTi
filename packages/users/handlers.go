@@ -1,24 +1,24 @@
-package handlers
+package users
 
 import (
 	"net/http"
 
-	"github.com/larry-lw-chan/go-tiny/packages/render"
-	"github.com/larry-lw-chan/go-tiny/packages/utils"
+	"github.com/larry-lw-chan/go-tiny/utils/flash"
+	"github.com/larry-lw-chan/go-tiny/utils/render"
 )
 
 // Authentication Handlers - TODO
-func Login(w http.ResponseWriter, r *http.Request) {
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
-func ForgotPassword(w http.ResponseWriter, r *http.Request) {
+func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, "forgot-password.page.tmpl", nil)
 }
 
-func Register(w http.ResponseWriter, r *http.Request) {
+func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	flash := utils.GetFlash(w, r, utils.FlashFailed)
+	flash := flash.Get(w, r, flash.FAILED)
 	if flash != nil {
 		data["Flash"] = flash
 		render.Template(w, "register.page.tmpl", data)
@@ -27,9 +27,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func RegisterPost(w http.ResponseWriter, r *http.Request) {
+func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	// Testing to see if the form is being submitted
-	utils.SetFlash(w, utils.FlashFailed, []byte("Registration Failed!"))
+	flash.Set(w, flash.FAILED, []byte("Registration Failed!"))
 	http.Redirect(w, r, "/register", http.StatusSeeOther)
 }
