@@ -3,8 +3,8 @@ package users
 import (
 	"net/http"
 
-	"github.com/larry-lw-chan/go-tiny/utils/flash"
-	"github.com/larry-lw-chan/go-tiny/utils/render"
+	"github.com/larry-lw-chan/goti/utils/flash"
+	"github.com/larry-lw-chan/goti/utils/render"
 )
 
 // Authentication Handlers - TODO

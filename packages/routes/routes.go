@@ -1,4 +1,4 @@
-package main
+package routes
 
 import (
 	"net/http"
@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/larry-lw-chan/go-tiny/packages/pages"
-	"github.com/larry-lw-chan/go-tiny/packages/users"
+	"github.com/larry-lw-chan/goti/packages/pages"
+	"github.com/larry-lw-chan/goti/packages/users"
 )
 
 func Routes() *chi.Mux {

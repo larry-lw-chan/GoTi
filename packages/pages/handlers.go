@@ -3,7 +3,7 @@ package pages
 import (
 	"net/http"
 
-	"github.com/larry-lw-chan/go-tiny/utils/render"
+	"github.com/larry-lw-chan/goti/utils/render"
 )
 
 func HomePageHandler(w http.ResponseWriter, r *http.Request) {

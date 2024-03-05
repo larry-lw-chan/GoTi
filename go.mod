@@ -1,4 +1,4 @@
-module github.com/larry-lw-chan/go-tiny
+module github.com/larry-lw-chan/goti
 
 go 1.21.7
 

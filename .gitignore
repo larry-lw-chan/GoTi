@@ -20,8 +20,11 @@
 # Go workspace file
 go.work
 
-# Air Temp Folder
+# Ignore Temp Folder
 tmp
 
 # Mac Dependency Removal
 .DS_Store
+
+# Ignore sqlite3 database
+/data/*.db
