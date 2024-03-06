@@ -3,16 +3,15 @@ package users
 import (
 	"context"
 	"net/http"
+	"time"
 
 	"github.com/larry-lw-chan/goti/data"
-	"github.com/larry-lw-chan/goti/utils/debug"
 	"github.com/larry-lw-chan/goti/utils/flash"
 	"github.com/larry-lw-chan/goti/utils/render"
 )
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	testDB()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -25,22 +24,36 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	flash := flash.Get(w, r)
 	if flash != nil {
 		data["Flash"] = flash
-		render.Template(w, "register.page.tmpl", data)
-	} else {
-		render.Template(w, "register.page.tmpl", nil)
 	}
+	render.Template(w, "register.page.tmpl", data)
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	// Testing to see if the form is being submitted
-	flash.Set(w, flash.FAILED, []byte("Registration Failed!"))
-	http.Redirect(w, r, "/register", http.StatusSeeOther)
-}
 
-func testDB() {
-	ctx := context.Background()
+	// Handle Form Validation
+	err := validateCreateUser(r)
+	if err != nil {
+		flash.Set(w, flash.FAILED, []byte(err.Error()))
+		http.Redirect(w, r, "/register", http.StatusSeeOther)
+	}
+
+	// Generate Hashed Password
+	hashPwd := HashPassword([]byte(r.FormValue("password")))
+
+	// Insert new user into database
 	queries := New(data.DB)
-	users, _ := queries.GetUserFromID(ctx, 1)
-	debug.Print(users)
+	ctx := context.Background()
+	user := CreateUserParams{
+		Username:  r.FormValue("username"),
+		Email:     r.FormValue("email"),
+		Password:  hashPwd,
+		CreatedAt: time.Now().String(),
+		UpdatedAt: time.Now().String(),
+	}
+	queries.CreateUser(ctx, user)
+
+	// Todo - redirect to user authentication post
+	flash.Set(w, flash.SUCCESS, []byte("Registration Worked!"))
+	http.Redirect(w, r, "/register", http.StatusSeeOther)
 }
