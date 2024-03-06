@@ -2,18 +2,14 @@ package users
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
-	"github.com/go-playground/locales/en"
-	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	en_translations "github.com/go-playground/validator/v10/translations/en"
+	"github.com/larry-lw-chan/goti/utils/translate"
 )
 
 // use a single instance , it caches struct info
 var (
-	uni      *ut.UniversalTranslator
 	validate *validator.Validate
 )
 
@@ -35,24 +31,16 @@ func validateCreateUser(r *http.Request) (errs []error) {
 	}
 
 	// Validate User Input
-	validate := validator.New()
-
-	en := en.New()
-	uni = ut.New(en, en)
-	trans, _ := uni.GetTranslator("en")
-
-	en_translations.RegisterDefaultTranslations(validate, trans)
+	validate = validator.New()
 
 	user := UserValidation{
 		Username: r.FormValue("username"),
 		Email:    r.FormValue("email"),
 		Password: r.FormValue("password"),
 	}
-	validateErrs := validate.Struct(&user)
-
-	if validateErrs != nil {
-		validateErrs := translateError(validateErrs, trans)
-		errs = append(errs, validateErrs...)
+	vErrs := validate.Struct(&user)
+	if vErrs != nil {
+		errs = append(errs, translate.Errors(vErrs, validate)...)
 	}
 
 	// Return nil if no errors
@@ -60,14 +48,3 @@ func validateCreateUser(r *http.Request) (errs []error) {
 }
 
 // Makes Validation more human readable
-func translateError(err error, trans ut.Translator) (errs []error) {
-	if err == nil {
-		return nil
-	}
-	validatorErrs := err.(validator.ValidationErrors)
-	for _, e := range validatorErrs {
-		translatedErr := fmt.Errorf(e.Translate(trans))
-		errs = append(errs, translatedErr)
-	}
-	return errs
-}
