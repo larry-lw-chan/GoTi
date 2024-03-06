@@ -22,7 +22,7 @@ func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	flash := flash.Get(w, r, flash.FAILED)
+	flash := flash.Get(w, r)
 	if flash != nil {
 		data["Flash"] = flash
 		render.Template(w, "register.page.tmpl", data)
