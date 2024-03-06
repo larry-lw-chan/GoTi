@@ -39,6 +39,6 @@ run:
 	go run ./cmd/web/*
 
 # Used by Dockerfile to create new db if not exists and run app
-up-and-run:
+migrate-up-then-run:
 	make migrate-up
 	make run

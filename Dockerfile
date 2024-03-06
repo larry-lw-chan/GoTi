@@ -11,4 +11,4 @@ RUN go mod download
 COPY . .
 
 # Default Command
-CMD ["make", "up-and-run"]
+CMD ["make", "migrate-up-then-run"]
