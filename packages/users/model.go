@@ -1,11 +1,10 @@
 package users
 
 type User struct {
-	Username string
-	Email    string
-	Password string
-}
-
-func Test() {
-	// queries := database.NewQueries()
+	ID        int64
+	Username  string
+	Email     string
+	Password  string
+	CreatedAt string
+	UpdatedAt string
 }

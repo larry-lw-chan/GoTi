@@ -1,8 +1,3 @@
-
-
-hello:
-	echo "Hello World"
-
 compile:
 	echo "Compiling for every OS and Platform"
 	GOOS=freebsd GOARCH=386 go build -o bin/main-freebsd-386 ./cmd/web/* 

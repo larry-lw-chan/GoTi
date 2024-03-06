@@ -5,8 +5,8 @@ CREATE TABLE users (
 	"username"		TEXT NOT NULL UNIQUE,
 	"email"			TEXT NOT NULL UNIQUE,
 	"password"		TEXT NOT NULL,
-	"created_at"	TEXT,
-	"updated_at"	TEXT,
+	"created_at"	TEXT NOT NULL,
+	"updated_at"	TEXT NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 

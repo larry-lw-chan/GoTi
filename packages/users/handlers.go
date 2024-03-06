@@ -1,14 +1,22 @@
 package users
 
 import (
+	"context"
 	"net/http"
 
+	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/utils/debug"
 	"github.com/larry-lw-chan/goti/utils/flash"
 	"github.com/larry-lw-chan/goti/utils/render"
 )
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	queries := New(data.DB)
+	ctx := context.Background()
+
+	users, _ := queries.GetUsers(ctx)
+	debug.Print(users)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
