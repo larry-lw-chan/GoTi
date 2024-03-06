@@ -39,9 +39,8 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func testDB() {
-	queries := New(data.DB)
 	ctx := context.Background()
-
+	queries := New(data.DB)
 	users, _ := queries.GetUserFromID(ctx, 1)
 	debug.Print(users)
 }

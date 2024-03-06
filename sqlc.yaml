@@ -1,9 +1,0 @@
-version: "2"
-sql:
-  - engine: "sqlite"
-    queries: "packages/users/sqlc/query.sql"
-    schema: "packages/users/sqlc/schema.sql"
-    gen:
-      go:
-        package: "users"
-        out: "packages/users/"
