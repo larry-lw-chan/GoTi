@@ -12,7 +12,6 @@ import (
 func main() {
 	db := data.Connect() // Connect Database
 	defer db.Close()     // Defer close the database connection
-	data.Inject(db)      // Inject Database Connection
 
 	// Start Server
 	r := routes.Routes() // Get Routes

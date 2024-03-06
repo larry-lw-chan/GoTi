@@ -12,11 +12,7 @@ import (
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	queries := New(data.DB)
-	ctx := context.Background()
-
-	users, _ := queries.GetUsers(ctx)
-	debug.Print(users)
+	testDB()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
@@ -40,4 +36,12 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Testing to see if the form is being submitted
 	flash.Set(w, flash.FAILED, []byte("Registration Failed!"))
 	http.Redirect(w, r, "/register", http.StatusSeeOther)
+}
+
+func testDB() {
+	queries := New(data.DB)
+	ctx := context.Background()
+
+	users, _ := queries.GetUserFromID(ctx, 1)
+	debug.Print(users)
 }
