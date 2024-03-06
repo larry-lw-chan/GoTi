@@ -32,9 +32,13 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	// Handle Form Validation
-	err := validateCreateUser(r)
-	if err != nil {
-		flash.Set(w, flash.FAILED, []byte(err.Error()))
+	errs := validateCreateUser(r)
+	if errs != nil {
+		var message string
+		for _, err := range errs {
+			message += err.Error() + "<br />"
+		}
+		flash.Set(w, flash.FAILED, []byte(message))
 		http.Redirect(w, r, "/register", http.StatusSeeOther)
 	}
 
