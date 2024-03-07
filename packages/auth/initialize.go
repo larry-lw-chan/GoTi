@@ -4,20 +4,12 @@ import (
 	"encoding/base64"
 	"encoding/gob"
 	"log"
-	"net/http"
 	"os"
 	"strconv"
 
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
-	"github.com/larry-lw-chan/goti/utils/debug"
 )
-
-// Struct to Hold Session
-type UserSession struct {
-	Username      string
-	Authenticated bool
-}
 
 // Store and Session keys
 const (
@@ -62,42 +54,4 @@ func InitializeStore() {
 
 	// Needed to make work with gorilla/sessions
 	gob.Register(UserSession{})
-}
-
-func CreateUserSession(w http.ResponseWriter, r *http.Request) {
-	// Get a session. We're ignoring the error resulted from decoding an
-	// existing session: Get() always returns a session, even if empty.
-	session, _ := store.Get(r, COOKIE_NAME)
-
-	// Create User Session and set it to the session
-	userSession := &UserSession{
-		Username:      "larry",
-		Authenticated: true,
-	}
-	session.Values[USER_SESSION] = userSession
-
-	// Save user session
-	err := session.Save(r, w)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
-
-// getUser returns a user from session s
-// on error returns an empty user
-func getUser(s *sessions.Session) UserSession {
-	userSession := UserSession{}
-
-	values := s.Values[USER_SESSION]
-	debug.Print(values)
-	// userSession, ok := values.(userSession)
-
-	// // If user not authenticated
-	// if !ok {
-	// 	return UserSession{Authenticated: false}
-	// }
-
-	// // User is authenticated
-	return userSession
 }

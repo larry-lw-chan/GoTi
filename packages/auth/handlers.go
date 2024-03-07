@@ -10,13 +10,14 @@ func TestAuthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Secret(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, COOKIE_NAME)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+	user := GetUserSession(r)
+
+	// Check if user is authenticated
+	if auth := user.Authenticated; !auth {
+		w.Write([]byte("You not authenticated"))
 		return
 	}
-
-	user := getUser(session)
 
 	// if auth := user.Authenticated; !auth {
 	// 	session.AddFlash("You don't have access!")
@@ -29,5 +30,5 @@ func Secret(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 
-	w.Write([]byte("Secret working" + user.Username))
+	w.Write([]byte("Secret working " + user.Username))
 }
