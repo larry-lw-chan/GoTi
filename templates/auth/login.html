@@ -1,0 +1,86 @@
+{{ template "base" . }} {{ define "content" }}
+<article class="register">
+  <div class="heading">
+    <h1>Let's get you setup</h1>
+    <p>
+      Let's get you set up on goti. We just need a few details from you to get
+      started.
+    </p>
+  </div>
+  <form action="/auth/register" method="post" id="register">
+    <fieldset>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        aria-label="Text"
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        autocomplete="email"
+        aria-label="Email"
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        placeholder="Password"
+        aria-label="Password"
+      />
+      <input
+        type="password"
+        name="confirm_password"
+        placeholder="Confirm Password"
+        aria-label="Password"
+      />
+    </fieldset>
+
+    <fieldset>
+      <label for="privacy">
+        <input type="checkbox" name="privacy" id="privacy" required />
+        I have read and agree to the
+        <a href="/privacy" target="_blank">privacy policy</a> *
+      </label>
+    </fieldset>
+    <button>Register</button>
+  </form>
+</article>
+{{ end }} {{ define "style" }}
+<style>
+  .register {
+    background-color: var(--pico-contrast-background);
+  }
+
+  .register input {
+    background-color: var(--pico-contrast-background);
+    color: var(--pico-contrast-inverse);
+  }
+
+  .register button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .register h1,
+  .register p,
+  .register label {
+    color: var(--pico-contrast-inverse);
+  }
+
+  .register input[type="checkbox"]:checked {
+    background-color: var(--pico-primary);
+  }
+</style>
+{{ end }} {{ define "script" }}
+<script
+  type="text/javascript"
+  src="/static/scripts/just-validate.production.min.js"
+></script>
+<script type="text/javascript">
+  // Validator Todo
+  // const validate = new window.JustValidate("#register");
+</script>
+{{ end }}

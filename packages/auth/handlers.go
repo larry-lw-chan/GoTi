@@ -12,6 +12,10 @@ import (
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "auth/login.html", nil)
+}
+
+func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 

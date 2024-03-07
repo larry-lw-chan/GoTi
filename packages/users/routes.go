@@ -1,9 +1,13 @@
 package users
 
 import (
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
 )
 
-func Routes(r *chi.Mux) {
-	// pass
+func Router() http.Handler {
+	r := chi.NewRouter()
+
+	return r
 }
