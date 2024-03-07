@@ -12,10 +12,10 @@ const (
 	navPartial = tmplPath + "partial/nav.partial.html"
 )
 
-// Todo: Template caching
+// Template Cache for storing parsed templates
 var tmplCache = map[string]*template.Template{}
 
-// Shortcut for caching and rendering templates
+// Templates
 func Template(w http.ResponseWriter, tmplName string, data any) {
 	tmpl := getCacheTemplate(tmplName)
 
