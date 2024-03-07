@@ -16,6 +16,9 @@ Alternatively, if you have [Go](https://go.dev/) installed, just type
 go run ./cmd/web/main.go
 ```
 
+### Todo - Binary Builds
+For future release, release binary builds...
+
 ## Development Mode
 To run the development environment, simply install [Air](https://github.com/cosmtrek/air)
 and type the following command inside the project root directory:
@@ -44,4 +47,7 @@ make migrate-down
 make seed
 ```
 
-Goti also makes heavy use of [SQLC](https://sqlc.dev/) for generating database query code.
+Goti also makes heavy use of [SQLC](https://sqlc.dev/) for generating database query code.  The following make shortcut below allows easy SQLC generation.
+```
+make package=users sqlc
+```
