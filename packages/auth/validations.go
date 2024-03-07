@@ -46,5 +46,3 @@ func validateCreateUser(r *http.Request) (errs []error) {
 	// Return nil if no errors
 	return errs
 }
-
-// Makes Validation more human readable
