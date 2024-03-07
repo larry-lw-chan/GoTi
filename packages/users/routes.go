@@ -9,5 +9,7 @@ import (
 func Router() http.Handler {
 	r := chi.NewRouter()
 
+	r.Get("/profile", ProfileHandler)
+
 	return r
 }

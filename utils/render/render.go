@@ -12,20 +12,34 @@ const (
 	navPartial = tmplPath + "partial/nav.partial.html"
 )
 
-// Todo: function will determine correct template subdirectory by parsing the file name
-// Example: base.layout.tmpl equal 'layout' folder and 'base' file name
-func getTmplFiles(tmplFile string) []string {
-	tmpl := tmplPath + tmplFile
-	tmplFiles := []string{tmpl, baseLayout, navPartial}
-	return tmplFiles
-}
+// Todo: Template caching
+var tmplCache = map[string]*template.Template{}
 
-func Template(w http.ResponseWriter, tmplFile string, data any) {
-	tmplFiles := getTmplFiles(tmplFile)
-	tmpl := template.Must(template.ParseFiles(tmplFiles...))
+// Shortcut for caching and rendering templates
+func Template(w http.ResponseWriter, tmplName string, data any) {
+	tmpl := getCacheTemplate(tmplName)
 
 	err := tmpl.Execute(w, data)
 	if err != nil {
 		log.Println(err)
 	}
+}
+
+// Get template from cache or parse and cache it
+func getCacheTemplate(tmplName string) *template.Template {
+	tmpl, ok := tmplCache[tmplName]
+
+	if !ok {
+		tmplFiles := getTmplFiles(tmplName)
+		tmpl = template.Must(template.ParseFiles(tmplFiles...))
+		tmplCache[tmplName] = tmpl
+	}
+
+	return tmpl
+}
+
+func getTmplFiles(tmplFile string) []string {
+	tmpl := tmplPath + tmplFile
+	tmplFiles := []string{tmpl, baseLayout, navPartial}
+	return tmplFiles
 }

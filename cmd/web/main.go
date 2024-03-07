@@ -39,7 +39,7 @@ func routes() *chi.Mux {
 	// Register Package Routes
 	r.Mount("/", pages.Router())
 	r.Mount("/auth", auth.Router())
-	r.Mount("/user", users.Router())
+	r.Mount("/users", users.Router())
 
 	// Return the Router
 	return r
