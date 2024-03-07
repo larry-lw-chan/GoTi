@@ -11,6 +11,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/packages/auth"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/users"
 	_ "github.com/mattn/go-sqlite3"
@@ -36,6 +37,7 @@ func routes() *chi.Mux {
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	// Register Package Routes
+	auth.Routes(r)
 	pages.Routes(r)
 	users.Routes(r)
 
@@ -43,25 +45,35 @@ func routes() *chi.Mux {
 	return r
 }
 
-func main() {
-	// Load config from environment
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	return ":" + port
+}
+
+// Load .env configuration
+func init() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+}
 
-	db := data.Connect() // Connect Database
-	defer db.Close()     // Defer close the database connection
+func main() {
+	// Initialize authentication session store
+	auth.InitializeStore()
+
+	// Connect to the database
+	db := data.Connect()
+	defer db.Close() // Defer close the database connection
 
 	// Load Routes
 	r := routes()
 
 	// Start Server
-	if os.Getenv("PORT") == "" {
-		os.Setenv("PORT", "3000")
-	}
-	port := ":" + os.Getenv("PORT")
-
+	port := getPort()
 	fmt.Println("Server is running at " + port)
 	http.ListenAndServe(port, r)
 }
