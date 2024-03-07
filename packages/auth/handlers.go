@@ -16,7 +16,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "auth/forgot-password.tmpl", nil)
+	render.Template(w, "auth/forgot-password.html", nil)
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +25,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if flash != nil {
 		data["Flash"] = flash
 	}
-	render.Template(w, "auth/register.tmpl", data)
+	render.Template(w, "auth/register.html", data)
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
