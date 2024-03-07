@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/packages/cookie"
+	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/utils/flash"
 	"github.com/larry-lw-chan/goti/utils/render"
 )
@@ -43,16 +45,16 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 			message += err.Error() + "<br />"
 		}
 		flash.Set(w, flash.FAILED, []byte(message))
-		http.Redirect(w, r, "auth/register", http.StatusSeeOther)
+		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 
 	// Generate Hashed Password
 	hashPwd := HashPassword([]byte(r.FormValue("password")))
 
 	// Insert new user into database
-	queries := New(data.DB)
+	queries := users.New(data.DB)
 	ctx := context.Background()
-	user := CreateUserParams{
+	user := users.CreateUserParams{
 		Username:  r.FormValue("username"),
 		Email:     r.FormValue("email"),
 		Password:  hashPwd,
@@ -66,14 +68,18 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/register", http.StatusSeeOther)
 }
 
-func TestAuthHandler(w http.ResponseWriter, r *http.Request) {
-	CreateUserSession(w, r)
-	w.Write([]byte("Test Auth Handler"))
+func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
+	cookie.CreateUserSession(w, r)
+	w.Write([]byte("Create User Session"))
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	cookie.DeleteUserSession(w, r)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func Secret(w http.ResponseWriter, r *http.Request) {
-
-	user := GetUserSession(r)
+	user := cookie.GetUserSession(r)
 
 	// Check if user is authenticated
 	if auth := user.Authenticated; !auth {

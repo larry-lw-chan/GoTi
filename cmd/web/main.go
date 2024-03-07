@@ -12,6 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/data"
 	"github.com/larry-lw-chan/goti/packages/auth"
+	"github.com/larry-lw-chan/goti/packages/cookie"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/users"
 	_ "github.com/mattn/go-sqlite3"
@@ -63,7 +64,7 @@ func init() {
 
 func main() {
 	// Initialize authentication session store
-	auth.InitializeStore()
+	cookie.InitializeStore()
 
 	// Connect to the database
 	db := data.Connect()

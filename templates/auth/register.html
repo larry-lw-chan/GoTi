@@ -1,6 +1,4 @@
-{{ template "base" . }}
-
-{{ define "content" }}
+{{ template "base" . }} {{ define "content" }}
 <article class="register">
   <div class="heading">
     <h1>Let's get you setup</h1>
@@ -44,15 +42,13 @@
       <label for="privacy">
         <input type="checkbox" name="privacy" id="privacy" required />
         I have read and agree to the
-        <a href="/privacy" target="_blank">privacy policy</a> *
+        <a href="/pages/privacy" target="_blank">privacy policy</a> *
       </label>
     </fieldset>
     <button>Register</button>
   </form>
 </article>
-{{ end }}
-
-{{ define "style" }}
+{{ end }} {{ define "style" }}
 <style>
   .register {
     background-color: var(--pico-contrast-background);
@@ -78,9 +74,7 @@
     background-color: var(--pico-primary);
   }
 </style>
-{{ end }}
-
-{{ define "script" }}
+{{ end }} {{ define "script" }}
 <script
   type="text/javascript"
   src="/static/scripts/just-validate.production.min.js"

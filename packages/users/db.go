@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.25.0
 
-package auth
+package users
 
 import (
 	"context"

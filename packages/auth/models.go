@@ -9,9 +9,3 @@ type User struct {
 	CreatedAt string
 	UpdatedAt string
 }
-
-// User Session
-type UserSession struct {
-	Username      string
-	Authenticated bool
-}
