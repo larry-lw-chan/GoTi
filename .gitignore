@@ -28,3 +28,6 @@ tmp
 
 # Ignore sqlite3 database
 /data/*.db
+
+# Ignore environment file
+.env

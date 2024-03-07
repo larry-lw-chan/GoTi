@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/data"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/users"
@@ -41,11 +44,20 @@ func routes() *chi.Mux {
 }
 
 func main() {
+	// Load config from environment
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	db := data.Connect() // Connect Database
 	defer db.Close()     // Defer close the database connection
 
-	// Start Server
+	// Load Routes
 	r := routes()
-	fmt.Println("Server is running at :3000")
-	http.ListenAndServe(":3000", r)
+
+	// Start Server
+	port := ":" + os.Getenv("PORT")
+	fmt.Println("Server is running at " + port)
+	http.ListenAndServe(port, r)
 }
