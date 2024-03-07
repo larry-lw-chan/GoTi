@@ -23,7 +23,7 @@ const (
 var store *sessions.CookieStore
 
 /*************************************************
-* SESSION SERVICES
+* USER SESSION SERVICES
 *************************************************/
 func CreateUserSession(w http.ResponseWriter, r *http.Request) {
 	// Get a session. We're ignoring the error resulted from decoding an

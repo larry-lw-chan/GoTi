@@ -37,7 +37,8 @@ func routes() *chi.Mux {
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	// Register Package Routes
-	auth.Routes(r)
+	r.Mount("/auth", auth.Router())
+
 	pages.Routes(r)
 	users.Routes(r)
 

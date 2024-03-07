@@ -1,6 +1,4 @@
-{{ template "base" . }}
-
-{{ define "content" }}
+{{ template "base" . }} {{ define "content" }}
 <div class="homepage">
   <section class="hero">
     <h1>Your social network</h1>
@@ -10,7 +8,7 @@
     </p>
   </section>
   <article class="login">
-    <form action="/login">
+    <form action="/auth/login">
       <fieldset>
         <input
           type="email"
@@ -24,20 +22,18 @@
       <button>Login</button>
     </form>
     <div class="password">
-      <a href="/forgot-password">Forgot password?</a>
+      <a href="/auth/forgot-password">Forgot password?</a>
     </div>
     <hr />
     <div class="register">
-      <a href="/register">
+      <a href="/auth/register">
         <button class="secondary">Create new account</button>
       </a>
     </div>
   </article>
 </div>
 
-{{ end }}
-
-{{ define "style" }}
+{{ end }} {{ define "style" }}
 <style>
   .hero {
     margin-bottom: calc(var(--pico-block-spacing-vertical) * 2);

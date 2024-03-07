@@ -16,7 +16,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "forgot-password.page.tmpl", nil)
+	render.Template(w, "auth/forgot-password.tmpl", nil)
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +25,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if flash != nil {
 		data["Flash"] = flash
 	}
-	render.Template(w, "register.page.tmpl", data)
+	render.Template(w, "auth/register.tmpl", data)
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 			message += err.Error() + "<br />"
 		}
 		flash.Set(w, flash.FAILED, []byte(message))
-		http.Redirect(w, r, "/register", http.StatusSeeOther)
+		http.Redirect(w, r, "auth/register", http.StatusSeeOther)
 	}
 
 	// Generate Hashed Password
