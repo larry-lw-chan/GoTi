@@ -36,7 +36,7 @@ sqlc:
 
 # Run the app
 run:
-	go run ./cmd/web/*
+	go run ./cmd/web/main.go
 
 # Used by Dockerfile to create new db if not exists and run app
 migrate-up-then-run:

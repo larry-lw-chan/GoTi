@@ -57,7 +57,11 @@ func main() {
 	r := routes()
 
 	// Start Server
+	if os.Getenv("PORT") == "" {
+		os.Setenv("PORT", "3000")
+	}
 	port := ":" + os.Getenv("PORT")
+
 	fmt.Println("Server is running at " + port)
 	http.ListenAndServe(port, r)
 }
