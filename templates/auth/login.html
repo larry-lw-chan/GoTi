@@ -1,13 +1,10 @@
 {{ template "base" . }} {{ define "content" }}
-<article class="register">
+<article class="login">
   <div class="heading">
-    <h1>Let's get you setup</h1>
-    <p>
-      Let's get you set up on goti. We just need a few details from you to get
-      started.
-    </p>
+    <h1>Login to Goti</h1>
+    <p>Login with your GoTi credentials.</p>
   </div>
-  <form action="/auth/register" method="post" id="register">
+  <form action="/auth/login" method="post" id="register">
     <fieldset>
       <input
         type="text"
@@ -30,48 +27,53 @@
         placeholder="Password"
         aria-label="Password"
       />
-      <input
-        type="password"
-        name="confirm_password"
-        placeholder="Confirm Password"
-        aria-label="Password"
-      />
     </fieldset>
 
-    <fieldset>
-      <label for="privacy">
-        <input type="checkbox" name="privacy" id="privacy" required />
-        I have read and agree to the
-        <a href="/privacy" target="_blank">privacy policy</a> *
-      </label>
-    </fieldset>
-    <button>Register</button>
+    <button>Login</button>
   </form>
+  <div class="links">
+    <a href="/auth/register">Register?</a>
+    <a href="/auth/forgot-password">Forgot password?</a>
+  </div>
 </article>
 {{ end }} {{ define "style" }}
 <style>
-  .register {
+  .login {
     background-color: var(--pico-contrast-background);
+    max-width: 700px;
+    margin: 0 auto;
   }
 
-  .register input {
+  .login input {
     background-color: var(--pico-contrast-background);
     color: var(--pico-contrast-inverse);
   }
 
-  .register button {
+  .login button {
     width: 100%;
     margin-bottom: 0.75rem;
   }
 
-  .register h1,
-  .register p,
-  .register label {
+  .login h1,
+  .login p,
+  .login label {
     color: var(--pico-contrast-inverse);
   }
 
-  .register input[type="checkbox"]:checked {
+  .login input[type="checkbox"]:checked {
     background-color: var(--pico-primary);
+  }
+
+  .links {
+    text-align: center;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .links a {
+    text-decoration: none;
   }
 </style>
 {{ end }} {{ define "script" }}

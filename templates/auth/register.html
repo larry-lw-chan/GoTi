@@ -47,11 +47,16 @@
     </fieldset>
     <button>Register</button>
   </form>
+  <div class="links">
+    <a href="/auth/login">Login Instead?</a>
+  </div>
 </article>
 {{ end }} {{ define "style" }}
 <style>
   .register {
     background-color: var(--pico-contrast-background);
+    max-width: 700px;
+    margin: 0 auto;
   }
 
   .register input {
@@ -72,6 +77,15 @@
 
   .register input[type="checkbox"]:checked {
     background-color: var(--pico-primary);
+  }
+
+  .links {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .links a {
+    text-decoration: none;
   }
 </style>
 {{ end }} {{ define "script" }}
