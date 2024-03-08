@@ -44,7 +44,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 		for _, err := range errs {
 			message += err.Error() + "<br />"
 		}
-		flash.Set(w, r, flash.FAILED, message)
+		flash.Set(w, r, flash.ERROR, message)
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 

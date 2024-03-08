@@ -8,10 +8,12 @@ import (
 	"github.com/larry-lw-chan/goti/packages/cookie"
 )
 
-// Flash Selections
+// Flash Notification Types
 const (
 	SUCCESS = "success"
-	FAILED  = "failed"
+	NOTICE  = "notice"
+	ALERT   = "alert"
+	ERROR   = "error"
 )
 
 type Flash struct {

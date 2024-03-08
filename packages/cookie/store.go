@@ -13,7 +13,6 @@ import (
 // Store and Session keys
 const (
 	STORE = "cookie-store"
-	FLASH = "flash-session"
 )
 
 // Session store
