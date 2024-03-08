@@ -3,7 +3,7 @@ GoTi is a social networking app written in Go designed to be light and easy to h
 
 ## How to run...
 
-### First clone the project and cd into project directory
+### First: Clone project and cd into project directory
 ```
 git clone git@github.com:larry-lw-chan/GoTi.git
 cd goti
