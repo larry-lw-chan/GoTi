@@ -10,8 +10,7 @@ cd goti
 ```
 
 ### To Run via Docker
-Assuming you have Docker running on the host system, just git clone the project, 
-cd into the project directory and docker-compose up:
+Just type:
 ```
 docker-compose up
 ```
