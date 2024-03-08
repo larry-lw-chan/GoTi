@@ -3,17 +3,24 @@ GoTi is a social networking app written in Go designed to be light and easy to h
 
 ## How to run...
 
-### Via Docker
+### First clone the project and cd into project directory
+```
+git clone git@github.com:larry-lw-chan/GoTi.git
+cd goti
+```
+
+### To Run via Docker
 Assuming you have Docker running on the host system, just git clone the project, 
 cd into the project directory and docker-compose up:
 ```
 docker-compose up
 ```
 
-### Via Go
-Alternatively, if you have [Go](https://go.dev/) installed, just type
+### To Run via Go directly
+Alternatively, if you have [Go](https://go.dev/) and [Make](https://www.gnu.org/software/make/manual/make.html) installed, just type
 ```
-go run ./cmd/web/main.go
+make migrate-up
+make run
 ```
 
 ### Todo - Binary Builds
