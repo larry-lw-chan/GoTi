@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // Global Database Connection
@@ -11,7 +13,7 @@ var DB *sql.DB
 
 func Connect() *sql.DB {
 	// Connect Database
-	db, err := sql.Open("sqlite3", "./data/sqlite3.db")
+	db, err := sql.Open("sqlite3", "./data/sqlite3.db?mode=rwc&_journal_mode=WAL")
 	if err != nil {
 		log.Fatal(err)
 	}

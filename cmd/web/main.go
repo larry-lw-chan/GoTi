@@ -15,7 +15,6 @@ import (
 	"github.com/larry-lw-chan/goti/packages/cookie"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/users"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func routes() *chi.Mux {
