@@ -27,7 +27,7 @@ func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	flash := flash.Get(w, r)
+	flash := cookie.FlashGet(w, r)
 	if flash != nil {
 		data["Flash"] = flash
 	}
@@ -44,7 +44,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 		for _, err := range errs {
 			message += err.Error() + "<br />"
 		}
-		flash.Set(w, flash.FAILED, []byte(message))
+		cookie.FlashSet(w, r, cookie.FAILED, message)
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 
@@ -70,8 +70,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
 	cookie.CreateUserSession(w, r)
-	cookie.FlashSet(w, r, "User Session Created")
-
+	cookie.FlashSet(w, r, cookie.SUCCESS, "User Session Created")
 	w.Write([]byte("Create User Session"))
 }
 
@@ -82,11 +81,11 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 func Secret(w http.ResponseWriter, r *http.Request) {
 	user := cookie.GetUserSession(r)
-	message := cookie.FlashGet(w, r)
+	flash := cookie.FlashGet(w, r)
 
 	// Check if user is authenticated
 	if auth := user.Authenticated; !auth {
-		w.Write([]byte("You not authenticated " + string(message)))
+		w.Write([]byte("You not authenticated "))
 		return
 	}
 
@@ -100,6 +99,7 @@ func Secret(w http.ResponseWriter, r *http.Request) {
 	// 	http.Redirect(w, r, "/forbidden", http.StatusFound)
 	// 	return
 	// }
-
+	w.Write([]byte("Flash working " + flash.Message))
+	w.Write([]byte("<br />"))
 	w.Write([]byte("Secret working " + user.Username))
 }

@@ -21,13 +21,15 @@ func init() {
 	gob.Register(Flash{})
 }
 
-func FlashGet(w http.ResponseWriter, r *http.Request) Flash {
-	// Get flash value
+func FlashGet(w http.ResponseWriter, r *http.Request) *Flash {
 	session, _ := Store.Get(r, STORE)
+
+	// Get flash value
 	flashes := session.Flashes()
 	if len(flashes) == 0 {
-		return Flash{}
+		return &Flash{}
 	}
+	flash := flashes[0].(Flash)
 
 	// Save the session
 	err := session.Save(r, w)
@@ -35,7 +37,7 @@ func FlashGet(w http.ResponseWriter, r *http.Request) Flash {
 		log.Println(err)
 	}
 
-	return flashes[0].(Flash)
+	return &flash
 }
 
 func FlashSet(w http.ResponseWriter, r *http.Request, notice string, message string) {
