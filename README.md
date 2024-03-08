@@ -23,7 +23,7 @@ make run
 ```
 
 ### Todo - Binary Builds
-For future release, release binary builds...
+For future release, release binary builds with prebuilt sqlite3 database for super easy download and run ability.
 
 ## Development Mode
 To run the development environment, simply install [Air](https://github.com/cosmtrek/air)
