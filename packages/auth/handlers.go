@@ -70,6 +70,8 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
 	cookie.CreateUserSession(w, r)
+	cookie.FlashSet(w, r, "User Session Created")
+
 	w.Write([]byte("Create User Session"))
 }
 
@@ -80,10 +82,11 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 func Secret(w http.ResponseWriter, r *http.Request) {
 	user := cookie.GetUserSession(r)
+	message := cookie.FlashGet(w, r)
 
 	// Check if user is authenticated
 	if auth := user.Authenticated; !auth {
-		w.Write([]byte("You not authenticated"))
+		w.Write([]byte("You not authenticated " + string(message)))
 		return
 	}
 
