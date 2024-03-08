@@ -1,9 +1,11 @@
-package cookie
+package flash
 
 import (
 	"encoding/gob"
 	"log"
 	"net/http"
+
+	"github.com/larry-lw-chan/goti/packages/cookie"
 )
 
 // Flash Selections
@@ -21,8 +23,8 @@ func init() {
 	gob.Register(Flash{})
 }
 
-func FlashGet(w http.ResponseWriter, r *http.Request) *Flash {
-	session, _ := Store.Get(r, STORE)
+func Get(w http.ResponseWriter, r *http.Request) *Flash {
+	session, _ := cookie.Store.Get(r, cookie.STORE)
 
 	// Get flash value
 	flashes := session.Flashes()
@@ -40,8 +42,8 @@ func FlashGet(w http.ResponseWriter, r *http.Request) *Flash {
 	return &flash
 }
 
-func FlashSet(w http.ResponseWriter, r *http.Request, notice string, message string) {
-	session, _ := Store.Get(r, STORE)
+func Set(w http.ResponseWriter, r *http.Request, notice string, message string) {
+	session, _ := cookie.Store.Get(r, cookie.STORE)
 	flash := Flash{Type: notice, Message: message}
 	session.AddFlash(flash)
 

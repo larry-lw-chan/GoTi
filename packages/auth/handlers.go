@@ -7,8 +7,8 @@ import (
 
 	"github.com/larry-lw-chan/goti/data"
 	"github.com/larry-lw-chan/goti/packages/cookie"
+	"github.com/larry-lw-chan/goti/packages/flash"
 	"github.com/larry-lw-chan/goti/packages/users"
-	"github.com/larry-lw-chan/goti/utils/flash"
 	"github.com/larry-lw-chan/goti/utils/render"
 )
 
@@ -27,7 +27,7 @@ func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	flash := cookie.FlashGet(w, r)
+	flash := flash.Get(w, r)
 	if flash != nil {
 		data["Flash"] = flash
 	}
@@ -44,7 +44,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 		for _, err := range errs {
 			message += err.Error() + "<br />"
 		}
-		cookie.FlashSet(w, r, cookie.FAILED, message)
+		flash.Set(w, r, flash.FAILED, message)
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 
@@ -64,13 +64,13 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	queries.CreateUser(ctx, user)
 
 	// Todo - redirect to user authentication post
-	flash.Set(w, flash.SUCCESS, []byte("Registration Worked!"))
+	flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
 	http.Redirect(w, r, "/register", http.StatusSeeOther)
 }
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
 	cookie.CreateUserSession(w, r)
-	cookie.FlashSet(w, r, cookie.SUCCESS, "User Session Created")
+	flash.Set(w, r, flash.SUCCESS, "User Session Created")
 	w.Write([]byte("Create User Session"))
 }
 
@@ -81,7 +81,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 func Secret(w http.ResponseWriter, r *http.Request) {
 	user := cookie.GetUserSession(r)
-	flash := cookie.FlashGet(w, r)
+	flash := flash.Get(w, r)
 
 	// Check if user is authenticated
 	if auth := user.Authenticated; !auth {
