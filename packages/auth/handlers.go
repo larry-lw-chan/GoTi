@@ -9,7 +9,7 @@ import (
 	"github.com/larry-lw-chan/goti/packages/cookie"
 	"github.com/larry-lw-chan/goti/packages/flash"
 	"github.com/larry-lw-chan/goti/packages/users"
-	"github.com/larry-lw-chan/goti/utils/render"
+	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
 // Authentication Handlers - TODO

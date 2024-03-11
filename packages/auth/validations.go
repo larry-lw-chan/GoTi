@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/larry-lw-chan/goti/utils/translate"
+	"github.com/larry-lw-chan/goti/packages/utils/translate"
 )
 
 // use a single instance , it caches struct info
