@@ -19,7 +19,7 @@ var tmplCache = map[string]*template.Template{}
 func Template(w http.ResponseWriter, tmplName string, data any) {
 	tmpl := getCacheTemplate(tmplName)
 
-	err := tmpl.Execute(w, data)
+	err := tmpl.ExecuteTemplate(w, "base", data)
 	if err != nil {
 		log.Println(err)
 	}
