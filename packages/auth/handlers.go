@@ -18,6 +18,22 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	// Handle Form Validation
+	errs := validateLoginUser(r)
+	if errs != nil {
+		var message string
+		for _, err := range errs {
+			message += err.Error() + "<br />"
+		}
+		flash.Set(w, r, flash.ERROR, message)
+		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
+	}
+
+	// Check if user exists
+	cookie.CreateUserSession(w, r)
+
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
