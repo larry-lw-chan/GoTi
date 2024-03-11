@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"time"
 
@@ -51,10 +50,6 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "auth/forgot-password.tmpl", nil)
-}
-
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	flash := flash.Get(w, r)
@@ -99,24 +94,25 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	if isAuthenticated {
 		flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
 		cookie.CreateUserSession(w, r, user.Username)
-		http.Redirect(w, r, "/users/profile/", http.StatusSeeOther)
+		http.Redirect(w, r, "/users/profile", http.StatusSeeOther)
 	} else {
 		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 }
 
-func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println(HashPassword([]byte("password")))
-
-	// Create User Session
-	cookie.CreateUserSession(w, r, "Testy")
-	flash.Set(w, r, flash.SUCCESS, "User Session Created")
-	w.Write([]byte("Create User Session"))
-}
-
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie.DeleteUserSession(w, r)
 	flash.Set(w, r, flash.SUCCESS, "You are successfully logged out")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "auth/forgot-password.tmpl", nil)
+}
+
+func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
+	cookie.CreateUserSession(w, r, "Testy")
+	flash.Set(w, r, flash.SUCCESS, "User Session Created")
+	w.Write([]byte("Create User Session"))
 }
