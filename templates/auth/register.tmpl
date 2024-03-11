@@ -12,7 +12,7 @@
   <form
     action="/auth/register"
     method="POST"
-    id="register"
+    id="register__form"
     autocomplete="off"
     novalidate="novalidate"
   >
@@ -112,7 +112,7 @@
 {{ define "script" }}
 <script type="text/javascript">
   // Validate Registration Form
-  const validator = new window.JustValidate("#register");
+  const validator = new window.JustValidate("#register__form");
   validator
     .addField("#username", [
       {
@@ -180,7 +180,7 @@
       },
     ])
     .onSuccess((event) => {
-      document.getElementById("register").submit();
+      document.getElementById("register__form").submit();
     });
 </script>
 // {{ end }}
