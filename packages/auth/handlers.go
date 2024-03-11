@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
@@ -14,7 +15,12 @@ import (
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "auth/login.tmpl", nil)
+	data := make(map[string]interface{})
+	flash := flash.Get(w, r)
+	if flash != nil {
+		data["Flash"] = flash
+	}
+	render.Template(w, "auth/login.tmpl", data)
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +44,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if provided password matches
 	if isAuthenticated {
 		cookie.CreateUserSession(w, r, user.Username)
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/users/profile", http.StatusSeeOther)
 	} else {
 		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
 		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
@@ -101,6 +107,9 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println(HashPassword([]byte("password")))
+
+	// Create User Session
 	cookie.CreateUserSession(w, r, "Testy")
 	flash.Set(w, r, flash.SUCCESS, "User Session Created")
 	w.Write([]byte("Create User Session"))

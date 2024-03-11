@@ -12,5 +12,5 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("You not authenticated"))
 		return
 	}
-	w.Write([]byte("User Profile"))
+	w.Write([]byte("User Profile here.  You are authenticated!"))
 }
