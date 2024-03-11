@@ -1,10 +1,31 @@
 package auth
 
 import (
+	"context"
 	"log"
 
+	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/packages/users"
 	"golang.org/x/crypto/bcrypt"
 )
+
+/*************************************************
+* Authenticate User
+*************************************************/
+func AuthenticateUser(email, password string) (*users.User, bool) {
+	// Find user by email
+	Queries := users.New(data.DB)
+	user, err := Queries.GetUserFromEmail(context.Background(), email)
+	if err != nil {
+		return nil, false
+	}
+
+	// Check if provided password matches
+	if !CheckPasswordHash(password, user.Password) {
+		return nil, false
+	}
+	return &user, true
+}
 
 /*************************************************
 * HASHING SERVICES
