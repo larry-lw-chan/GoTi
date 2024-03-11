@@ -29,12 +29,20 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		flash.Set(w, r, flash.ERROR, message)
 		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
+		return
 	}
 
-	// Check if user exists
-	cookie.CreateUserSession(w, r)
+	// Find user by email
+	user, isAuthenticated := AuthenticateUser(r.FormValue("email"), r.FormValue("password"))
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	// Check if provided password matches
+	if isAuthenticated {
+		cookie.CreateUserSession(w, r, user.Username)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	} else {
+		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
+		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
+	}
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
@@ -69,53 +77,37 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Insert new user into database
 	queries := users.New(data.DB)
-	ctx := context.Background()
-	user := users.CreateUserParams{
+	createUser := users.CreateUserParams{
 		Username:  r.FormValue("username"),
 		Email:     r.FormValue("email"),
 		Password:  hashPwd,
 		CreatedAt: time.Now().String(),
 		UpdatedAt: time.Now().String(),
 	}
-	queries.CreateUser(ctx, user)
+	queries.CreateUser(context.Background(), createUser)
 
-	// Todo - redirect to user authentication post
-	flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
-	http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
+	// Authenticate user
+	user, isAuthenticated := AuthenticateUser(r.FormValue("email"), r.FormValue("password"))
+
+	// Check if provided password matches
+	if isAuthenticated {
+		flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
+		cookie.CreateUserSession(w, r, user.Username)
+		http.Redirect(w, r, "/users/profile/", http.StatusSeeOther)
+	} else {
+		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
+		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
+	}
 }
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
-	cookie.CreateUserSession(w, r)
+	cookie.CreateUserSession(w, r, "Testy")
 	flash.Set(w, r, flash.SUCCESS, "User Session Created")
 	w.Write([]byte("Create User Session"))
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie.DeleteUserSession(w, r)
+	flash.Set(w, r, flash.SUCCESS, "You are successfully logged out")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
-}
-
-func Secret(w http.ResponseWriter, r *http.Request) {
-	user := cookie.GetUserSession(r)
-	flash := flash.Get(w, r)
-
-	// Check if user is authenticated
-	if auth := user.Authenticated; !auth {
-		w.Write([]byte("You not authenticated "))
-		return
-	}
-
-	// if auth := user.Authenticated; !auth {
-	// 	session.AddFlash("You don't have access!")
-	// 	err = session.Save(r, w)
-	// 	if err != nil {
-	// 		http.Error(w, err.Error(), http.StatusInternalServerError)
-	// 		return
-	// 	}
-	// 	http.Redirect(w, r, "/forbidden", http.StatusFound)
-	// 	return
-	// }
-	w.Write([]byte("Flash working " + flash.Message))
-	w.Write([]byte("<br />"))
-	w.Write([]byte("Secret working " + user.Username))
 }

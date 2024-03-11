@@ -22,14 +22,14 @@ func init() {
 /*************************************************
 * USER SESSION SERVICES
 *************************************************/
-func CreateUserSession(w http.ResponseWriter, r *http.Request) {
+func CreateUserSession(w http.ResponseWriter, r *http.Request, username string) {
 	// Get a session. We're ignoring the error resulted from decoding an
 	// existing session: Get() always returns a session, even if empty.
 	session, _ := Store.Get(r, STORE)
 
 	// Create User Session and set it to the session
 	userSession := &UserSession{
-		Username:      "larry",
+		Username:      username,
 		Authenticated: true,
 	}
 	session.Values[USER_SESSION] = userSession

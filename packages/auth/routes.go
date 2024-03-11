@@ -25,8 +25,5 @@ func Router() http.Handler {
 
 	// Debugging Purposes Only
 	r.Get("/test-login", TestLoginHandler)
-
-	r.Get("/secret", Secret)
-
 	return r
 }
