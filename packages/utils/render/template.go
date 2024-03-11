@@ -8,8 +8,8 @@ import (
 
 const (
 	tmplPath   = "./templates/"
-	baseLayout = tmplPath + "layout/base.layout.html"
-	navPartial = tmplPath + "partial/nav.partial.html"
+	baseLayout = tmplPath + "layout/base.layout.tmpl"
+	navPartial = tmplPath + "partial/nav.partial.tmpl"
 )
 
 // Template Cache for storing parsed templates

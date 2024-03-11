@@ -1,0 +1,190 @@
+{{ template "base" . }}
+
+{{ define "content" }}
+<article class="register">
+  <div class="heading">
+    <h1>Let's get you setup</h1>
+    <p>
+      Let's get you set up on goti. We just need a few details from you to get
+      started.
+    </p>
+  </div>
+  <form
+    action="/auth/register"
+    method="POST"
+    id="register"
+    autocomplete="off"
+    novalidate="novalidate"
+  >
+    <fieldset>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        aria-label="Text"
+      />
+    </fieldset>
+    <fieldset>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="Email"
+        autocomplete="email"
+        aria-label="Email"
+        required
+      />
+    </fieldset>
+    <fieldset>
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        aria-label="Password"
+      />
+    </fieldset>
+    <fieldset>
+      <input
+        type="password"
+        name="confirm_password"
+        id="confirm_password"
+        placeholder="Confirm Password"
+        aria-label="Password"
+      />
+    </fieldset>
+    <fieldset>
+      <label for="privacy">
+        <input type="checkbox" name="privacy" id="privacy" required />
+        I have read and agree to the
+        <a href="/pages/privacy" target="_blank">privacy policy</a> *
+      </label>
+    </fieldset>
+    <button type="submit">Register</button>
+  </form>
+
+  <div class="links">
+    <a href="/auth/login">Login Instead?</a>
+  </div>
+</article>
+{{ end }}
+
+{{ define "style" }}
+<style>
+  .register {
+    background-color: var(--pico-contrast-background);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .register input {
+    background-color: var(--pico-contrast-background);
+    color: var(--pico-contrast-inverse);
+  }
+
+  .register button {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .register h1,
+  .register p,
+  .register label {
+    color: var(--pico-contrast-inverse);
+  }
+
+  .register input[type="checkbox"]:checked {
+    background-color: var(--pico-primary);
+  }
+
+  .links {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .links a {
+    text-decoration: none;
+  }
+</style>
+{{ end }}
+
+{{ define "script" }}
+<script
+  type="text/javascript"
+  src="/static/scripts/just-validate.production.min.js"
+></script>
+<script type="text/javascript">
+  // Validate Registration Form
+  const validator = new window.JustValidate("#register");
+  validator
+    .addField("#username", [
+      {
+        rule: "required",
+        message: "Username is required",
+      },
+      {
+        rule: "minLength",
+        value: 3,
+        message: "Username should be at least 3 characters",
+      },
+      {
+        rule: "maxLength",
+        value: 20,
+        message: "Username should be at most 20 characters",
+      },
+    ])
+    .addField("#email", [
+      {
+        rule: "required",
+        message: "Email is required",
+      },
+      {
+        rule: "email",
+        message: "Please enter a valid email",
+      },
+    ])
+    .addField("#password", [
+      {
+        rule: "required",
+        message: "Password is required",
+      },
+      {
+        rule: "minLength",
+        value: 8,
+        message: "Password should be at least 8 characters",
+      },
+    ])
+    .addField("#confirm_password", [
+      {
+        rule: "required",
+        message: "Confirm Password is required",
+      },
+      {
+        rule: "minLength",
+        value: 8,
+        message: "Password should be at least 8 characters",
+      },
+      {
+        validator: (value, fields) => {
+          if (fields["#password"] && fields["#confirm_password"].elem) {
+            const repeatPasswordValue = fields["#password"].elem.value;
+
+            return value === repeatPasswordValue;
+          }
+
+          return true;
+        },
+        errorMessage: "Passwords should be the same",
+      },
+    ])
+    .addField("#privacy", [
+      {
+        rule: "required",
+      },
+    ])
+    .onSuccess((event) => {
+      document.getElementById("register").submit();
+    });
+</script>
+// {{ end }}

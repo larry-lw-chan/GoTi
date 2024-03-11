@@ -14,7 +14,7 @@ import (
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "auth/login.html", nil)
+	render.Template(w, "auth/login.tmpl", nil)
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +22,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "auth/forgot-password.html", nil)
+	render.Template(w, "auth/forgot-password.tmpl", nil)
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +31,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if flash != nil {
 		data["Flash"] = flash
 	}
-	render.Template(w, "auth/register.html", data)
+	render.Template(w, "auth/register.tmpl", data)
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -65,7 +65,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Todo - redirect to user authentication post
 	flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
-	http.Redirect(w, r, "/register", http.StatusSeeOther)
+	http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 }
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {
