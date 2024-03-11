@@ -1,4 +1,6 @@
-{{ template "base" . }} {{ define "content" }}
+{{ template "base" . }}
+
+{{ define "content" }}
 <div class="homepage">
   <section class="hero">
     <h1>Your social network</h1>
@@ -8,18 +10,25 @@
     </p>
   </section>
   <article class="login">
-    <form action="/auth/login">
+    <form action="/auth/login" method="POST" id="login__form">
       <fieldset>
         <input
           type="email"
           name="email"
+          id="email"
           placeholder="Email"
           autocomplete="email"
         />
-
-        <input type="password" name="password" placeholder="Password" />
       </fieldset>
-      <button>Login</button>
+      <fieldset>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+        />
+      </fieldset>
+      <button type="submit">Login</button>
     </form>
     <div class="password">
       <a href="/auth/forgot-password">Forgot password?</a>
@@ -33,7 +42,9 @@
   </article>
 </div>
 
-{{ end }} {{ define "style" }}
+{{ end }}
+
+{{ define "style" }}
 <style>
   .hero {
     margin-bottom: calc(var(--pico-block-spacing-vertical) * 2);
@@ -84,4 +95,36 @@
     }
   }
 </style>
+{{ end }}
+
+{{ define "script" }}
+<script>
+  // Validate Registration Form
+  const validator = new window.JustValidate("#login__form");
+  validator
+    .addField("#email", [
+      {
+        rule: "required",
+        message: "Email is required",
+      },
+      {
+        rule: "email",
+        message: "Please enter a valid email",
+      },
+    ])
+    .addField("#password", [
+      {
+        rule: "required",
+        message: "Password is required",
+      },
+      {
+        rule: "minLength",
+        value: 8,
+        message: "Password should be at least 8 characters",
+      },
+    ])
+    .onSuccess((event) => {
+      document.getElementById("login__form").submit();
+    });
+</script>
 {{ end }}
