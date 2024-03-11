@@ -195,6 +195,12 @@ footer {
 }
 
 footer .legal {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--pico-muted-color);
+}
+
+footer .legal a {
+  color: var(--pico-muted-color);
+  text-decoration: none;
+  margin-left: 1rem;
 }

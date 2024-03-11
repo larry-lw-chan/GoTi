@@ -5,7 +5,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homepage</title>
+    <title>{{ block "title" .}}{{ end }}</title>
+
     <link rel="icon" href="/static/images/favicon.svg" type="image/x-icon" />
 
     <!-- Eventually we will allow custom Pico themes editing a config file -->
@@ -14,7 +15,7 @@
   </head>
   <body>
     <header>
-      {{template "navigation" .}}
+      {{ template "navigation" .}}
     </header>
 
     <main>
@@ -25,13 +26,14 @@
         </div>
         {{ end }}
 
-        {{ block "content" .}}{{ end }}
+        {{ template "content" .}}
       </div>
     </main>
 
     <footer class="container">
       <div class="legal">
-        <span class="copyright">Copyright &copy;2024 Larry LW Chan</span>
+        <a href="https://github.com/larry-lw-chan">&copy;2024 Larry Chan</a>
+        <a href="/pages/privacy">Privacy Policy</a>
       </div>
     </footer>
 
