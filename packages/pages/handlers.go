@@ -13,20 +13,20 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 	if flash != nil {
 		data["Flash"] = flash
 	}
-	render.Template(w, "pages/home.tmpl", data)
+	render.Template(w, "pages/home.base.tmpl", data)
 }
 
 func AboutPageHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	render.Template(w, "pages/about.tmpl", data)
+	render.Template(w, "pages/about.base.tmpl", data)
 }
 
 func ContactPageHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	render.Template(w, "pages/contact.tmpl", data)
+	render.Template(w, "pages/contact.base.tmpl", data)
 }
 
 func PrivacyPageHandler(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
-	render.Template(w, "pages/privacy.tmpl", data)
+	render.Template(w, "pages/privacy.base.tmpl", data)
 }
