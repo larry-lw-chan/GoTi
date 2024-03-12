@@ -7,19 +7,28 @@ import (
 	"text/template"
 )
 
-const tmplPath = "./templates/"
+// Structs
+type Location struct {
+	TmplPath string
+	Layout   map[string][]string
+}
+
+// Function Variables
+var layout map[string][]string
+var tmplPath string
 
 // Template Cache for storing parsed templates
 var tmplCache = map[string]*template.Template{}
 
-// Layouts for templates
-var layout map[string][]string
+func Layouts(l Location) {
+	tmplPath = l.TmplPath
+	layout = l.Layout
 
-func init() {
-	layout = map[string][]string{
-		"base": {
-			tmplPath + "layout/base.tmpl",
-		},
+	// Append Template Path to Layout
+	for _, path := range layout {
+		for i, file := range path {
+			path[i] = tmplPath + file
+		}
 	}
 }
 

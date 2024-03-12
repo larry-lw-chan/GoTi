@@ -15,6 +15,7 @@ import (
 	"github.com/larry-lw-chan/goti/packages/cookie"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/users"
+	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
 func routes() *chi.Mux {
@@ -53,8 +54,8 @@ func getPort() string {
 	return ":" + port
 }
 
-// Load .env configuration
 func init() {
+	// Load .env configuration
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -62,6 +63,16 @@ func init() {
 }
 
 func main() {
+	// Setup Template Layouts
+	render.Layouts(render.Location{
+		TmplPath: "./templates/",
+		Layout: map[string][]string{
+			"base": {
+				"layout/base.tmpl",
+			},
+		},
+	})
+
 	// Initialize authentication session store
 	cookie.InitializeStore()
 
