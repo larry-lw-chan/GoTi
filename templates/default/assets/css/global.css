@@ -1,0 +1,56 @@
+/* Flash Styling */
+.flash {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.flash.success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.flash.notice {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
+.flash.alert {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.flash.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+/* Form Styling */
+fieldset {
+  margin-bottom: 0;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--pico-contrast-background) inset;
+  -webkit-text-fill-color: var(--pico-contrast-inverse) !important;
+}
+
+/* Form Validation Styling */
+.just-validate-success-field {
+  border-color: #28a745;
+  border-width: 2px;
+}
+
+.just-validate-error-field {
+  border-color: #dc3545;
+  border-width: 2px;
+}
+
+.just-validate-error-label {
+  margin-bottom: var(--pico-spacing);
+}

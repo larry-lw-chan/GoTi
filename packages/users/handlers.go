@@ -4,13 +4,23 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/packages/cookie"
+	"github.com/larry-lw-chan/goti/packages/flash"
+	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]interface{})
+	if f := flash.Get(w, r); f != nil {
+		data["Flash"] = f
+	}
+
 	user := cookie.GetUserSession(r)
 	if auth := user.Authenticated; !auth {
-		w.Write([]byte("You not authenticated"))
+		flash.Set(w, r, flash.ERROR, "Please login to view your profile.")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	w.Write([]byte("User Profile here.  You are authenticated!"))
+
+	// Check if provided password matches
+	render.Template(w, "/users/profile.app.tmpl", data)
 }
