@@ -41,9 +41,9 @@ func routes() *chi.Mux {
 	assetFS := http.FileServer(http.Dir(path + "/assets"))
 	r.Handle("/assets/*", http.StripPrefix("/assets/", assetFS))
 
-	// User File Server for local uploads
-	userFS := http.FileServer(http.Dir("uploads"))
-	r.Handle("/uploads/*", http.StripPrefix("/uploads/", userFS))
+	// Local Upload File Server
+	uploadFS := http.FileServer(http.Dir("uploads"))
+	r.Handle("/uploads/*", http.StripPrefix("/uploads/", uploadFS))
 
 	// Register Package Routes
 	r.Mount("/", pages.Router())
