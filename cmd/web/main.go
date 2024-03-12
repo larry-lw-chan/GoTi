@@ -46,6 +46,30 @@ func routes() *chi.Mux {
 	return r
 }
 
+func loadTemplates() {
+	// Define the path to the templates
+	path := "./templates/default"
+
+	// Override the default template path with user configuration
+	// if os.Getenv("TEMPLATE_PATH") != "" {
+	// 	path = os.Getenv("TEMPLATE_PATH")
+	// 	log.Println(path)
+	// }
+
+	// Setup Template Layouts
+	render.Layouts(render.Location{
+		TmplPath: path,
+		Layout: map[string][]string{
+			"base": {
+				"/layout/base.tmpl",
+			},
+			"app": {
+				"/layout/app.tmpl",
+			},
+		},
+	})
+}
+
 func getPort() string {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -63,17 +87,10 @@ func init() {
 }
 
 func main() {
-	// Setup Template Layouts
-	render.Layouts(render.Location{
-		TmplPath: "./templates/",
-		Layout: map[string][]string{
-			"base": {
-				"layout/base.tmpl",
-			},
-		},
-	})
+	// Load Templates
+	loadTemplates()
 
-	// Initialize authentication session store
+	// Initialize session store
 	cookie.InitializeStore()
 
 	// Connect to the database

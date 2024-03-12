@@ -7,13 +7,13 @@ import (
 	"text/template"
 )
 
-// Structs
+// Struct used to pass template path and layout location
 type Location struct {
 	TmplPath string
 	Layout   map[string][]string
 }
 
-// Function Variables
+// Layout and Template Location
 var layout map[string][]string
 var tmplPath string
 
@@ -35,7 +35,8 @@ func Layouts(l Location) {
 // Templates
 func Template(w http.ResponseWriter, tmplName string, data any) {
 	// get layout from filename Eg. home.base.tmpl -> base
-	filename := strings.Split(tmplName, "/")[1]
+	arr := strings.Split(tmplName, "/")
+	filename := arr[len(arr)-1]
 	layoutName := strings.Split(filename, ".")[1]
 
 	// get template from cache or parse and cache it
