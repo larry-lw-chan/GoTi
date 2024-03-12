@@ -13,22 +13,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Header Styling */
-body > header {
+/* Nav Styling */
+header nav {
   background-color: var(--pico-primary-background);
-  position: fixed;
   width: 100vw;
   height: var(--header-height);
   padding-block: 0;
 }
 
-header > nav {
-  position: relative;
+header .logo {
+  text-align: center;
 }
 
 header .logo img {
-  height: 3.8rem;
-  margin-top: var(--pico-block-spacing-vertical);
+  width: 3rem;
 }
 
 /* Navagation Styling */
