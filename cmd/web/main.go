@@ -18,6 +18,10 @@ import (
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
+// Define the path to the templates
+var path string = "templates/default"
+var port string = ":3000"
+
 func routes() *chi.Mux {
 	// Define Routes Here
 	r := chi.NewRouter()
@@ -33,9 +37,13 @@ func routes() *chi.Mux {
 	// processing should be stopped.
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	// Static File Server
-	fs := http.FileServer(http.Dir("static"))
-	r.Handle("/static/*", http.StripPrefix("/static/", fs))
+	// Asset File Server
+	assetFS := http.FileServer(http.Dir(path + "/assets"))
+	r.Handle("/assets/*", http.StripPrefix("/assets/", assetFS))
+
+	// User File Server for local uploads
+	userFS := http.FileServer(http.Dir("uploads"))
+	r.Handle("/uploads/*", http.StripPrefix("/uploads/", userFS))
 
 	// Register Package Routes
 	r.Mount("/", pages.Router())
@@ -47,15 +55,6 @@ func routes() *chi.Mux {
 }
 
 func loadTemplates() {
-	// Define the path to the templates
-	path := "./templates/default"
-
-	// Override the default template path with user configuration
-	// if os.Getenv("TEMPLATE_PATH") != "" {
-	// 	path = os.Getenv("TEMPLATE_PATH")
-	// 	log.Println(path)
-	// }
-
 	// Setup Template Layouts
 	render.Layouts(render.Location{
 		TmplPath: path,
@@ -70,19 +69,22 @@ func loadTemplates() {
 	})
 }
 
-func getPort() string {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "3000"
-	}
-	return ":" + port
-}
-
+// Load Envrionment Configuration
 func init() {
-	// Load .env configuration
+	// Load .env file
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
+	}
+
+	// Override the default template path with user configuration
+	if os.Getenv("TEMPLATE_PATH") != "" {
+		path = os.Getenv("TEMPLATE_PATH")
+	}
+
+	// Override the default port with user configuration
+	if os.Getenv("PORT") != "" {
+		port = os.Getenv("PORT")
 	}
 }
 
@@ -101,7 +103,6 @@ func main() {
 	r := routes()
 
 	// Start Server
-	port := getPort()
 	fmt.Println("Server is running at " + port)
 	http.ListenAndServe(port, r)
 }

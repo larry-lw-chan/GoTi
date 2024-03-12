@@ -1,0 +1,131 @@
+/* Global Variables */
+:root {
+  --header-height: 5.5rem;
+  --transition-speed: 0.2s;
+}
+
+/* Body Styling */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header Styling */
+body > header {
+  background-color: var(--pico-primary-background);
+  position: fixed;
+  width: 100vw;
+  height: var(--header-height);
+  padding-block: 0;
+}
+
+header > nav {
+  position: relative;
+}
+
+header .logo img {
+  height: 3.8rem;
+  margin-top: var(--pico-block-spacing-vertical);
+}
+
+/* Navagation Styling */
+.hamburger {
+  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
+}
+
+.hamburger .bar1,
+.hamburger .bar2,
+.hamburger .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: var(--pico-primary-inverse);
+  margin: 6px 0;
+  transition: var(--transition-speed);
+}
+
+/* Rotate first bar */
+.change .bar1 {
+  transform: translate(0, 11px) rotate(-45deg);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+  transform: translate(0, -11px) rotate(45deg);
+}
+
+/* Overlay Menu Toggling */
+#primary-nav ul {
+  position: fixed;
+  display: block;
+  background-color: var(--pico-primary-background);
+  margin: 0;
+  padding: var(--header-height) 0 0 2rem;
+  top: 0;
+  left: 100vw;
+  width: 120vw;
+  height: 100vh;
+  z-index: -1;
+  transition: var(--transition-speed);
+}
+
+#primary-nav.change ul {
+  transition: var(--transition-speed);
+  left: 0;
+}
+
+#primary-nav li {
+  display: block;
+  text-align: left;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+#primary-nav li a {
+  color: var(--pico-primary-inverse);
+}
+
+#primary-nav li a:hover {
+  color: var(--pico-primary-hover);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .hamburger {
+    display: None;
+  }
+
+  #primary-nav ul {
+    display: flex;
+    gap: 3vw;
+    position: static;
+    z-index: 0;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  #primary-nav li {
+    display: inline;
+  }
+
+  #primary-nav a {
+    color: white;
+    font-size: 1.1rem;
+  }
+}
+
+/* Main Styling */
+main {
+  margin-top: calc(var(--header-height) + 1rem);
+}
