@@ -36,6 +36,12 @@ header .logo img {
   margin-top: calc(var(--pico-block-spacing-vertical) * 2);
 }
 
+@media (min-width: 768px) {
+  #hamburger {
+    display: None;
+  }
+}
+
 /* Overlay Menu Toggling */
 #primary-nav ul {
   position: fixed;

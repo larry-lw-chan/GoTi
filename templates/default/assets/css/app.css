@@ -56,14 +56,14 @@ header {
 }
 
 @media (min-width: 768px) {
-  #primary-menu li {
+  /* #primary-menu li {
     display: inline;
   }
 
   #primary-menu a {
     color: white;
     font-size: 1.1rem;
-  }
+  } */
 }
 
 /* Hamburger Styling */
