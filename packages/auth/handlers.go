@@ -19,7 +19,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if flash != nil {
 		data["Flash"] = flash
 	}
-	render.Template(w, "auth/login.base.tmpl", data)
+	render.Template(w, "/auth/login.base.tmpl", data)
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {

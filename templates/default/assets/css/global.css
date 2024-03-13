@@ -1,3 +1,39 @@
+/* Hamburger Styling */
+#hamburger {
+  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
+}
+
+#hamburger .bar1,
+#hamburger .bar2,
+#hamburger .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: var(--pico-primary-inverse);
+  margin: 6px 0;
+  transition: var(--transition-speed);
+}
+
+@media (min-width: 768px) {
+  #hamburger {
+    display: None;
+  }
+}
+
+/* Rotate first bar */
+.change .bar1 {
+  transform: translate(0, 11px) rotate(-45deg);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+  transform: translate(0, -11px) rotate(45deg);
+}
+
 /* Flash Styling */
 .flash {
   margin-bottom: 1rem;

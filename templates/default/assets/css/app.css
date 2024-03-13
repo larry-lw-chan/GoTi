@@ -6,9 +6,6 @@
 
 /* Body Styling */
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,48 +26,12 @@ header .logo img {
   width: 3rem;
 }
 
-/* Navagation Styling */
-.hamburger {
-  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
-}
-
-.hamburger .bar1,
-.hamburger .bar2,
-.hamburger .bar3 {
-  width: 35px;
-  height: 5px;
-  background-color: var(--pico-primary-inverse);
-  margin: 6px 0;
-  transition: var(--transition-speed);
-}
-
-/* Rotate first bar */
-.change .bar1 {
-  transform: translate(0, 11px) rotate(-45deg);
-}
-
-/* Fade out the second bar */
-.change .bar2 {
-  opacity: 0;
-}
-
-/* Rotate last bar */
-.change .bar3 {
-  transform: translate(0, -11px) rotate(45deg);
-}
+/* Navigation Styling */
 
 /* Overlay Menu Toggling */
 #primary-nav ul {
   position: fixed;
-  display: block;
-  background-color: var(--pico-primary-background);
-  margin: 0;
-  padding: var(--header-height) 0 0 2rem;
-  top: 0;
-  left: 100vw;
-  width: 120vw;
-  height: 100vh;
-  z-index: -1;
+  bottom: 0;
   transition: var(--transition-speed);
 }
 
@@ -96,10 +57,6 @@ header .logo img {
 }
 
 @media (min-width: 768px) {
-  .hamburger {
-    display: None;
-  }
-
   #primary-nav ul {
     display: flex;
     gap: 3vw;

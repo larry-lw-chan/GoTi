@@ -31,36 +31,6 @@ header .logo img {
   margin-top: var(--pico-block-spacing-vertical);
 }
 
-/* Navagation Styling */
-.hamburger {
-  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
-}
-
-.hamburger .bar1,
-.hamburger .bar2,
-.hamburger .bar3 {
-  width: 35px;
-  height: 5px;
-  background-color: var(--pico-primary-inverse);
-  margin: 6px 0;
-  transition: var(--transition-speed);
-}
-
-/* Rotate first bar */
-.change .bar1 {
-  transform: translate(0, 11px) rotate(-45deg);
-}
-
-/* Fade out the second bar */
-.change .bar2 {
-  opacity: 0;
-}
-
-/* Rotate last bar */
-.change .bar3 {
-  transform: translate(0, -11px) rotate(45deg);
-}
-
 /* Overlay Menu Toggling */
 #primary-nav ul {
   position: fixed;
@@ -98,10 +68,6 @@ header .logo img {
 }
 
 @media (min-width: 768px) {
-  .hamburger {
-    display: None;
-  }
-
   #primary-nav ul {
     display: flex;
     gap: 3vw;

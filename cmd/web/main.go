@@ -54,8 +54,8 @@ func routes() *chi.Mux {
 	return r
 }
 
+// Inject Template Layouts
 func loadTemplates() {
-	// Setup Template Layouts
 	render.Layouts(render.Location{
 		TmplPath: path,
 		Layout: map[string][]string{
