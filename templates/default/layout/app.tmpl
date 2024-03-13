@@ -23,15 +23,35 @@
       </div>
       <nav id="primary-nav">
         <ul class="links">
-          <li><a href="/users/profile">Home</a></li>
-          <li><a href="/#">Search</a></li>
-          <li><a href="/#">Write</a></li>
-          <li><a href="/#">Activity</a></li>
-          <li><a href="/#">Profile</a></li>
+          <li>
+            <a href="/users/profile" alt="home">
+              <box-icon name="home-smile" color="white" type="solid"></box-icon>
+            </a>
+          </li>
+          <li>
+            <a href="/#" alt="search">
+              <box-icon name="search-alt" color="white"></box-icon>
+            </a>
+          </li>
+          <li>
+            <a href="/#" alt="edit">
+              <box-icon name="edit" color="white"></box-icon>
+            </a>
+          </li>
+          <li>
+            <a href="/#" alt="favorite">
+              <box-icon name="heart" color="white" type="solid"></box-icon>
+            </a>
+          </li>
+          <li>
+            <a href="/#" alt="profile">
+              <box-icon name="user" color="white" type="solid"></box-icon>
+            </a>
+          </li>
         </ul>
       </nav>
       <div id="menu">
-        <div class="hamburger">
+        <div id="hamburger">
           <div class="bar1"></div>
           <div class="bar2"></div>
           <div class="bar3"></div>
@@ -62,9 +82,11 @@
     {{ block "style" .}}{{ end }}
 
     <!-- All JS Scripts Here -->
-    <script src="/assets/scripts/global.js"></script>
     <script src="/assets/scripts/htmx.min.js"></script>
+    <script src="/assets/scripts/boxicons.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="/assets/scripts/just-validate.production.min.js"></script>
+    <script src="/assets/scripts/global.js"></script>
     {{ block "script" .}}{{ end }}
   </body>
 </html>
