@@ -11,7 +11,6 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/data"
-	"github.com/larry-lw-chan/goti/packages/auth"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
@@ -39,7 +38,7 @@ func routes() *chi.Mux {
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	// Load Flash Middleware
-	r.Use(flash.CheckIfExist)
+	r.Use(flash.TryGetFlash)
 
 	// Asset File Server
 	assetFS := http.FileServer(http.Dir(path + "/assets"))
@@ -51,8 +50,8 @@ func routes() *chi.Mux {
 
 	// Register Package Routes
 	r.Mount("/", pages.Router())
-	r.Mount("/auth", auth.Router())
-	r.Mount("/users", users.Router())
+	r.Mount("/auth", users.AuthRouter())
+	r.Mount("/users", users.UserRouter())
 
 	// Return the Router
 	return r

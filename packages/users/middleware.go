@@ -15,5 +15,6 @@ func CheckIfAuthenticated(next http.Handler) http.Handler {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			return
 		}
+		next.ServeHTTP(w, r)
 	})
 }

@@ -1,4 +1,4 @@
-package auth
+package users
 
 import (
 	"context"
@@ -8,14 +8,15 @@ import (
 	"github.com/larry-lw-chan/goti/data"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
-	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
-// Authentication Handlers - TODO
+/*************************************************
+* Authenticate Handlers
+*************************************************/
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, "/auth/login.base.tmpl", data)
+	render.Template(w, "/users/login.base.tmpl", data)
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -47,12 +48,8 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	flash := flash.Get(w, r)
-	if flash != nil {
-		data["Flash"] = flash
-	}
-	render.Template(w, "/auth/register.base.tmpl", data)
+	data := r.Context().Value("data").(map[string]interface{})
+	render.Template(w, "/users/register.base.tmpl", data)
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -73,8 +70,8 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	hashPwd := HashPassword([]byte(r.FormValue("password")))
 
 	// Insert new user into database
-	queries := users.New(data.DB)
-	createUser := users.CreateUserParams{
+	queries := New(data.DB)
+	createUser := CreateUserParams{
 		Username:  r.FormValue("username"),
 		Email:     r.FormValue("email"),
 		Password:  hashPwd,
@@ -104,7 +101,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "/auth/forgot-password.base.tmpl", nil)
+	render.Template(w, "/users/forgot-password.base.tmpl", nil)
 }
 
 func TestLoginHandler(w http.ResponseWriter, r *http.Request) {

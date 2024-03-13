@@ -1,20 +1,19 @@
-package auth
+package users
 
 import (
 	"context"
 	"log"
 
 	"github.com/larry-lw-chan/goti/data"
-	"github.com/larry-lw-chan/goti/packages/users"
 	"golang.org/x/crypto/bcrypt"
 )
 
 /*************************************************
 * Authenticate User
 *************************************************/
-func AuthenticateUser(email, password string) (*users.User, bool) {
+func AuthenticateUser(email, password string) (*User, bool) {
 	// Find user by email
-	Queries := users.New(data.DB)
+	Queries := New(data.DB)
 	user, err := Queries.GetUserFromEmail(context.Background(), email)
 	if err != nil {
 		return nil, false
