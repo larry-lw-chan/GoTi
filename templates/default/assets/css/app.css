@@ -26,48 +26,28 @@ header .logo img {
   width: 3rem;
 }
 
-/* Navigation Styling */
-
-/* Overlay Menu Toggling */
-#primary-nav ul {
+/* Primary Navigation - fixed on bottom */
+#primary-nav {
   position: fixed;
-  bottom: 0;
+  bottom: -1px;
+  height: 4rem;
+  background-color: var(--pico-background-color);
+  opacity: 0.9;
   transition: var(--transition-speed);
 }
-
-#primary-nav.change ul {
-  transition: var(--transition-speed);
-  left: 0;
+#primary-nav ul {
+  display: flex;
+  justify-content: space-around;
+  width: 100vw;
 }
 
 #primary-nav li {
-  display: block;
-  text-align: left;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-#primary-nav li a {
-  color: var(--pico-primary-inverse);
-}
-
-#primary-nav li a:hover {
-  color: var(--pico-primary-hover);
-  text-decoration: none;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
-  #primary-nav ul {
-    display: flex;
-    gap: 3vw;
-    position: static;
-    z-index: 0;
-    left: auto;
-    top: auto;
-    width: auto;
-    height: auto;
-    padding: 0;
-    background-color: transparent;
+  #primary-nav ul {`
+    
   }
 
   #primary-nav li {
@@ -79,6 +59,8 @@ header .logo img {
     font-size: 1.1rem;
   }
 }
+
+/* Menu Styling */
 
 /* Main Styling */
 main {
