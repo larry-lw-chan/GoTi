@@ -31,6 +31,11 @@ header .logo img {
   margin-top: var(--pico-block-spacing-vertical);
 }
 
+/* Hamburger Styling - Speicific to base.css */
+#hamburger {
+  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
+}
+
 /* Overlay Menu Toggling */
 #primary-nav ul {
   position: fixed;
@@ -46,7 +51,7 @@ header .logo img {
   transition: var(--transition-speed);
 }
 
-#primary-nav.change ul {
+.change #primary-nav ul {
   transition: var(--transition-speed);
   left: 0;
 }

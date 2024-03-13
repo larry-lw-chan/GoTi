@@ -1,8 +1,4 @@
 /* Hamburger Styling */
-#hamburger {
-  margin-top: calc(var(--pico-block-spacing-vertical) * 2);
-}
-
 #hamburger .bar1,
 #hamburger .bar2,
 #hamburger .bar3 {
