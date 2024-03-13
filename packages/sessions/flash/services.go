@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/larry-lw-chan/goti/packages/cookie"
+	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 )
 
 // Flash Notification Types
