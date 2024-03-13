@@ -9,12 +9,6 @@
   transition: var(--transition-speed);
 }
 
-@media (min-width: 768px) {
-  #hamburger {
-    display: None;
-  }
-}
-
 /* Rotate first bar */
 .change .bar1 {
   transform: translate(0, 11px) rotate(-45deg);
