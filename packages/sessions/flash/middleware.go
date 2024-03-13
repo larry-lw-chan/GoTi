@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func CheckIfExist(next http.Handler) http.Handler {
+func TryGetFlash(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Create a new data map
 		data := make(map[string]interface{})
