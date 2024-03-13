@@ -1,10 +1,10 @@
 package render
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 	"strings"
-	"text/template"
 )
 
 // Struct used to pass template path and layout location
@@ -41,7 +41,6 @@ func Template(w http.ResponseWriter, tmplName string, data any) {
 
 	// get template from cache or parse and cache it
 	tmpl := getCacheTemplate(tmplName, layoutName)
-
 	err := tmpl.ExecuteTemplate(w, layoutName, data)
 	if err != nil {
 		log.Println(err)
@@ -61,8 +60,8 @@ func getCacheTemplate(tmplName string, layoutName string) *template.Template {
 	return tmpl
 }
 
-func getTmplFiles(tmplFile string, key string) []string {
-	tmpl := tmplPath + tmplFile
+func getTmplFiles(tmplName string, key string) []string {
+	tmpl := tmplPath + tmplName
 	tmplFiles := append([]string{tmpl}, layout[key]...)
 	return tmplFiles
 }
