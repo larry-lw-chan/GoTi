@@ -24,12 +24,11 @@ header {
   height: var(--header-height);
   background-color: var(--pico-background-color);
   opacity: var(--menu_opacity);
-  border-radius: 10px; /* Add rounded corners */
 }
 
 /* Logo Styling */
 #logo {
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   text-align: center;
 }
 
@@ -72,7 +71,7 @@ header {
   position: fixed;
   top: 0;
   right: 0;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   margin-right: 1.5rem;
   opacity: 0.5;
 }
@@ -81,9 +80,10 @@ header {
 #secondary-menu {
   display: none;
   position: absolute;
-  right: 0px;
-  background-color: var(--pico-background-color);
+  margin-top: 0.25rem;
+  right: 0.5rem;
   transition: var(--transition-speed);
+  z-index: 1;
 }
 
 .change #secondary-menu {
@@ -93,7 +93,8 @@ header {
 #secondary-menu ul {
   width: 40vw;
   padding: 0;
-  background-color: var(--pico-background-color);
+  background-color: var(--pico-form-element-background-color);
+  border-radius: 10px;
 }
 
 #secondary-menu li {
