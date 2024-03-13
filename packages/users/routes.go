@@ -9,6 +9,8 @@ import (
 func Router() http.Handler {
 	r := chi.NewRouter()
 
+	r.Use(CheckIfAuthenticated)
+
 	r.Get("/profile", ProfileHandler)
 
 	return r

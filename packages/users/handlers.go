@@ -3,8 +3,8 @@ package users
 import (
 	"net/http"
 
-	"github.com/larry-lw-chan/goti/packages/cookie"
-	"github.com/larry-lw-chan/goti/packages/flash"
+	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
+	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 

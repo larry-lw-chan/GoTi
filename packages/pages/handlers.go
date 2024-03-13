@@ -3,16 +3,11 @@ package pages
 import (
 	"net/http"
 
-	"github.com/larry-lw-chan/goti/packages/flash"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
 func HomePageHandler(w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	flash := flash.Get(w, r)
-	if flash != nil {
-		data["Flash"] = flash
-	}
+	data := r.Context().Value("data").(map[string]interface{})
 	render.Template(w, "/pages/home.base.tmpl", data)
 }
 

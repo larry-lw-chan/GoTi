@@ -12,8 +12,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/data"
 	"github.com/larry-lw-chan/goti/packages/auth"
-	"github.com/larry-lw-chan/goti/packages/cookie"
 	"github.com/larry-lw-chan/goti/packages/pages"
+	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
+	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
@@ -36,6 +37,9 @@ func routes() *chi.Mux {
 	// through ctx.Done() that the request has timed out and further
 	// processing should be stopped.
 	r.Use(middleware.Timeout(60 * time.Second))
+
+	// Load Flash Middleware
+	r.Use(flash.CheckIfExist)
 
 	// Asset File Server
 	assetFS := http.FileServer(http.Dir(path + "/assets"))

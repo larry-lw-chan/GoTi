@@ -6,19 +6,15 @@ import (
 	"time"
 
 	"github.com/larry-lw-chan/goti/data"
-	"github.com/larry-lw-chan/goti/packages/cookie"
-	"github.com/larry-lw-chan/goti/packages/flash"
+	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
+	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
 // Authentication Handlers - TODO
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	flash := flash.Get(w, r)
-	if flash != nil {
-		data["Flash"] = flash
-	}
+	data := r.Context().Value("data").(map[string]interface{})
 	render.Template(w, "/auth/login.base.tmpl", data)
 }
 
