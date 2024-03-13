@@ -1,7 +1,8 @@
 /* Global Variables */
 :root {
-  --header-height: 5.5rem;
+  --header-height: 7vh;
   --transition-speed: 0.2s;
+  --menu_opacity: 0.95;
 }
 
 /* Body Styling */
@@ -10,57 +11,111 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Nav Styling */
-header nav {
-  background-color: var(--pico-primary-background);
-  width: 100vw;
-  height: var(--header-height);
+/* Header Styling */
+body > header,
+body > main {
   padding-block: 0;
 }
 
-header .logo {
+header {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: var(--header-height);
+  background-color: var(--pico-background-color);
+  opacity: var(--menu_opacity);
+  border-radius: 10px; /* Add rounded corners */
+}
+
+/* Logo Styling */
+#logo {
+  margin-top: 1rem;
   text-align: center;
 }
 
-header .logo img {
+#logo img {
   width: 3rem;
 }
 
-/* Primary Navigation - fixed on bottom */
-#primary-nav {
+/* Primary Menu - fixed on bottom */
+#primary-menu {
   position: fixed;
   bottom: -1px;
   height: 4rem;
   background-color: var(--pico-background-color);
-  opacity: 0.9;
+  opacity: var(--menu_opacity);
   transition: var(--transition-speed);
 }
-#primary-nav ul {
+#primary-menu ul {
   display: flex;
   justify-content: space-around;
   width: 100vw;
 }
 
-#primary-nav li {
+#primary-menu li {
   padding: 0;
 }
 
 @media (min-width: 768px) {
-  #primary-nav ul {`
-    
-  }
-
-  #primary-nav li {
+  #primary-menu li {
     display: inline;
   }
 
-  #primary-nav a {
+  #primary-menu a {
     color: white;
     font-size: 1.1rem;
   }
 }
 
-/* Menu Styling */
+/* Hamburger Styling */
+#hamburger {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-top: 1rem;
+  margin-right: 1.5rem;
+  opacity: 0.5;
+}
+
+/* Secondary Menu Styling */
+#secondary-menu {
+  display: none;
+  position: absolute;
+  right: 0px;
+  background-color: var(--pico-background-color);
+  transition: var(--transition-speed);
+}
+
+.change #secondary-menu {
+  display: block;
+}
+
+#secondary-menu ul {
+  width: 40vw;
+  padding: 0;
+  background-color: var(--pico-background-color);
+}
+
+#secondary-menu li {
+  border-bottom: var(--pico-secondary) 1px solid;
+  list-style: none;
+}
+
+#secondary-menu li:last-child {
+  border-bottom: none;
+}
+
+#secondary-menu li a {
+  display: block;
+  padding: 1rem;
+  font-weight: 900;
+  text-decoration: none;
+  color: var(--pico-primary-inverse);
+}
+
+#secondary-menu li a:hover {
+  background-color: var(--pico-secondary-hover);
+}
 
 /* Main Styling */
 main {
