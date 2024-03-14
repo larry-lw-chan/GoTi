@@ -11,9 +11,9 @@ import (
 )
 
 const createProfile = `-- name: CreateProfile :one
-INSERT INTO profiles (name, bio, link, avatar, user_id, created_at, updated_at) 
-VALUES (?, ?, ?, ?, ?, ?, ?)
-RETURNING id, name, bio, link, avatar, user_id, created_at, updated_at
+INSERT INTO profiles (name, bio, link, avatar, private, user_id, created_at, updated_at) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+RETURNING id, name, bio, link, avatar, private, user_id, created_at, updated_at
 `
 
 type CreateProfileParams struct {
@@ -21,6 +21,7 @@ type CreateProfileParams struct {
 	Bio       sql.NullString
 	Link      sql.NullString
 	Avatar    sql.NullString
+	Private   sql.NullInt64
 	UserID    int64
 	CreatedAt string
 	UpdatedAt string
@@ -32,6 +33,7 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 		arg.Bio,
 		arg.Link,
 		arg.Avatar,
+		arg.Private,
 		arg.UserID,
 		arg.CreatedAt,
 		arg.UpdatedAt,
@@ -43,6 +45,7 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 		&i.Bio,
 		&i.Link,
 		&i.Avatar,
+		&i.Private,
 		&i.UserID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
@@ -51,7 +54,7 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 }
 
 const getProfileFromUserId = `-- name: GetProfileFromUserId :one
-SELECT id, name, bio, link, avatar, user_id, created_at, updated_at FROM profiles WHERE user_id = ?
+SELECT id, name, bio, link, avatar, private, user_id, created_at, updated_at FROM profiles WHERE user_id = ?
 `
 
 func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profile, error) {
@@ -63,6 +66,7 @@ func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profi
 		&i.Bio,
 		&i.Link,
 		&i.Avatar,
+		&i.Private,
 		&i.UserID,
 		&i.CreatedAt,
 		&i.UpdatedAt,
