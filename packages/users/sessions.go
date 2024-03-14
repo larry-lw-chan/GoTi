@@ -8,7 +8,7 @@ import (
 )
 
 // Auth Session Value key
-const USER_SESSION = "user-session"
+const USER_SESSION string = "user-session"
 
 // User Session Struct
 type UserSession struct {

@@ -14,7 +14,6 @@ import (
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/profiles"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
-	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
@@ -38,9 +37,6 @@ func routes() *chi.Mux {
 	// processing should be stopped.
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	// Load Flash Middleware
-	r.Use(flash.TryGetFlash)
-
 	// Asset File Server
 	assetFS := http.FileServer(http.Dir(path + "/assets"))
 	r.Handle("/assets/*", http.StripPrefix("/assets/", assetFS))
@@ -51,8 +47,8 @@ func routes() *chi.Mux {
 
 	// Register Package Routes
 	r.Mount("/", pages.Router())
-	r.Mount("/auth", users.Router())
-	r.Mount("/users", profiles.Router())
+	r.Mount("/users", users.Router())
+	r.Mount("/profiles", profiles.Router())
 
 	// Return the Router
 	return r
