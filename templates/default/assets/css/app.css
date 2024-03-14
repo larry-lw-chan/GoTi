@@ -78,16 +78,20 @@ header {
 
 /* Secondary Menu Styling */
 #secondary-menu {
-  display: none;
+  transition: var(--transition-speed);
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
   position: absolute;
   margin-top: 0.25rem;
   right: 0.5rem;
-  transition: var(--transition-speed);
   z-index: 1;
 }
 
 .change #secondary-menu {
-  display: block;
+  visibility: visible;
+  height: auto;
+  opacity: 1;
 }
 
 #secondary-menu ul {
