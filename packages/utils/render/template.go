@@ -62,6 +62,6 @@ func getCacheTemplate(tmplName string, layoutName string) *template.Template {
 
 func getTmplFiles(tmplName string, key string) []string {
 	tmpl := tmplPath + tmplName
-	tmplFiles := append([]string{tmpl}, layout[key]...)
+	tmplFiles := append(layout[key], tmpl)
 	return tmplFiles
 }
