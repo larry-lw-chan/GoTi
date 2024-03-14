@@ -63,12 +63,15 @@ func loadTemplates() {
 				"/layout/base.tmpl",
 				"/layout/partials/_flash.tmpl",
 				"/layout/partials/_header.base.tmpl",
+				"/layout/partials/_footer.base.tmpl",
+				"/layout/partials/_javascript.base.tmpl",
 			},
 			"app": {
 				"/layout/app.tmpl",
 				"/layout/partials/_flash.tmpl",
 				"/layout/partials/_header.app.tmpl",
 				"/layout/partials/_primary.app.tmpl",
+				"/layout/partials/_javascript.app.tmpl",
 			},
 		},
 	})
