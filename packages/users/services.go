@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/database"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -13,7 +13,7 @@ import (
 *************************************************/
 func AuthenticateUser(email, password string) (*User, bool) {
 	// Find user by email
-	Queries := New(data.DB)
+	Queries := New(database.DB)
 	user, err := Queries.GetUserFromEmail(context.Background(), email)
 	if err != nil {
 		return nil, false

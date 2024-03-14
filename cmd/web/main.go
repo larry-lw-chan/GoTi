@@ -10,7 +10,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
-	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
@@ -99,7 +99,7 @@ func main() {
 	cookie.InitializeStore()
 
 	// Connect to the database
-	db := data.Connect()
+	db := database.Connect()
 	defer db.Close() // Defer close the database connection
 
 	// Load Routes

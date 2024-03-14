@@ -1,7 +1,10 @@
 {{ define "title" }}Profile Page{{ end }}
 
 {{ define "content" }}
-<h1>User profile here</h1>
+<div id="profile">
+  <h1>{{.User.Username}}</h1>
+</div>
+
 <p>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est possimus ipsam
   non, laborum, expedita pariatur aperiam recusandae corporis adipisci numquam

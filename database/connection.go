@@ -1,4 +1,4 @@
-package data
+package database
 
 import (
 	"database/sql"
@@ -13,7 +13,7 @@ var DB *sql.DB
 
 func Connect() *sql.DB {
 	// Connect Database
-	db, err := sql.Open("sqlite3", "./data/sqlite3.db?mode=rwc&_journal_mode=WAL")
+	db, err := sql.Open("sqlite3", "./database/sqlite3.db?mode=rwc&_journal_mode=WAL")
 	if err != nil {
 		log.Fatal(err)
 	}
