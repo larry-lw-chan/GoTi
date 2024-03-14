@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/larry-lw-chan/goti/data"
+	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
@@ -70,7 +70,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	hashPwd := HashPassword([]byte(r.FormValue("password")))
 
 	// Insert new user into database
-	queries := New(data.DB)
+	queries := New(database.DB)
 	createUser := CreateUserParams{
 		Username:  r.FormValue("username"),
 		Email:     r.FormValue("email"),
