@@ -14,6 +14,7 @@ type Profile struct {
 	Bio       sql.NullString
 	Link      sql.NullString
 	Avatar    sql.NullString
+	Private   sql.NullInt64
 	UserID    int64
 	CreatedAt string
 	UpdatedAt string
