@@ -1,7 +1,79 @@
 {{ define "title" }}Edit Profile{{ end }}
 
-{{ define "logo" }}dsds{{ end }}
+{{ define "primary_outer" }}
+<div style="display: none"></div>
+{{ end }}
+
+{{ define "header_inner" }}
+<div class="box">
+  <a href="/profiles/show">Cancel</a>
+</div>
+<div class="box">
+  <strong>Edit Profile</strong>
+</div>
+<div class="box">
+  <a href="#">Done</a>
+</div>
+{{ end }}
 
 {{ define "content" }}
-<div>Edit Profile</div>
+<article>
+  <form action="#" method="POST" id="profile__form">
+    <fieldset>
+      <label for="name">Name</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        placeholder="Please enter name"
+        aria-label="name"
+      />
+    </fieldset>
+    <fieldset>
+      <label for="bio">Bio</label>
+      <input
+        type="text"
+        name="bio"
+        id="bio"
+        placeholder="Write bio"
+        aria-label="bio"
+      />
+    </fieldset>
+    <fieldset>
+      <label for="bio">Link</label>
+      <input
+        type="text"
+        name="link"
+        id="link"
+        placeholder="Add link"
+        aria-label="bio"
+      />
+    </fieldset>
+  </form>
+</article>
+{{ end }}
+
+{{ define "style" }}
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--pico-secondary-border);
+  }
+  .box {
+    padding: 1rem;
+  }
+
+  .box a {
+    text-decoration: none;
+  }
+
+  .box strong {
+    font-size: 1rem;
+  }
+
+  article {
+    padding: 1.5rem;
+  }
+</style>
 {{ end }}

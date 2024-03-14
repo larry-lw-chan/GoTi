@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
-INSERT INTO profiles (name, bio, link, avatar, user_id, created_at, updated_at) 
-VALUES('Testy One', 'I am a test user', 'www.test.com', '', 1, UNIXEPOCH(), UNIXEPOCH());
+INSERT INTO profiles (name, bio, link, avatar, private, user_id, created_at, updated_at) 
+VALUES('Testy One', 'I am a test user', 'www.test.com', '', 0, 1, UNIXEPOCH(), UNIXEPOCH());
 -- +goose StatementEnd
 
 -- +goose Down
