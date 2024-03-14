@@ -15,66 +15,12 @@
     <link rel="stylesheet" href="/assets/css/app.css" />
   </head>
   <body>
-    <header>
-      <div id="logo">
-        <a href="/users/profile">
-          <img src="/assets/images/logoIcon.svg" alt="Logo" />
-        </a>
-      </div>
-      <div id="hamburger">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </div>
-      <div id="secondary-menu">
-        <ul class="links">
-          <li><a href="#">Appearance</a></li>
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Saved</a></li>
-          <li><a href="#">Your likes</a></li>
-          <li><a href="/users/logout">Log Out</a></li>
-        </ul>
-      </div>
-    </header>
-
-    <nav id="primary-menu">
-      <ul class="links">
-        <li>
-          <a href="/users/profile" alt="home">
-            <box-icon name="home-smile" color="white" type="solid"></box-icon>
-          </a>
-        </li>
-        <li>
-          <a href="/#" alt="search">
-            <box-icon name="search-alt" color="white"></box-icon>
-          </a>
-        </li>
-        <li>
-          <a href="/#" alt="edit">
-            <box-icon name="edit" color="white"></box-icon>
-          </a>
-        </li>
-        <li>
-          <a href="/#" alt="favorite">
-            <box-icon name="heart" color="white" type="solid"></box-icon>
-          </a>
-        </li>
-        <li>
-          <a href="/#" alt="profile">
-            <box-icon name="user" color="white" type="solid"></box-icon>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <header>{{ block "header" .}}{{ end }}</header>
+    <nav id="primary-menu">{{ block "primary" .}}{{ end }}</nav>
 
     <main>
       <div class="container">
-        {{ if .Flash.Message }}
-        <div class="flash {{ .Flash.Type }}">
-          {{ .Flash.Message }}
-        </div>
-        {{ end }}
-
+        {{ template "flash" .}}
         {{ template "content" .}}
       </div>
     </main>

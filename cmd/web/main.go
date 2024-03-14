@@ -61,9 +61,14 @@ func loadTemplates() {
 		Layout: map[string][]string{
 			"base": {
 				"/layout/base.tmpl",
+				"/layout/partials/_flash.tmpl",
+				"/layout/partials/_header.base.tmpl",
 			},
 			"app": {
 				"/layout/app.tmpl",
+				"/layout/partials/_flash.tmpl",
+				"/layout/partials/_header.app.tmpl",
+				"/layout/partials/_primary.app.tmpl",
 			},
 		},
 	})

@@ -15,36 +15,11 @@
     <link rel="stylesheet" href="/assets/css/base.css" />
   </head>
   <body>
-    <header>
-      <nav class="container">
-        <div class="logo">
-          <a href="/">
-            <img src="/assets/images/logo.svg" alt="Logo" />
-          </a>
-        </div>
-        <div id="primary-nav">
-          <div id="hamburger">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-          </div>
-          <ul class="links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/pages/about">About</a></li>
-            <li><a href="/pages/contact">Contact</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <header>{{ block "header" .}}{{ end }}</header>
 
     <main>
       <div class="container">
-        {{ if .Flash.Message }}
-        <div class="flash {{ .Flash.Type }}">
-          {{ .Flash.Message }}
-        </div>
-        {{ end }}
-
+        {{ template "flash" .}}
         {{ template "content" .}}
       </div>
     </main>
