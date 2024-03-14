@@ -95,6 +95,7 @@ header {
 }
 
 #secondary-menu ul {
+  min-width: 10rem;
   width: 30vw;
   padding: 0;
   background-color: var(--pico-form-element-background-color);

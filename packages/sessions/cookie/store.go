@@ -12,7 +12,7 @@ import (
 
 // Store and Session keys
 const (
-	STORE = "cookie-store"
+	STORE string = "cookie-store"
 )
 
 // Session store

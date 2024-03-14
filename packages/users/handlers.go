@@ -29,7 +29,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 			message += err.Error() + "<br />"
 		}
 		flash.Set(w, r, flash.ERROR, message)
-		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 		return
 	}
 
@@ -39,10 +39,11 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Check if provided password matches
 	if isAuthenticated {
 		CreateUserSession(w, r, user)
-		http.Redirect(w, r, "/users/profile", http.StatusSeeOther)
+		flash.Set(w, r, flash.SUCCESS, "You have successfully logged in!")
+		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 	} else {
 		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
-		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
 	}
 }
 
@@ -62,7 +63,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 			message += err.Error() + "<br />"
 		}
 		flash.Set(w, r, flash.ERROR, message)
-		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
+		http.Redirect(w, r, "/users/register", http.StatusSeeOther)
 	}
 
 	// Generate Hashed Password
@@ -86,16 +87,15 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	if isAuthenticated {
 		flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
 		CreateUserSession(w, r, user)
-		http.Redirect(w, r, "/users/profile", http.StatusSeeOther)
+		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 	} else {
 		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
-		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
+		http.Redirect(w, r, "/users/register", http.StatusSeeOther)
 	}
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	DeleteUserSession(w, r)
-	flash.Set(w, r, flash.SUCCESS, "You are successfully logged out")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 

@@ -10,10 +10,10 @@ import (
 
 // Flash Notification Types
 const (
-	SUCCESS = "success"
-	NOTICE  = "notice"
-	ALERT   = "alert"
-	ERROR   = "error"
+	SUCCESS string = "success"
+	NOTICE  string = "notice"
+	ALERT   string = "alert"
+	ERROR   string = "error"
 )
 
 type Flash struct {
@@ -26,17 +26,21 @@ func init() {
 }
 
 func Get(w http.ResponseWriter, r *http.Request) *Flash {
-	session, _ := cookie.Store.Get(r, cookie.STORE)
+	session, err := cookie.Store.Get(r, cookie.STORE)
+	if err != nil {
+		log.Println(err)
+		return nil
+	}
 
 	// Get flash value
 	flashes := session.Flashes()
 	if len(flashes) == 0 {
-		return &Flash{}
+		return nil
 	}
 	flash := flashes[0].(Flash)
 
 	// Save the session
-	err := session.Save(r, w)
+	err = session.Save(r, w)
 	if err != nil {
 		log.Println(err)
 	}
@@ -45,12 +49,19 @@ func Get(w http.ResponseWriter, r *http.Request) *Flash {
 }
 
 func Set(w http.ResponseWriter, r *http.Request, notice string, message string) {
-	session, _ := cookie.Store.Get(r, cookie.STORE)
+	// Get the session
+	session, err := cookie.Store.Get(r, cookie.STORE)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	// Add a flash message
 	flash := Flash{Type: notice, Message: message}
 	session.AddFlash(flash)
 
 	// Save the session
-	err := session.Save(r, w)
+	err = session.Save(r, w)
 	if err != nil {
 		log.Println(err)
 	}

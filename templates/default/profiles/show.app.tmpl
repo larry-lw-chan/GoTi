@@ -1,0 +1,84 @@
+{{ define "title" }}Profile Page{{ end }}
+
+{{ define "content" }}
+<div id="profile">
+  <div class="left">
+    <h2>{{.Profile.Name.String}}</h2>
+    <h5>{{.Username}}</h5>
+    <div id="follower">
+      <div class="avatars"></div>
+      <p>0 Followers</p>
+    </div>
+  </div>
+  <div class="right">
+    <div class="avatar">
+      {{ if .Profile.Avatar.Valid }}
+      <img src="{{.Profile.Avatar.String}}" alt="{{.Profile.Name.String}}" />
+      {{ else }}
+      <div class="avatar-placeholder">
+        <box-icon name="user" color="white" type="solid" size="5rem"></box-icon>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+<button class="edit-profile">Edit Profile</button>
+
+{{ end }}
+
+{{ define "style" }}
+<style>
+  #profile {
+    height: 8rem;
+    margin-bottom: 1rem;
+  }
+  #profile::after {
+    content: "";
+    clear: both;
+  }
+  #profile .left {
+    float: left;
+    width: 50%;
+  }
+
+  #follower {
+    margin-top: 1.2rem;
+  }
+
+  #profile .right {
+    float: right;
+    width: 50%;
+  }
+  #profile h2,
+  h5 {
+    margin-bottom: 0.5rem;
+  }
+
+  .avatar-placeholder {
+    float: right;
+    width: 4.5rem;
+    height: 4.5rem;
+    background-color: var(--pico-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .avatar-placeholder box-icon {
+    margin-top: 1.6rem;
+  }
+
+  .edit-profile {
+    width: 100%;
+    background-color: var(--pico-muted-border-color);
+    font-weight: 900;
+    border-color: var(--pico-secondary-border);
+  }
+</style>
+{{ end }}
+
+{{ define "script" }}
+
+{{ end }}
