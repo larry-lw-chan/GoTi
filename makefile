@@ -10,20 +10,20 @@ compile:
 # Database Migrations, creation and seeding
 migrate-up:
 	GOOSE_DRIVER=sqlite3 \
-	GOOSE_DBSTRING=./data/sqlite3.db \
-	GOOSE_MIGRATION_DIR=./data/migrations/ \
+	GOOSE_DBSTRING=./database/sqlite3.db \
+	GOOSE_MIGRATION_DIR=./database/migrations/ \
 	goose up
 
 migrate-down:
 	GOOSE_DRIVER=sqlite3 \
-	GOOSE_DBSTRING=./data/sqlite3.db \
-	GOOSE_MIGRATION_DIR=./data/migrations/ \
+	GOOSE_DBSTRING=./database/sqlite3.db \
+	GOOSE_MIGRATION_DIR=./database/migrations/ \
 	goose down
 
 seed:
 	GOOSE_DRIVER=sqlite3 \
-	GOOSE_DBSTRING=./data/sqlite3.db \
-	GOOSE_MIGRATION_DIR=./data/seed/ \
+	GOOSE_DBSTRING=./database/sqlite3.db \
+	GOOSE_MIGRATION_DIR=./database/seed/ \
 	goose -no-versioning up
 
 db:

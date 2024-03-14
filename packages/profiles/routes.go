@@ -11,7 +11,6 @@ import (
 func Router() http.Handler {
 	r := chi.NewRouter()
 	r.Use(middleware.CheckIfAuthenticated)
-	r.Get("/", ProfileHandler)
-
+	r.Get("/profile", ProfileHandler)
 	return r
 }
