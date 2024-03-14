@@ -18,5 +18,6 @@ func Router() http.Handler {
 
 	// Profile Routes
 	r.Get("/show", ShowHandler)
+	r.Get("/edit", EditHandler)
 	return r
 }
