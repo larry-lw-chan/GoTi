@@ -33,7 +33,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	)
 	var i User
 	err := row.Scan(
-		&i.ID,
+		&i.Id,
 		&i.Username,
 		&i.Email,
 		&i.Password,
@@ -51,7 +51,7 @@ func (q *Queries) GetUserFromEmail(ctx context.Context, email string) (User, err
 	row := q.db.QueryRowContext(ctx, getUserFromEmail, email)
 	var i User
 	err := row.Scan(
-		&i.ID,
+		&i.Id,
 		&i.Username,
 		&i.Email,
 		&i.Password,
@@ -69,7 +69,7 @@ func (q *Queries) GetUserFromUsername(ctx context.Context, username string) (Use
 	row := q.db.QueryRowContext(ctx, getUserFromUsername, username)
 	var i User
 	err := row.Scan(
-		&i.ID,
+		&i.Id,
 		&i.Username,
 		&i.Email,
 		&i.Password,

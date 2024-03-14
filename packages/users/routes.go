@@ -15,17 +15,5 @@ func AuthRouter() http.Handler {
 	r.Post("/register", RegisterPostHandler)
 	r.Get("/logout", LogoutHandler)
 	r.Get("/forgot-password", ForgotPasswordHandler)
-
-	// Debugging Purposes Only
-	r.Get("/test", TestLoginHandler)
-	return r
-}
-
-// Protected Routes
-func UserRouter() http.Handler {
-	r := chi.NewRouter()
-	r.Use(CheckIfAuthenticated)
-	r.Get("/profile", ProfileHandler)
-
 	return r
 }

@@ -12,6 +12,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/packages/pages"
+	"github.com/larry-lw-chan/goti/packages/profiles"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 	"github.com/larry-lw-chan/goti/packages/users"
@@ -51,7 +52,7 @@ func routes() *chi.Mux {
 	// Register Package Routes
 	r.Mount("/", pages.Router())
 	r.Mount("/auth", users.AuthRouter())
-	r.Mount("/users", users.UserRouter())
+	r.Mount("/users", profiles.Router())
 
 	// Return the Router
 	return r

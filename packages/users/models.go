@@ -7,7 +7,7 @@ package users
 import ()
 
 type User struct {
-	ID        int64
+	Id        int64
 	Username  string
 	Email     string
 	Password  string

@@ -6,5 +6,5 @@ VALUES('test', 'test@test.com', '$2a$04$Re8k56ax4pDhpqxUbbOLdO6PtmUBFc6Lmv7/Pld9
 
 -- +goose Down
 -- +goose StatementBegin
-DELETE FROM users WHERE id = 0;
+DELETE FROM users WHERE id = 1;
 -- +goose StatementEnd

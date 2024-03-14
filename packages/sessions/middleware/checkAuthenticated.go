@@ -1,4 +1,4 @@
-package users
+package middleware
 
 import (
 	"net/http"
