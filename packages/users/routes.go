@@ -7,7 +7,7 @@ import (
 )
 
 // Authentication Routes
-func AuthRouter() http.Handler {
+func Router() http.Handler {
 	r := chi.NewRouter()
 	r.Get("/login", LoginHandler)
 	r.Post("/login", LoginPostHandler)
