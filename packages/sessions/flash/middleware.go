@@ -2,7 +2,6 @@ package flash
 
 import (
 	"context"
-	"log"
 	"net/http"
 )
 
@@ -12,9 +11,7 @@ func TryGetFlash(next http.Handler) http.Handler {
 		data := make(map[string]interface{})
 
 		// Get the flash message
-		flash := Get(w, r)
-		log.Println(flash)
-		if flash != nil {
+		if flash := Get(w, r); flash != nil {
 			data["Flash"] = flash
 		}
 
