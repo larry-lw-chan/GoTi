@@ -15,29 +15,30 @@
     <link rel="stylesheet" href="/assets/css/base.css" />
   </head>
   <body>
-    <header>{{ block "header" .}}{{ end }}</header>
+    {{ block "header_outer" .}}
+    <header>{{ template "header_inner" .}}</header>
+    {{ end }}
 
+    {{ block "main" .}}
     <main>
       <div class="container">
         {{ template "flash" .}}
         {{ template "content" .}}
       </div>
     </main>
+    {{ end }}
 
+    {{ block "footer_outer" .}}
     <footer class="container">
-      <div class="legal">
-        <a href="https://github.com/larry-lw-chan">&copy;2024 Larry Chan</a>
-        <a href="/pages/privacy">Privacy Policy</a>
-      </div>
+      {{ template "footer_inner" .}}
     </footer>
+    {{ end }}
 
     <!-- All Style Scripts Here -->
     {{ block "style" .}}{{ end }}
 
     <!-- All JS Scripts Here -->
-    <script src="/assets/scripts/global.js"></script>
-    <script src="/assets/scripts/htmx.min.js"></script>
-    <script src="/assets/scripts/just-validate.production.min.js"></script>
+    {{ template "libraries" . }}
     {{ block "script" .}}{{ end }}
   </body>
 </html>

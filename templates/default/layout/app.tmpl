@@ -15,24 +15,28 @@
     <link rel="stylesheet" href="/assets/css/app.css" />
   </head>
   <body>
-    <header>{{ block "header" .}}{{ end }}</header>
-    <nav id="primary-menu">{{ block "primary" .}}{{ end }}</nav>
+    {{ block "header_outer" .}}
+    <header>{{ template "header_inner" .}}</header>
+    {{ end }}
 
+    {{ block "primary_outer" .}}
+    <nav id="primary-menu">{{ template "primary_inner" .}}</nav>
+    {{ end }}
+
+    {{ block "main" .}}
     <main>
       <div class="container">
         {{ template "flash" .}}
         {{ template "content" .}}
       </div>
     </main>
+    {{ end }}
 
     <!-- All Style Scripts Here -->
     {{ block "style" .}}{{ end }}
 
     <!-- All JS Scripts Here -->
-    <script src="/assets/scripts/htmx.min.js"></script>
-    <script src="/assets/scripts/boxicons.js"></script>
-    <script src="/assets/scripts/just-validate.production.min.js"></script>
-    <script src="/assets/scripts/global.js"></script>
+    {{ template "libraries" . }}
     {{ block "script" .}}{{ end }}
   </body>
 </html>
