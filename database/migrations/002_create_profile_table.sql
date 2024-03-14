@@ -5,7 +5,7 @@
 -- +goose Up
 -- +goose StatementBegin
 CREATE TABLE profiles (
-    "id" 	            INTEGER PRIMARY KEY,
+    "id" 	            INTEGER NOT NULL UNIQUE,
     "name"				TEXT,
 	"bio"				TEXT,
 	"link"				TEXT,
@@ -13,6 +13,7 @@ CREATE TABLE profiles (
 	"user_id"			INTEGER UNIQUE NOT NULL,
 	"created_at"  		TEXT NOT NULL,
 	"updated_at"	    TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("user_id") REFERENCES "users"("id")
 );
 

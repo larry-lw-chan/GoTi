@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
-	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
+	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
@@ -13,7 +13,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
 	// Find user by username
-	userSession := cookie.GetUserSession(r)
+	userSession := users.GetUserSession(r)
 	queries := New(database.DB)
 
 	profile, err := queries.GetProfileFromUserId(context.Background(), 1)
@@ -25,5 +25,5 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	data["Profile"] = profile
 
 	// Load user into profile
-	render.Template(w, "/users/profile.app.tmpl", data)
+	render.Template(w, "/profiles/profile.app.tmpl", data)
 }
