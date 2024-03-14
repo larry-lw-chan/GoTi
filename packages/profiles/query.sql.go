@@ -11,17 +11,19 @@ import (
 )
 
 const createProfile = `-- name: CreateProfile :one
-INSERT INTO profiles (name, bio, link, avatar, user_id) 
-VALUES (?, ?, ?, ?, ?)
+INSERT INTO profiles (name, bio, link, avatar, user_id, created_at, updated_at) 
+VALUES (?, ?, ?, ?, ?, ?, ?)
 RETURNING id, name, bio, link, avatar, user_id, created_at, updated_at
 `
 
 type CreateProfileParams struct {
-	Name   sql.NullString
-	Bio    sql.NullString
-	Link   sql.NullString
-	Avatar sql.NullString
-	UserID int64
+	Name      sql.NullString
+	Bio       sql.NullString
+	Link      sql.NullString
+	Avatar    sql.NullString
+	UserID    int64
+	CreatedAt string
+	UpdatedAt string
 }
 
 func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (Profile, error) {
@@ -31,6 +33,8 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 		arg.Link,
 		arg.Avatar,
 		arg.UserID,
+		arg.CreatedAt,
+		arg.UpdatedAt,
 	)
 	var i Profile
 	err := row.Scan(

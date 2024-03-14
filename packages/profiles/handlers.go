@@ -2,7 +2,9 @@ package profiles
 
 import (
 	"context"
+	"database/sql"
 	"net/http"
+	"time"
 
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/packages/users"
@@ -12,14 +14,22 @@ import (
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
-	// Find user by username
+	// Get user session information
 	userSession := users.GetUserSession(r)
 	queries := New(database.DB)
 
-	profile, err := queries.GetProfileFromUserId(context.Background(), 1)
+	// Get profile information or create if not exist
+	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.Id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		profileParem := CreateProfileParams{
+			Name:      sql.NullString{String: "please update your name", Valid: true},
+			Bio:       sql.NullString{String: "please add a bio", Valid: true},
+			Link:      sql.NullString{String: "please add your site link", Valid: true},
+			UserID:    userSession.Id,
+			CreatedAt: time.Now().String(),
+			UpdatedAt: time.Now().String(),
+		}
+		profile, _ = queries.CreateProfile(context.Background(), profileParem)
 	}
 	data["Username"] = userSession.Username
 	data["Profile"] = profile
