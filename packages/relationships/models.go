@@ -2,11 +2,11 @@
 // versions:
 //   sqlc v1.25.0
 
-package followers
+package relationships
 
 import ()
 
-type Follower struct {
+type Relationship struct {
 	ID         int64
 	FollowerID int64
 	FolloweeID int64
