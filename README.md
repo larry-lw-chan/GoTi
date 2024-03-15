@@ -58,6 +58,6 @@ Goti also makes heavy use of [SQLC](https://sqlc.dev/) for generating database q
 make package=users sqlc
 ```
 
-License
+## License
 Copyright (C) 2024 Larry LW Chan
 
