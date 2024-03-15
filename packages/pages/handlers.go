@@ -27,5 +27,7 @@ func PrivacyPageHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "/pages/not_found.base.tmpl", nil)
+	data := r.Context().Value("data").(map[string]interface{})
+	data["Code"] = http.StatusText(http.StatusNotFound)
+	render.Template(w, "/pages/not_found.base.tmpl", data)
 }
