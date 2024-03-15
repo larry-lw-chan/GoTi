@@ -6,6 +6,10 @@ import (
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
+func CreateThreadHandler(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, "/threads/create_thread.app.tmpl", nil)
+}
+
 /********************************************************
 * Partials
 *********************************************************/
