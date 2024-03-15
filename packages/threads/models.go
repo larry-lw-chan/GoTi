@@ -8,6 +8,13 @@ import (
 	"database/sql"
 )
 
+type Hashtag struct {
+	ID        int64
+	Hashtag   string
+	CreatedAt string
+	UpdatedAt string
+}
+
 type Like struct {
 	ID        int64
 	ThreadID  sql.NullInt64
@@ -25,4 +32,12 @@ type Thread struct {
 	CreatedAt string
 	UpdatedAt string
 	Foreign   interface{}
+}
+
+type ThreadsHashtag struct {
+	ID        int64
+	ThreadID  sql.NullInt64
+	HashtagID int64
+	CreatedAt string
+	UpdatedAt string
 }
