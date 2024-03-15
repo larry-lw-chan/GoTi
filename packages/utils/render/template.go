@@ -33,25 +33,9 @@ func Layouts(l Location) {
 	}
 }
 
-// Partials
-func Partial(w http.ResponseWriter, tmplName string, data any) {
-	// get template from cache
-	tmpl, ok := tmplCache[tmplName]
-
-	// if not available, parse and cache partial
-	if !ok {
-		tmplFile := tmplPath + tmplName
-		tmpl = template.Must(template.ParseFiles(tmplFile))
-		tmplCache[tmplName] = tmpl
-	}
-	// Execute partial
-	err := tmpl.Execute(w, data)
-	if err != nil {
-		log.Println(err)
-	}
-}
-
-// Templates
+/****************************************************
+* render Template
+****************************************************/
 func Template(w http.ResponseWriter, tmplName string, data any) {
 	// get layout from filename Eg. home.base.tmpl -> base
 	arr := strings.Split(tmplName, "/")
@@ -79,4 +63,24 @@ func getTmplFiles(tmplName string, key string) []string {
 	tmpl := tmplPath + tmplName
 	tmplFiles := append(layout[key], tmpl)
 	return tmplFiles
+}
+
+/****************************************************
+* render Partial
+****************************************************/
+func Partial(w http.ResponseWriter, tmplName string, data any) {
+	// get template from cache
+	tmpl, ok := tmplCache[tmplName]
+
+	// if not available, parse and cache partial
+	if !ok {
+		tmplFile := tmplPath + tmplName
+		tmpl = template.Must(template.ParseFiles(tmplFile))
+		tmplCache[tmplName] = tmpl
+	}
+	// Execute partial
+	err := tmpl.Execute(w, data)
+	if err != nil {
+		log.Println(err)
+	}
 }

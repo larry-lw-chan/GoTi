@@ -17,6 +17,8 @@ func Router() http.Handler {
 	r.Use(middleware.CheckIfAuthenticated)
 
 	// Profile Routes
-	r.Get("/userthreads", UserThreadsHandler)
+	r.Get("/user-threads", UserThreadsHandler)
+	r.Get("/user-replies", UserRepliesHandler)
+	r.Get("/user-repost", UserRepostHandler)
 	return r
 }
