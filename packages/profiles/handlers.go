@@ -60,3 +60,7 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 	// Load user into profile
 	render.Template(w, "/profiles/edit.app.tmpl", data)
 }
+
+func EditPostHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
+}

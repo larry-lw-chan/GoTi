@@ -18,7 +18,7 @@
 
 {{ define "content" }}
 <article>
-  <form action="#" method="POST" id="profile__form">
+  <form action="/profiles/edit" method="POST" id="profile__form">
     <fieldset>
       <label for="name">Name</label>
       <input
@@ -49,6 +49,19 @@
         aria-label="bio"
       />
     </fieldset>
+    <fieldset class="private-profile">
+      <span>Private Profile</span>
+      <input
+        type="checkbox"
+        name="private"
+        id="private"
+        class="checkbox"
+        aria-label="private"
+      />
+      <label for="private" class="toggle"></label>
+    </fieldset>
+    <br />
+    <button>Done</button>
   </form>
 </article>
 {{ end }}
@@ -74,6 +87,68 @@
 
   article {
     padding: 1.5rem;
+  }
+
+  /* Fieldset Styling for Private Profile */
+  .private-profile {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #profile__form button {
+    width: 100%;
+  }
+
+  /* toggle in label designing */
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    background-color: var(--pico-secondary-hover-border);
+    border-radius: 30px;
+    border: 0px solid gray;
+  }
+
+  /* After slide changes */
+  .toggle:after {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--pico-form-element-border-color);
+    top: 0px;
+    left: 0px;
+    transition: all 0.5s;
+  }
+
+  /* Checkbox checked effect */
+  .checkbox:checked + .toggle::after {
+    left: 25px;
+  }
+
+  /* Checkbox checked toggle label bg color */
+  .checkbox:checked + .toggle {
+    background-color: var(--pico-color);
+  }
+
+  /* Checkbox vanished */
+  .checkbox {
+    display: none;
+  }
+
+  /* Switches */
+  .toggle:after {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--pico-form-element-border-color);
+    top: 0px;
+    left: 0px;
+    transition: all 0.5s;
   }
 </style>
 {{ end }}
