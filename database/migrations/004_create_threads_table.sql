@@ -11,9 +11,22 @@ CREATE TABLE threads (
 	FOREIGN KEY("thread_id") 	REFERENCES "threads"("id")
 	FOREIGN KEY("user_id") 		REFERENCES "users"("id")
 );
+
+CREATE TABLE likes (
+    "id" 	            INTEGER NOT NULL UNIQUE,
+	"thread_id"			INTEGER,
+	"user_id"			INTEGER NOT NULL,
+	"created_at"  		TEXT NOT NULL,
+	"updated_at"	    TEXT NOT NULL,
+
+	PRIMARY KEY("id" AUTOINCREMENT),
+	FOREIGN KEY("thread_id") 	REFERENCES "threads"("id")
+	FOREIGN KEY("user_id") 		REFERENCES "users"("id")
+);
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
+DROP TABLE likes;
 DROP TABLE threads;
 -- +goose StatementEnd

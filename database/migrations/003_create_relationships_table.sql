@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE followers (
+CREATE TABLE relationships (
     "id" 	            INTEGER NOT NULL UNIQUE,
     "follower_id"		INTEGER NOT NULL,
 	"followee_id"		INTEGER NOT NULL,  
@@ -14,5 +14,5 @@ CREATE TABLE followers (
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE followers;
+DROP TABLE relationships;
 -- +goose StatementEnd

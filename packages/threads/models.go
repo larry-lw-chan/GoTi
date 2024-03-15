@@ -8,6 +8,15 @@ import (
 	"database/sql"
 )
 
+type Like struct {
+	ID        int64
+	ThreadID  sql.NullInt64
+	UserID    int64
+	CreatedAt string
+	UpdatedAt string
+	Foreign   interface{}
+}
+
 type Thread struct {
 	ID        int64
 	Content   string

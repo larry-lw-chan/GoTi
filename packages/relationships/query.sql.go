@@ -3,14 +3,14 @@
 //   sqlc v1.25.0
 // source: query.sql
 
-package followers
+package relationships
 
 import (
 	"context"
 )
 
 const createFollower = `-- name: CreateFollower :one
-INSERT INTO followers (follower_id, followee_id, created_at, updated_at) 
+INSERT INTO relationships (follower_id, followee_id, created_at, updated_at) 
 VALUES (?, ?, ?, ?)
 RETURNING id, follower_id, followee_id, created_at, updated_at, "foreign"
 `
@@ -22,14 +22,14 @@ type CreateFollowerParams struct {
 	UpdatedAt  string
 }
 
-func (q *Queries) CreateFollower(ctx context.Context, arg CreateFollowerParams) (Follower, error) {
+func (q *Queries) CreateFollower(ctx context.Context, arg CreateFollowerParams) (Relationship, error) {
 	row := q.db.QueryRowContext(ctx, createFollower,
 		arg.FollowerID,
 		arg.FolloweeID,
 		arg.CreatedAt,
 		arg.UpdatedAt,
 	)
-	var i Follower
+	var i Relationship
 	err := row.Scan(
 		&i.ID,
 		&i.FollowerID,
