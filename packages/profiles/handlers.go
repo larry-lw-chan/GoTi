@@ -62,5 +62,6 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditPostHandler(w http.ResponseWriter, r *http.Request) {
+	// Do more stuff later
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 }
