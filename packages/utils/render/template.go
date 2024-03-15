@@ -20,6 +20,7 @@ var tmplPath string
 // Template Cache for storing parsed templates
 var tmplCache = map[string]*template.Template{}
 
+// Function used to declare the template path and layout location
 func Layouts(l Location) {
 	tmplPath = l.TmplPath
 	layout = l.Layout
@@ -30,6 +31,12 @@ func Layouts(l Location) {
 			path[i] = tmplPath + file
 		}
 	}
+}
+
+// Partials
+func Partial(w http.ResponseWriter, tmplName string, data any) {
+	tmpl := tmplPath + tmplName
+	template.Must(template.ParseFiles(tmpl)).Execute(w, data)
 }
 
 // Templates

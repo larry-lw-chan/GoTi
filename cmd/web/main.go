@@ -14,6 +14,7 @@ import (
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/profiles"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
+	"github.com/larry-lw-chan/goti/packages/threads"
 	"github.com/larry-lw-chan/goti/packages/timelines"
 	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
@@ -50,6 +51,7 @@ func routes() *chi.Mux {
 	r.Mount("/", pages.Router())
 	r.Mount("/users", users.Router())
 	r.Mount("/profiles", profiles.Router())
+	r.Mount("/threads", threads.Router())
 	r.Mount("/timelines", timelines.Router())
 
 	// Return the Router

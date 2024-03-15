@@ -26,6 +26,22 @@
   <button class="edit-profile">Edit Profile</button>
 </a>
 
+<div id="activity">
+  <div class="menu">
+    <a
+      href="#"
+      class="active"
+      hx-post="/contacts"
+      hx-target="#main2"
+      hx-include="#search2"
+      >Threads</a
+    >
+    <a href="#">Replies</a>
+    <a href="#">Repost</a>
+  </div>
+
+  <div id="display"></div>
+</div>
 {{ end }}
 
 {{ define "style" }}
@@ -78,9 +94,44 @@
     font-weight: 900;
     border-color: var(--pico-secondary-border);
   }
+
+  /* Activity */
+  #activity {
+    margin-top: 1rem;
+  }
+
+  #activity .menu {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .menu a {
+    display: inline-block;
+    width: 33.33%;
+    padding: 0.5rem 0;
+    text-decoration: none;
+    font-weight: 900;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+  }
+
+  .menu a.active {
+    border-bottom: 1px solid var(--pico-primary-border);
+  }
 </style>
 {{ end }}
 
 {{ define "script" }}
+<script type="application/javascript">
+  // Toggle active class on menu items
+  const menu = document.querySelector(".menu");
 
+  menu.addEventListener("click", (e) => {
+    if (e.target.tagName === "A") {
+      menu.querySelector(".active").classList.remove("active");
+      e.target.classList.add("active");
+    }
+  });
+</script>
 {{ end }}
