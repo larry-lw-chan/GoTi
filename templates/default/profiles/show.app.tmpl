@@ -31,13 +31,27 @@
     <a
       href="#"
       class="active"
-      hx-post="/contacts"
-      hx-target="#main2"
-      hx-include="#search2"
+      hx-get="/threads/user-threads"
+      hx-target="#display"
+      hx-swap="innerHTML"
+      hx-trigger="load, click"
       >Threads</a
     >
-    <a href="#">Replies</a>
-    <a href="#">Repost</a>
+    <a
+      href="#"
+      href="#"
+      hx-get="/threads/user-replies"
+      hx-target="#display"
+      hx-swap="innerHTML"
+      >Replies</a
+    >
+    <a
+      href="#"
+      hx-get="/threads/user-repost"
+      hx-target="#display"
+      hx-swap="innerHTML"
+      >Repost</a
+    >
   </div>
 
   <div id="display"></div>
