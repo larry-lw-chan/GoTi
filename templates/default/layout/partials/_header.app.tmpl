@@ -18,4 +18,14 @@
     <li><a href="/users/logout">Log Out</a></li>
   </ul>
 </div>
+
+<script type="application/javascript">
+  window.onload = function () {
+    // Hamburger Menu Toggle
+    document.getElementById("hamburger").addEventListener("click", function () {
+      let header = document.querySelector("header");
+      header.classList.toggle("change");
+    });
+  };
+</script>
 {{ end }}
