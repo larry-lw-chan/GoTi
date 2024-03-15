@@ -54,6 +54,9 @@ func routes() *chi.Mux {
 	r.Mount("/threads", threads.Router())
 	r.Mount("/timelines", timelines.Router())
 
+	// Custom Error Handling
+	r.NotFound(pages.NotFoundHandler)
+
 	// Return the Router
 	return r
 }
