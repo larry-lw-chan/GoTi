@@ -17,7 +17,8 @@ func Router() http.Handler {
 	r.Use(middleware.CheckIfAuthenticated)
 
 	// Profile Routes
-	r.Get("/new", CreateThreadHandler)
+	r.Get("/new", NewThreadHandler)
+	r.Post("/new", NewPostThreadHandler)
 
 	// Partial Routes for HTMX usage
 	r.Get("/user-threads", UserThreadsHandler)

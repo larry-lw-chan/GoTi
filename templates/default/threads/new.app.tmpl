@@ -1,0 +1,25 @@
+{{ define "title" }}
+Create New Thread
+{{ end }}
+
+{{ define "content" }}
+<h2>Create New Thread</h2>
+<article>
+  <form action="/threads/new" method="post" id="login__form">
+    <fieldset>
+      <input
+        type="content"
+        name="content"
+        id="content"
+        placeholder="Start a thread..."
+        autocomplete="content"
+        aria-label="content"
+        required
+      />
+    </fieldset>
+
+    <button>Post</button>
+  </form>
+</article>
+
+{{ end }}
