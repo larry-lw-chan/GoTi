@@ -4,6 +4,7 @@ VALUES (?, ?, ?, ?, ?)
 RETURNING *;
 
 -- name: GetAllThreads :many
-SELECT content, username
+SELECT content, username, avatar
 FROM threads
-JOIN users ON threads.user_id = users.id;
+JOIN users ON users.id = threads.user_id
+JOIN profiles ON profiles.user_id = threads.user_id;

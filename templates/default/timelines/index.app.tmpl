@@ -3,16 +3,84 @@
 {{ define "content" }}
   <h1>Timeline Index</h1>
   {{ if .Threads }}
-    <ul>
-      {{ range.Threads }}
-        <li>
-          <a href="/timelines/{{ .Username }}">{{ .Username }}</a>
-          <a href="/timelines/{{ .Content }}">{{ .Content }}</a>
-        </li>
-      {{ end }}
-    </ul>
+    {{ range .Threads }}
+      <article>
+        <aside>
+          <div class="avatar">
+            {{ if .Avatar.Valid }}
+              <img src="{{ .Avatar.String }}" alt="{{ .Avatar.String }}" />
+            {{ else }}
+              <div class="avatar-placeholder">
+                <box-icon
+                  name="user"
+                  color="white"
+                  type="solid"
+                  size="2.5rem"
+                ></box-icon>
+              </div>
+            {{ end }}
+          </div>
+        </aside>
+        <div class="content">
+          <h5 class="username">
+            <a href="/profiles/{{ .Username }}">{{ .Username }}</a>
+          </h5>
+          <div class="thread">
+            <a href="/timelines/{{ .Content }}">
+              {{ .Content }}
+            </a>
+          </div>
+        </div>
+      </article>
+    {{ end }}
   {{ else }}
     <p>No timelines found.</p>
   {{ end }}
 
+{{ end }}
+
+{{ define "style" }}
+  <style>
+    /* Article */
+    article {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--pico-color);
+      border-radius: 0.5rem;
+    }
+
+    /* Username & Thread */
+    .username {
+      margin-bottom: 0.2rem;
+    }
+
+    .username a,
+    .thread a {
+      color: var(--pico-primary-inverse);
+      text-decoration: none;
+    }
+
+    .username a:hover {
+      text-decoration: underline;
+    }
+
+    /* Avatar Placeholder */
+    .avatar-placeholder {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: var(--pico-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .avatar-placeholder box-icon {
+      margin-top: 0.6rem;
+    }
+  </style>
 {{ end }}
