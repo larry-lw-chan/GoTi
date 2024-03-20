@@ -1,3 +1,30 @@
 <div id="user-threads">
-  <button>Start your first thread</button>
+  {{ if .Threads }}
+    {{ range .Threads }}
+      <article>
+        <aside>
+          <div class="avatar-placeholder">
+            <box-icon
+              name="user"
+              color="white"
+              type="solid"
+              size="2.5rem"
+            ></box-icon>
+          </div>
+        </aside>
+        <div class="content">
+          <h5 class="username">
+            <a href="/profiles/{{ .Username }}">{{ .Username }}</a>
+          </h5>
+          <div class="thread">
+            <a href="/timelines/{{ .Content }}">
+              {{ .Content }}
+            </a>
+          </div>
+        </div>
+      </article>
+    {{ end }}
+  {{ else }}
+    <button>Start your first thread</button>
+  {{ end }}
 </div>

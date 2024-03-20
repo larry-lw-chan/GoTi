@@ -1,155 +1,174 @@
 {{ define "title" }}Profile Page{{ end }}
 
 {{ define "content" }}
-<div id="profile">
-  <div class="left">
-    <h2>{{.Profile.Name.String}}</h2>
-    <h5>{{.Username}}</h5>
-    <div id="follower">
-      <div class="avatars"></div>
-      <p>0 Followers</p>
-    </div>
-  </div>
-  <div class="right">
-    <div class="avatar">
-      {{ if .Profile.Avatar.Valid }}
-      <img src="{{.Profile.Avatar.String}}" alt="{{.Profile.Name.String}}" />
-      {{ else }}
-      <div class="avatar-placeholder">
-        <box-icon name="user" color="white" type="solid" size="5rem"></box-icon>
+  <div id="profile">
+    <div class="left">
+      <h2>{{ .Profile.Name.String }}</h2>
+      <h5>{{ .Username }}</h5>
+      <div id="follower">
+        <div class="avatars"></div>
+        <p>0 Followers</p>
       </div>
-      {{ end }}
+    </div>
+    <div class="right">
+      <div class="avatar">
+        {{ if .Profile.Avatar.Valid }}
+          <img
+            src="{{ .Profile.Avatar.String }}"
+            alt="{{ .Profile.Name.String }}"
+          />
+        {{ else }}
+          <div class="avatar-placeholder">
+            <box-icon
+              name="user"
+              color="white"
+              type="solid"
+              size="5rem"
+            ></box-icon>
+          </div>
+        {{ end }}
+      </div>
     </div>
   </div>
-</div>
-<a href="/profiles/edit">
-  <button class="edit-profile">Edit Profile</button>
-</a>
+  <a href="/profiles/edit">
+    <button class="edit-profile">Edit Profile</button>
+  </a>
 
-<div id="activity">
-  <div class="menu">
-    <a
-      href="#"
-      class="active"
-      hx-get="/threads/user-threads"
-      hx-target="#display"
-      hx-swap="innerHTML"
-      hx-trigger="load, click"
-      >Threads</a
-    >
-    <a
-      href="#"
-      href="#"
-      hx-get="/threads/user-replies"
-      hx-target="#display"
-      hx-swap="innerHTML"
-      >Replies</a
-    >
-    <a
-      href="#"
-      hx-get="/threads/user-repost"
-      hx-target="#display"
-      hx-swap="innerHTML"
-      >Repost</a
-    >
+  <div id="activity">
+    <div class="menu">
+      <a
+        href="#"
+        class="active"
+        hx-get="/threads/user-threads"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        hx-trigger="load, click"
+        >Threads</a
+      >
+      <a
+        href="#"
+        href="#"
+        hx-get="/threads/user-replies"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        >Replies</a
+      >
+      <a
+        href="#"
+        hx-get="/threads/user-repost"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        >Repost</a
+      >
+    </div>
+
+    <div id="display"></div>
   </div>
-
-  <div id="display"></div>
-</div>
 {{ end }}
 
 {{ define "style" }}
-<style>
-  #profile {
-    height: 8rem;
-    margin-bottom: 1rem;
-  }
-  #profile::after {
-    content: "";
-    clear: both;
-  }
-  #profile .left {
-    float: left;
-    width: 50%;
-  }
+  <style>
+    #profile {
+      height: 8rem;
+      margin-bottom: 1rem;
+    }
+    #profile::after {
+      content: "";
+      clear: both;
+    }
+    #profile .left {
+      float: left;
+      width: 50%;
+    }
 
-  #follower {
-    margin-top: 1.2rem;
-  }
+    #follower {
+      margin-top: 1.2rem;
+    }
 
-  #profile .right {
-    float: right;
-    width: 50%;
-  }
-  #profile h2,
-  h5 {
-    margin-bottom: 0.5rem;
-  }
+    #profile .right {
+      float: right;
+      width: 50%;
+    }
+    #profile h2,
+    h5 {
+      margin-bottom: 0.5rem;
+    }
 
-  .avatar-placeholder {
-    float: right;
-    width: 4.5rem;
-    height: 4.5rem;
-    background-color: var(--pico-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    overflow: hidden;
-  }
+    .avatar-placeholder {
+      float: right;
+      width: 4.5rem;
+      height: 4.5rem;
+      background-color: var(--pico-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      overflow: hidden;
+    }
 
-  .avatar-placeholder box-icon {
-    margin-top: 1.6rem;
-  }
+    .avatar-placeholder box-icon {
+      margin-top: 1.6rem;
+    }
 
-  .edit-profile {
-    width: 100%;
-    background-color: var(--pico-muted-border-color);
-    font-weight: 900;
-    border-color: var(--pico-secondary-border);
-  }
+    .edit-profile {
+      width: 100%;
+      background-color: var(--pico-muted-border-color);
+      font-weight: 900;
+      border-color: var(--pico-secondary-border);
+    }
 
-  /* Activity */
-  #activity {
-    margin-top: 1rem;
-  }
+    /* Activity */
+    #activity {
+      margin-top: 1rem;
+    }
 
-  #activity .menu {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
+    #activity .menu {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
 
-  .menu a {
-    display: inline-block;
-    width: 33.33%;
-    padding: 0.5rem 0;
-    text-decoration: none;
-    font-weight: 900;
-    border-bottom: 1px solid var(--pico-muted-border-color);
-  }
+    .menu a {
+      display: inline-block;
+      width: 33.33%;
+      padding: 0.5rem 0;
+      text-decoration: none;
+      font-weight: 900;
+      border-bottom: 1px solid var(--pico-muted-border-color);
+    }
 
-  .menu a.active {
-    border-bottom: 1px solid var(--pico-primary-border);
-  }
+    .menu a.active {
+      border-bottom: 1px solid var(--pico-primary-border);
+    }
 
-  #display {
-    position: relative;
-  }
-</style>
+    #display {
+      position: relative;
+    }
+
+    /* Article */
+    article {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--pico-color);
+      border-radius: 0.5rem;
+    }
+  </style>
 {{ end }}
 
 {{ define "script" }}
-<script type="application/javascript">
-  // Toggle active class on menu items
-  const menu = document.querySelector(".menu");
+  <script type="application/javascript">
+    // Toggle active class on menu items
+    const menu = document.querySelector(".menu");
 
-  menu.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
-      menu.querySelector(".active").classList.remove("active");
-      e.target.classList.add("active");
-    }
-  });
-</script>
+    menu.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        menu.querySelector(".active").classList.remove("active");
+        e.target.classList.add("active");
+      }
+    });
+  </script>
 {{ end }}

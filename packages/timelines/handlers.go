@@ -1,7 +1,6 @@
 package timelines
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
@@ -16,8 +15,6 @@ func TimelineIndexHandler(w http.ResponseWriter, r *http.Request) {
 	// Temp Solution - Get all Threads
 	queries := threads.New(database.DB)
 	threads, err := queries.GetAllThreads(r.Context())
-
-	log.Println(threads)
 
 	if err != nil {
 		// Handle Error
