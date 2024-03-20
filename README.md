@@ -28,6 +28,7 @@ For future release, release binary builds with prebuilt sqlite3 database for sup
 ## Development Mode
 To run the development environment, simply install [Air](https://github.com/cosmtrek/air)
 and type the following command inside the project root directory:
+
 ```
 air
 ```
@@ -35,9 +36,13 @@ air
 All Template, Javascript, and CSS formatting is done with Prettier for consistency.  
 
 In order for Prettier to have Go Template compatibility, the plugin "prettier-plugin-go-template" is utilized.  Assuming you already have node installed on your computer, just type:
+
 ```
 npm install
 ```
+
+## Coding Conventions
+For consistency, this project mainly follows BEM naming conventions as the compromsie between having orderly CSS while minimizing developer dependencies such as Tailwind or SASS.  Majority of CSS is contained in static stylesheets.  Individual page overrides can be used the template by defining a 'style' block.
 
 ## Database & Migration
 Goti uses a forked version of [Goose](https://github.com/pressly/goose) for database migrations.  Migration files are located in db folder.  SQlite3 is currently the default database.  To generate a develoopment database, type
@@ -61,6 +66,7 @@ make seed
 ```
 
 Goti also makes heavy use of [SQLC](https://sqlc.dev/) for generating database query code.  The following make shortcut below allows easy SQLC generation.
+
 ```
 make package=users sqlc
 ```

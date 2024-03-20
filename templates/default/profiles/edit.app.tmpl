@@ -13,7 +13,13 @@
       <strong class="header-override__description">Edit Profile</strong>
     </div>
     <div class="header-override__box">
-      <a href="#" class="header-override__submit">Done</a>
+      <a
+        href="#"
+        class="header-override__submit"
+        onclick="document.querySelector('#profile__form').submit();return false;"
+      >
+        Done
+      </a>
     </div>
   </header>
 {{ end }}
