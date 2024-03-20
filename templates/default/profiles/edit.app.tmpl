@@ -4,16 +4,18 @@
   <div style="display: none"></div>
 {{ end }}
 
-{{ define "header_inner" }}
-  <div class="header-override">
-    <a href="/profiles/show" class="header-override__cancel">Cancel</a>
-  </div>
-  <div class="header-override">
-    <strong class="header-override__description">Edit Profile</strong>
-  </div>
-  <div class="header-override">
-    <a href="#" class="header-override__submit">Done</a>
-  </div>
+{{ define "header_outer" }}
+  <header class="header-override">
+    <div class="header-override__box">
+      <a href="/profiles/show" class="header-override__cancel">Cancel</a>
+    </div>
+    <div class="header-override__box">
+      <strong class="header-override__description">Edit Profile</strong>
+    </div>
+    <div class="header-override__box">
+      <a href="#" class="header-override__submit">Done</a>
+    </div>
+  </header>
 {{ end }}
 
 {{ define "content" }}
@@ -55,7 +57,7 @@
           type="checkbox"
           name="private"
           id="private"
-          class="checkbox"
+          class="toggle__checkbox"
           aria-label="private"
         />
         <label for="private" class="toggle__label"></label>
@@ -64,76 +66,4 @@
       <button>Done</button>
     </form>
   </article>
-{{ end }}
-
-{{ define "style" }}
-  <style>
-    header {
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--pico-secondary-border);
-    }
-
-    /* Fieldset Styling for Private Profile */
-    .private-profile {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    #profile__form button {
-      width: 100%;
-    }
-
-    /* toggle in label designing */
-    .toggle__label {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 25px;
-      background-color: var(--pico-secondary-hover-border);
-      border-radius: 30px;
-      border: 0px solid gray;
-    }
-
-    /* After slide changes */
-    .toggle__label:after {
-      content: "";
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background-color: var(--pico-form-element-border-color);
-      top: 0px;
-      left: 0px;
-      transition: all 0.5s;
-    }
-
-    /* Checkbox checked effect */
-    .checkbox:checked + .toggle__label::after {
-      left: 25px;
-    }
-
-    /* Checkbox checked toggle label bg color */
-    .checkbox:checked + .toggle__label {
-      background-color: var(--pico-color);
-    }
-
-    /* Checkbox vanished */
-    .checkbox {
-      display: none;
-    }
-
-    /* Switches */
-    .toggle__label:after {
-      content: "";
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background-color: var(--pico-form-element-border-color);
-      top: 0px;
-      left: 0px;
-      transition: all var(--transition-speed);
-    }
-  </style>
 {{ end }}

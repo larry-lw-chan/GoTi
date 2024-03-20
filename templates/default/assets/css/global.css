@@ -80,3 +80,53 @@ input:-webkit-autofill {
 .just-validate-error-label {
   margin-bottom: var(--pico-spacing);
 }
+
+/****************************************************
+* Form Element Styling
+****************************************************/
+/* Toggle Style */
+.toggle__label {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  background-color: var(--pico-secondary-hover-border);
+  border-radius: 30px;
+  border: 0px solid gray;
+}
+
+.toggle__label:after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--pico-form-element-border-color);
+  top: 0px;
+  left: 0px;
+  transition: all 0.5s;
+}
+
+.toggle__checkbox:checked + .toggle__label::after {
+  left: 25px;
+}
+
+.toggle__checkbox:checked + .toggle__label {
+  background-color: var(--pico-color);
+}
+
+.toggle__checkbox {
+  display: none;
+}
+
+.toggle__label:after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--pico-form-element-border-color);
+  top: 0px;
+  left: 0px;
+  transition: all var(--transition-speed);
+}
