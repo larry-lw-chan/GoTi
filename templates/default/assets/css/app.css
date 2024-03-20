@@ -207,6 +207,12 @@ main {
 
 /* Header Override */
 .header-override {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--pico-secondary-border);
+}
+
+.header-override__box {
   padding: 1rem;
 }
 
@@ -288,4 +294,13 @@ main {
 /* Profiles - Edit Page */
 #profile-edit {
   padding: 1.5rem;
+}
+
+.private-profile {
+  display: flex;
+  justify-content: space-between;
+}
+
+#profile__form button {
+  width: 100%;
 }
