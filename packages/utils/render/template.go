@@ -63,16 +63,20 @@ func Template(w http.ResponseWriter, data map[string]interface{}, files ...strin
 }
 
 func getTmplFiles(key string, files []string) []string {
-	tmplName := files[0]
-	tmpl := tmplPath + tmplName
-	tmplFiles := append(layout[key], tmpl)
+	tmplFiles := layout[key]
+	for _, file := range files {
+		tmplFiles = append(tmplFiles, tmplPath+file)
+	}
 	return tmplFiles
 }
 
 /****************************************************
 * render Partial
 ****************************************************/
-func Partial(w http.ResponseWriter, data map[string]interface{}, tmplName string) {
+func Partial(w http.ResponseWriter, data map[string]interface{}, files ...string) {
+	// get main template
+	tmplName := files[0]
+
 	// get template from cache
 	tmpl, ok := tmplCache[tmplName]
 
@@ -83,7 +87,7 @@ func Partial(w http.ResponseWriter, data map[string]interface{}, tmplName string
 		tmplCache[tmplName] = tmpl
 	}
 	// Execute partial
-	err := tmpl.Execute(w, data)
+	err := tmpl.ExecuteTemplate(w, "partial", data)
 	if err != nil {
 		log.Println(err)
 	}
