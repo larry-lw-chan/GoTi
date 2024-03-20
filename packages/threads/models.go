@@ -24,6 +24,18 @@ type Like struct {
 	Foreign   interface{}
 }
 
+type Profile struct {
+	ID        int64
+	Name      sql.NullString
+	Bio       sql.NullString
+	Link      sql.NullString
+	Avatar    sql.NullString
+	Private   sql.NullInt64
+	UserID    int64
+	CreatedAt string
+	UpdatedAt string
+}
+
 type Thread struct {
 	ID        int64
 	Content   string
