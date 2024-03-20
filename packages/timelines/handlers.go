@@ -23,5 +23,5 @@ func TimelineIndexHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Template(w, "/timelines/index.app.tmpl", data)
+	render.Template(w, data, "/timelines/index.app.tmpl")
 }
