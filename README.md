@@ -32,6 +32,12 @@ and type the following command inside the project root directory:
 air
 ```
 
+All Template, Javascript, and CSS formatting is done with Prettier for consistency.  
+In order for Prettier to have Go Template compatibility, the plugin "prettier-plugin-go-template" is utilized.  Assuming you already have node installed on your computer, just type
+'''
+npm install
+'''
+
 ## Database & Migration
 Goti uses a forked version of [Goose](https://github.com/pressly/goose) for database migrations.  Migration files are located in db folder.  SQlite3 is currently the default database.  To generate a develoopment database, type
 

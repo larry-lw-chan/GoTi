@@ -44,3 +44,37 @@ func (q *Queries) CreateThread(ctx context.Context, arg CreateThreadParams) (Thr
 	)
 	return i, err
 }
+
+const getAllThreads = `-- name: GetAllThreads :many
+SELECT content, username
+FROM threads
+JOIN users ON threads.user_id = users.id
+`
+
+type GetAllThreadsRow struct {
+	Content  string
+	Username string
+}
+
+func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error) {
+	rows, err := q.db.QueryContext(ctx, getAllThreads)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetAllThreadsRow
+	for rows.Next() {
+		var i GetAllThreadsRow
+		if err := rows.Scan(&i.Content, &i.Username); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}

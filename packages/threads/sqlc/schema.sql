@@ -38,3 +38,16 @@ CREATE TABLE likes (
 	FOREIGN KEY("thread_id") 	REFERENCES "threads"("id")
 	FOREIGN KEY("user_id") 		REFERENCES "users"("id")
 );
+
+
+
+
+-- Schema from other packages to allow for foreign key constraints
+CREATE TABLE users (
+    "id" 	            INTEGER PRIMARY KEY,
+    "username"			TEXT NOT NULL UNIQUE,
+	"email"				TEXT NOT NULL UNIQUE,
+	"password"			TEXT NOT NULL,
+	"created_at"  		TEXT NOT NULL,
+	"updated_at"	    TEXT NOT NULL
+);
