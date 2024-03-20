@@ -38,7 +38,7 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	data["Profile"] = profile
 
 	// Load user into profile
-	render.Template(w, "/profiles/show.app.tmpl", data)
+	render.Template(w, data, "/profiles/show.app.tmpl")
 }
 
 func EditHandler(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +59,7 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 	data["Profile"] = profile
 
 	// Load user into profile
-	render.Template(w, "/profiles/edit.app.tmpl", data)
+	render.Template(w, data, "/profiles/edit.app.tmpl")
 }
 
 func EditPostHandler(w http.ResponseWriter, r *http.Request) {

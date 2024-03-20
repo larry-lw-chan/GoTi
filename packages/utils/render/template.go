@@ -36,7 +36,7 @@ func Layouts(l Location) {
 /****************************************************
 * render Template
 ****************************************************/
-func Template(w http.ResponseWriter, tmplName string, data any) {
+func Template(w http.ResponseWriter, data map[string]interface{}, tmplName string) {
 	// get layout from filename Eg. home.base.tmpl -> base
 	arr := strings.Split(tmplName, "/")
 	filename := arr[len(arr)-1]
@@ -68,7 +68,7 @@ func getTmplFiles(tmplName string, key string) []string {
 /****************************************************
 * render Partial
 ****************************************************/
-func Partial(w http.ResponseWriter, tmplName string, data any) {
+func Partial(w http.ResponseWriter, data map[string]interface{}, tmplName string) {
 	// get template from cache
 	tmpl, ok := tmplCache[tmplName]
 

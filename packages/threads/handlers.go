@@ -14,7 +14,7 @@ import (
 func NewThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
-	render.Template(w, "/threads/new.app.tmpl", data)
+	render.Template(w, data, "/threads/new.app.tmpl")
 }
 
 func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
@@ -73,13 +73,13 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Partial(w, "/threads/partials/user_threads.app.tmpl", data)
+	render.Partial(w, data, "/threads/partials/user_threads.app.tmpl")
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, "/threads/partials/user_replies.app.tmpl", nil)
+	render.Partial(w, nil, "/threads/partials/user_replies.app.tmpl")
 }
 
 func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, "/threads/partials/user_repost.app.tmpl", nil)
+	render.Partial(w, nil, "/threads/partials/user_repost.app.tmpl")
 }

@@ -15,7 +15,7 @@ import (
 *************************************************/
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, "/users/login.base.tmpl", data)
+	render.Template(w, data, "/users/login.base.tmpl")
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +49,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, "/users/register.base.tmpl", data)
+	render.Template(w, data, "/users/register.base.tmpl")
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -100,5 +100,5 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, "/users/forgot-password.base.tmpl", nil)
+	render.Template(w, nil, "/users/forgot-password.base.tmpl")
 }
