@@ -36,7 +36,10 @@ func Layouts(l Location) {
 /****************************************************
 * render Template
 ****************************************************/
-func Template(w http.ResponseWriter, data map[string]interface{}, tmplName string) {
+func Template(w http.ResponseWriter, data map[string]interface{}, files ...string) {
+	// get main template
+	tmplName := files[0]
+
 	// get layout from filename Eg. home.base.tmpl -> base
 	arr := strings.Split(tmplName, "/")
 	filename := arr[len(arr)-1]
@@ -47,7 +50,7 @@ func Template(w http.ResponseWriter, data map[string]interface{}, tmplName strin
 
 	// if not available, parse and cache template
 	if !ok {
-		tmplFiles := getTmplFiles(tmplName, layoutName)
+		tmplFiles := getTmplFiles(layoutName, files)
 		tmpl = template.Must(template.ParseFiles(tmplFiles...))
 		tmplCache[tmplName] = tmpl
 	}
@@ -59,7 +62,8 @@ func Template(w http.ResponseWriter, data map[string]interface{}, tmplName strin
 	}
 }
 
-func getTmplFiles(tmplName string, key string) []string {
+func getTmplFiles(key string, files []string) []string {
+	tmplName := files[0]
 	tmpl := tmplPath + tmplName
 	tmplFiles := append(layout[key], tmpl)
 	return tmplFiles
