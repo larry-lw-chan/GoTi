@@ -73,7 +73,7 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Partial(w, data, "/threads/partials/user_threads.app.tmpl")
+	render.Partial(w, data, "/threads/partials/user_threads.app.tmpl", "/partials/thread.app.tmpl")
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
