@@ -30,7 +30,7 @@ header > nav {
   position: relative;
 }
 
-header .logo img {
+.logo__img {
   height: 3.8rem;
   margin-top: var(--pico-block-spacing-vertical);
 }
@@ -118,12 +118,12 @@ footer {
   text-align: center;
 }
 
-footer .legal {
+.legal {
   font-size: 0.7rem;
   color: var(--pico-muted-color);
 }
 
-footer .legal a {
+.legal__link {
   color: var(--pico-muted-color);
   text-decoration: none;
   margin-left: 1rem;
