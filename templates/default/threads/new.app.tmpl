@@ -1,47 +1,63 @@
-{{ define "title" }}
-Create New Thread
+{{ define "title" }}New Thread{{ end }}
+
+{{ define "primary_outer" }}
+  <div style="display: none"></div>
+{{ end }}
+
+{{ define "header_outer" }}
+  <header class="header-override">
+    <div class="header-override__box">
+      <a href="/profiles/show" class="header-override__cancel">Cancel</a>
+    </div>
+    <div class="header-override__box">
+      <strong class="header-override__description">New Thread</strong>
+    </div>
+    <div class="header-override__box">
+      <a href="#" class="header-override__submit">Done</a>
+    </div>
+  </header>
 {{ end }}
 
 {{ define "content" }}
-<h2>Create New Thread</h2>
-<article>
-  <form action="/threads/new" method="post" id="thread__form">
-    <fieldset>
-      <input
-        type="content"
-        name="content"
-        id="content"
-        placeholder="Start a thread..."
-        autocomplete="content"
-        aria-label="content"
-        required
-      />
-    </fieldset>
+  <article class="form-container">
+    <form action="/threads/new" method="post" id="thread__form">
+      <fieldset>
+        <label for="content">Thread</label>
+        <input
+          type="content"
+          name="content"
+          id="content"
+          placeholder="Start a thread..."
+          autocomplete="content"
+          aria-label="content"
+          required
+        />
+      </fieldset>
 
-    <button>Post</button>
-  </form>
-</article>
+      <button>Post</button>
+    </form>
+  </article>
 {{ end }}
 
 {{ define "script" }}
-<script type="text/javascript">
-  window.addEventListener("load", (e) => {
-    const validator = new window.JustValidate("#thread__form");
-    validator
-      .addField("#content", [
-        {
-          rule: "required",
-          message: "Content is required",
-        },
-        {
-          rule: "minLength",
-          value: 8,
-          message: "Password should be at least 8 characters",
-        },
-      ])
-      .onSuccess((event) => {
-        document.getElementById("thread__form").submit();
-      });
-  });
-</script>
+  <script type="text/javascript">
+    window.addEventListener("load", (e) => {
+      const validator = new window.JustValidate("#thread__form");
+      validator
+        .addField("#content", [
+          {
+            rule: "required",
+            message: "Content is required",
+          },
+          {
+            rule: "minLength",
+            value: 8,
+            message: "Password should be at least 8 characters",
+          },
+        ])
+        .onSuccess((event) => {
+          document.getElementById("thread__form").submit();
+        });
+    });
+  </script>
 {{ end }}
