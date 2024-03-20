@@ -1,154 +1,139 @@
 {{ define "title" }}Edit Profile{{ end }}
 
 {{ define "primary_outer" }}
-<div style="display: none"></div>
+  <div style="display: none"></div>
 {{ end }}
 
 {{ define "header_inner" }}
-<div class="box">
-  <a href="/profiles/show">Cancel</a>
-</div>
-<div class="box">
-  <strong>Edit Profile</strong>
-</div>
-<div class="box">
-  <a href="#">Done</a>
-</div>
+  <div class="header-override">
+    <a href="/profiles/show" class="header-override__cancel">Cancel</a>
+  </div>
+  <div class="header-override">
+    <strong class="header-override__description">Edit Profile</strong>
+  </div>
+  <div class="header-override">
+    <a href="#" class="header-override__submit">Done</a>
+  </div>
 {{ end }}
 
 {{ define "content" }}
-<article>
-  <form action="/profiles/edit" method="POST" id="profile__form">
-    <fieldset>
-      <label for="name">Name</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        placeholder="Please enter name"
-        aria-label="name"
-      />
-    </fieldset>
-    <fieldset>
-      <label for="bio">Bio</label>
-      <input
-        type="text"
-        name="bio"
-        id="bio"
-        placeholder="Write bio"
-        aria-label="bio"
-      />
-    </fieldset>
-    <fieldset>
-      <label for="bio">Link</label>
-      <input
-        type="text"
-        name="link"
-        id="link"
-        placeholder="Add link"
-        aria-label="bio"
-      />
-    </fieldset>
-    <fieldset class="private-profile">
-      <span>Private Profile</span>
-      <input
-        type="checkbox"
-        name="private"
-        id="private"
-        class="checkbox"
-        aria-label="private"
-      />
-      <label for="private" class="toggle"></label>
-    </fieldset>
-    <br />
-    <button>Done</button>
-  </form>
-</article>
+  <article id="profile-edit">
+    <form action="/profiles/edit" method="POST" id="profile__form">
+      <fieldset>
+        <label for="name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Please enter name"
+          aria-label="name"
+        />
+      </fieldset>
+      <fieldset>
+        <label for="bio">Bio</label>
+        <input
+          type="text"
+          name="bio"
+          id="bio"
+          placeholder="Write bio"
+          aria-label="bio"
+        />
+      </fieldset>
+      <fieldset>
+        <label for="bio">Link</label>
+        <input
+          type="text"
+          name="link"
+          id="link"
+          placeholder="Add link"
+          aria-label="bio"
+        />
+      </fieldset>
+      <fieldset class="private-profile">
+        <span>Private Profile</span>
+        <input
+          type="checkbox"
+          name="private"
+          id="private"
+          class="checkbox"
+          aria-label="private"
+        />
+        <label for="private" class="toggle__label"></label>
+      </fieldset>
+      <br />
+      <button>Done</button>
+    </form>
+  </article>
 {{ end }}
 
 {{ define "style" }}
-<style>
-  header {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--pico-secondary-border);
-  }
-  .box {
-    padding: 1rem;
-  }
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--pico-secondary-border);
+    }
 
-  .box a {
-    text-decoration: none;
-  }
+    /* Fieldset Styling for Private Profile */
+    .private-profile {
+      display: flex;
+      justify-content: space-between;
+    }
 
-  .box strong {
-    font-size: 1rem;
-  }
+    #profile__form button {
+      width: 100%;
+    }
 
-  article {
-    padding: 1.5rem;
-  }
+    /* toggle in label designing */
+    .toggle__label {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 25px;
+      background-color: var(--pico-secondary-hover-border);
+      border-radius: 30px;
+      border: 0px solid gray;
+    }
 
-  /* Fieldset Styling for Private Profile */
-  .private-profile {
-    display: flex;
-    justify-content: space-between;
-  }
+    /* After slide changes */
+    .toggle__label:after {
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: var(--pico-form-element-border-color);
+      top: 0px;
+      left: 0px;
+      transition: all 0.5s;
+    }
 
-  #profile__form button {
-    width: 100%;
-  }
+    /* Checkbox checked effect */
+    .checkbox:checked + .toggle__label::after {
+      left: 25px;
+    }
 
-  /* toggle in label designing */
-  .toggle {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 25px;
-    background-color: var(--pico-secondary-hover-border);
-    border-radius: 30px;
-    border: 0px solid gray;
-  }
+    /* Checkbox checked toggle label bg color */
+    .checkbox:checked + .toggle__label {
+      background-color: var(--pico-color);
+    }
 
-  /* After slide changes */
-  .toggle:after {
-    content: "";
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: var(--pico-form-element-border-color);
-    top: 0px;
-    left: 0px;
-    transition: all 0.5s;
-  }
+    /* Checkbox vanished */
+    .checkbox {
+      display: none;
+    }
 
-  /* Checkbox checked effect */
-  .checkbox:checked + .toggle::after {
-    left: 25px;
-  }
-
-  /* Checkbox checked toggle label bg color */
-  .checkbox:checked + .toggle {
-    background-color: var(--pico-color);
-  }
-
-  /* Checkbox vanished */
-  .checkbox {
-    display: none;
-  }
-
-  /* Switches */
-  .toggle:after {
-    content: "";
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: var(--pico-form-element-border-color);
-    top: 0px;
-    left: 0px;
-    transition: all 0.5s;
-  }
-</style>
+    /* Switches */
+    .toggle__label:after {
+      content: "";
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: var(--pico-form-element-border-color);
+      top: 0px;
+      left: 0px;
+      transition: all var(--transition-speed);
+    }
+  </style>
 {{ end }}

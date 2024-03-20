@@ -27,6 +27,7 @@ header {
   height: var(--header-height);
   background-color: var(--pico-background-color);
   opacity: var(--menu_opacity);
+  z-index: 10;
 }
 
 /* Logo Styling */
@@ -179,7 +180,7 @@ main {
   overflow: hidden;
 }
 
-.avatar-placeholder box-icon {
+.avatar-placeholder__icon {
   margin-top: 0.6rem;
 }
 
@@ -193,13 +194,35 @@ main {
   border: 1px solid var(--pico-color);
   border-radius: 0.5rem;
   position: relative;
-  z-index: -1;
+  z-index: 0;
+}
+
+.thread__username {
+  margin-bottom: 0.2rem;
+}
+
+.thread__username:hover {
+  text-decoration: underline;
+}
+
+/* Header Override */
+.header-override {
+  padding: 1rem;
+}
+
+.header-override__cancel,
+.header-override__submit {
+  text-decoration: none;
+}
+
+.header-override__description {
+  font-size: 1rem;
 }
 
 /****************************************** 
 * Individual Template Styling
 *******************************************/
-/* Profile Show Page */
+/* Profiles - Show Page */
 #profile {
   height: 8rem;
   margin-bottom: 1rem;
@@ -260,4 +283,9 @@ main {
 
 #display {
   position: relative;
+}
+
+/* Profiles - Edit Page */
+#profile-edit {
+  padding: 1.5rem;
 }

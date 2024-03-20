@@ -2,21 +2,28 @@
   {{ if .Threads }}
     {{ range .Threads }}
       <article class="thread">
-        <aside>
-          <div class="avatar-placeholder">
-            <box-icon
-              name="user"
-              color="white"
-              type="solid"
-              size="2.5rem"
-            ></box-icon>
-          </div>
+        <aside class="thread__aside">
+          {{ if .Avatar.Valid }}
+            <div class="avatar">
+              <img src="{{ .Avatar.String }}" alt="{{ .Avatar.String }}" />
+            </div>
+          {{ else }}
+            <div class="avatar-placeholder">
+              <box-icon
+                name="user"
+                color="white"
+                type="solid"
+                size="2.5rem"
+                class="avatar-placeholder__icon"
+              ></box-icon>
+            </div>
+          {{ end }}
         </aside>
-        <div class="content">
-          <h5 class="username">
+        <div class="thread__container">
+          <h5 class="thread__username">
             <a href="/profiles/{{ .Username }}">{{ .Username }}</a>
           </h5>
-          <div class="thread">
+          <div class="thread__content">
             <a href="/timelines/{{ .Content }}">
               {{ .Content }}
             </a>
