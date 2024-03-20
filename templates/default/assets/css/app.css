@@ -44,7 +44,7 @@ header {
   background-color: var(--pico-background-color);
   opacity: var(--menu_opacity);
   transition: var(--transition-speed);
-  z-index: 100;
+  z-index: 10;
 }
 #primary-menu ul {
   display: flex;
@@ -86,7 +86,7 @@ header {
   position: absolute;
   margin-top: 0.25rem;
   right: 0.5rem;
-  z-index: 1;
+  z-index: 10;
 }
 
 .change #secondary-menu {
