@@ -26,6 +26,7 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 			Name:      sql.NullString{String: "your name", Valid: true},
 			Bio:       sql.NullString{String: "add bio", Valid: true},
 			Link:      sql.NullString{String: "add links", Valid: true},
+			Private:   sql.NullInt64{Int64: 0, Valid: true},
 			Avatar:    sql.NullString{Valid: false},
 			UserID:    userSession.Id,
 			CreatedAt: time.Now().String(),

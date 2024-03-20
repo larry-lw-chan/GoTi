@@ -35,6 +35,9 @@
           id="name"
           placeholder="Please enter name"
           aria-label="name"
+          {{ if .Profile.Name.Valid }}
+            value="{{ .Profile.Name.String }}"
+          {{ end }}
         />
       </fieldset>
       <fieldset>
@@ -45,6 +48,9 @@
           id="bio"
           placeholder="Write bio"
           aria-label="bio"
+          {{ if .Profile.Bio.Valid }}
+            value="{{ .Profile.Bio.String }}"
+          {{ end }}
         />
       </fieldset>
       <fieldset>
@@ -54,7 +60,10 @@
           name="link"
           id="link"
           placeholder="Add link"
-          aria-label="bio"
+          aria-label="link"
+          {{ if .Profile.Link.Valid }}
+            value="{{ .Profile.Link.String }}"
+          {{ end }}
         />
       </fieldset>
       <fieldset class="private-profile">
@@ -65,6 +74,9 @@
           id="private"
           class="toggle__checkbox"
           aria-label="private"
+          {{ if .Profile.Private.Valid }}
+            value="{{ .Profile.Private.Int64 }}"
+          {{ end }}
         />
         <label for="private" class="toggle__label"></label>
       </fieldset>
