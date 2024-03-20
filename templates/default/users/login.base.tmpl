@@ -1,111 +1,82 @@
 {{ define "title" }}Goti Login{{ end }}
 
 {{ define "content" }}
-<article class="login">
-  <div class="heading">
-    <h1>Login to Goti</h1>
-    <p>Login with your GoTi credentials.</p>
-  </div>
-  <form action="/users/login" method="post" id="login__form">
-    <fieldset>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="Email"
-        autocomplete="email"
-        aria-label="Email"
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Password"
-        aria-label="Password"
-      />
-    </fieldset>
+  <article class="login">
+    <div class="header">
+      <h1 class="header__heading">Login to Goti</h1>
+      <p class="header__description">Login with your GoTi credentials.</p>
+    </div>
+    <form action="/users/login" method="post" id="login__form">
+      <fieldset>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          autocomplete="email"
+          aria-label="Email"
+          class="login__input"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          aria-label="Password"
+          class="login__input"
+        />
+      </fieldset>
 
-    <button>Login</button>
-  </form>
-  <div class="links">
-    <a href="/users/register">Register?</a>
-    <a href="/users/forgot-password">Forgot password?</a>
-  </div>
-</article>
+      <button class="login__button">Login</button>
+    </form>
+    <div class="links">
+      <a href="/users/register" class="links__link">Register?</a>
+      <a href="/users/forgot-password" class="links__link">
+        Forgot password?
+      </a>
+    </div>
+  </article>
 {{ end }}
 
 {{ define "style" }}
-<style>
-  .login {
-    background-color: var(--pico-contrast-background);
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .login input {
-    background-color: var(--pico-contrast-background);
-    color: var(--pico-contrast-inverse);
-  }
-
-  .login button {
-    width: 100%;
-    margin-bottom: 0.75rem;
-  }
-
-  .login h1,
-  .login p,
-  .login label {
-    color: var(--pico-contrast-inverse);
-  }
-
-  .login input[type="checkbox"]:checked {
-    background-color: var(--pico-primary);
-  }
-
-  .links {
-    text-align: center;
-    font-size: 0.8rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .links a {
-    text-decoration: none;
-  }
-</style>
+  <style>
+    .login {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+  </style>
 {{ end }}
 
 {{ define "script" }}
-<script type="text/javascript">
-  window.addEventListener("load", (e) => {
-    const validator = new window.JustValidate("#login__form");
-    validator
-      .addField("#email", [
-        {
-          rule: "required",
-          message: "Email is required",
-        },
-        {
-          rule: "email",
-          message: "Please enter a valid email",
-        },
-      ])
-      .addField("#password", [
-        {
-          rule: "required",
-          message: "Password is required",
-        },
-        {
-          rule: "minLength",
-          value: 8,
-          message: "Password should be at least 8 characters",
-        },
-      ])
-      .onSuccess((event) => {
-        document.getElementById("login__form").submit();
-      });
-  });
-</script>
+  <script type="text/javascript">
+    window.addEventListener("load", (e) => {
+      const validator = new window.JustValidate("#login__form");
+      validator
+        .addField("#email", [
+          {
+            rule: "required",
+            message: "Email is required",
+          },
+          {
+            rule: "email",
+            message: "Please enter a valid email",
+          },
+        ])
+        .addField("#password", [
+          {
+            rule: "required",
+            message: "Password is required",
+          },
+          {
+            rule: "minLength",
+            value: 8,
+            message: "Password should be at least 8 characters",
+          },
+        ])
+        .onSuccess((event) => {
+          document.getElementById("login__form").submit();
+        });
+    });
+  </script>
 {{ end }}

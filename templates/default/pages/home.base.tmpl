@@ -1,129 +1,78 @@
 {{ define "title" }}Goti Home{{ end }}
 
 {{ define "content" }}
-<div class="homepage">
-  <section class="hero">
-    <h1>Your social network</h1>
-    <p>
-      GoTi is a social platform designed for self hosting. Performant with only
-      things that matter.
-    </p>
-  </section>
-  <article class="login">
-    <form action="/users/login" method="POST" id="login__form">
-      <fieldset>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          autocomplete="email"
-        />
-      </fieldset>
-      <fieldset>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-        />
-      </fieldset>
-      <button type="submit">Login</button>
-    </form>
-    <div class="password">
-      <a href="/users/forgot-password">Forgot password?</a>
-    </div>
-    <hr />
-    <div class="register">
-      <a href="/users/register">
-        <button class="secondary">Create new account</button>
-      </a>
-    </div>
-  </article>
-</div>
-{{ end }}
-
-{{ define "style" }}
-<style>
-  .hero {
-    margin-bottom: calc(var(--pico-block-spacing-vertical) * 2);
-    text-align: center;
-  }
-  .hero h1 {
-    font-size: 3rem;
-  }
-
-  .hero p {
-    font-size: 1.5rem;
-  }
-
-  .login {
-    background-color: var(--pico-contrast-background);
-  }
-
-  .login input {
-    background-color: var(--pico-contrast-background);
-    color: var(--pico-contrast-inverse);
-  }
-
-  .login button {
-    width: 100%;
-    margin-bottom: 0.75rem;
-  }
-
-  .password {
-    text-align: center;
-    font-size: 0.8rem;
-  }
-
-  @media (min-width: 1024px) {
-    .homepage {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .hero {
-      flex: 400;
-      text-align: left;
-    }
-
-    .login {
-      flex: 300;
-    }
-  }
-</style>
+  <div class="homepage">
+    <section class="hero">
+      <h1 class="hero__heading">Your social network</h1>
+      <p class="hero__description">
+        GoTi is a social platform designed for self hosting. Performant with
+        only things that matter.
+      </p>
+    </section>
+    <article class="login">
+      <form action="/users/login" method="POST" id="login__form">
+        <fieldset>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            autocomplete="email"
+            class="login__input"
+          />
+        </fieldset>
+        <fieldset>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            class="login__input"
+          />
+        </fieldset>
+        <button type="submit" class="login__button">Login</button>
+      </form>
+      <div class="password">
+        <a href="/users/forgot-password">Forgot password?</a>
+      </div>
+      <hr />
+      <div class="register">
+        <a href="/users/register">
+          <button class="register__button secondary">Create new account</button>
+        </a>
+      </div>
+    </article>
+  </div>
 {{ end }}
 
 {{ define "script" }}
-<script>
-  // Validate Registration Form
-  const validator = new window.JustValidate("#login__form");
-  validator
-    .addField("#email", [
-      {
-        rule: "required",
-        message: "Email is required",
-      },
-      {
-        rule: "email",
-        message: "Please enter a valid email",
-      },
-    ])
-    .addField("#password", [
-      {
-        rule: "required",
-        message: "Password is required",
-      },
-      {
-        rule: "minLength",
-        value: 8,
-        message: "Password should be at least 8 characters",
-      },
-    ])
-    .onSuccess((event) => {
-      document.getElementById("login__form").submit();
-    });
-</script>
+  <script>
+    // Validate Registration Form
+    const validator = new window.JustValidate("#login__form");
+    validator
+      .addField("#email", [
+        {
+          rule: "required",
+          message: "Email is required",
+        },
+        {
+          rule: "email",
+          message: "Please enter a valid email",
+        },
+      ])
+      .addField("#password", [
+        {
+          rule: "required",
+          message: "Password is required",
+        },
+        {
+          rule: "minLength",
+          value: 8,
+          message: "Password should be at least 8 characters",
+        },
+      ])
+      .onSuccess((event) => {
+        document.getElementById("login__form").submit();
+      });
+  </script>
 {{ end }}
