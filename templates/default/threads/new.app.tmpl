@@ -5,7 +5,7 @@ Create New Thread
 {{ define "content" }}
 <h2>Create New Thread</h2>
 <article>
-  <form action="/threads/new" method="post" id="login__form">
+  <form action="/threads/new" method="post" id="thread__form">
     <fieldset>
       <input
         type="content"
@@ -21,5 +21,27 @@ Create New Thread
     <button>Post</button>
   </form>
 </article>
+{{ end }}
 
+{{ define "script" }}
+<script type="text/javascript">
+  window.addEventListener("load", (e) => {
+    const validator = new window.JustValidate("#thread__form");
+    validator
+      .addField("#content", [
+        {
+          rule: "required",
+          message: "Content is required",
+        },
+        {
+          rule: "minLength",
+          value: 8,
+          message: "Password should be at least 8 characters",
+        },
+      ])
+      .onSuccess((event) => {
+        document.getElementById("thread__form").submit();
+      });
+  });
+</script>
 {{ end }}
