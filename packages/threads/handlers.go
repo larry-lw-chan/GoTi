@@ -12,7 +12,8 @@ import (
 )
 
 func NewThreadHandler(w http.ResponseWriter, r *http.Request) {
-	data := r.Context().Value("data").(map[string]any)
+	data := r.Context().Value("data").(map[string]interface{})
+
 	render.Template(w, "/threads/new.app.tmpl", data)
 }
 
@@ -59,7 +60,20 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 * Partials
 *********************************************************/
 func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, "/threads/partials/user_threads.app.tmpl", nil)
+	data := r.Context().Value("data").(map[string]interface{})
+
+	// Temp Solution - Get all Threads
+	queries := New(database.DB)
+	threads, err := queries.GetAllThreads(r.Context())
+
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+	} else {
+		data["Threads"] = threads
+	}
+
+	render.Partial(w, "/threads/partials/user_threads.app.tmpl", data)
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {

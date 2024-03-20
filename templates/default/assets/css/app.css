@@ -44,6 +44,7 @@ header {
   background-color: var(--pico-background-color);
   opacity: var(--menu_opacity);
   transition: var(--transition-speed);
+  z-index: 100;
 }
 #primary-menu ul {
   display: flex;
@@ -126,4 +127,36 @@ header {
 /* Main Styling */
 main {
   margin-top: calc(var(--header-height) + 1rem);
+}
+
+/* Thread Styling */
+/* Username & Thread */
+.username {
+  margin-bottom: 0.2rem;
+}
+
+.username a,
+.thread a {
+  color: var(--pico-primary-inverse);
+  text-decoration: none;
+}
+
+.username a:hover {
+  text-decoration: underline;
+}
+
+/* Avatar Placeholder */
+.avatar-placeholder {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--pico-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-placeholder box-icon {
+  margin-top: 0.6rem;
 }
