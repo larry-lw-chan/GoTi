@@ -1,5 +1,18 @@
 {{ define "title" }}Timeline Home{{ end }}
 
 {{ define "content" }}
-<h1>Timeline Index</h1>
+  <h1>Timeline Index</h1>
+  {{ if .Threads }}
+    <ul>
+      {{ range.Threads }}
+        <li>
+          <a href="/timelines/{{ .Username }}">{{ .Username }}</a>
+          <a href="/timelines/{{ .Content }}">{{ .Content }}</a>
+        </li>
+      {{ end }}
+    </ul>
+  {{ else }}
+    <p>No timelines found.</p>
+  {{ end }}
+
 {{ end }}
