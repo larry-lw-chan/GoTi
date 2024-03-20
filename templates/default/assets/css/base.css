@@ -4,6 +4,9 @@
   --transition-speed: 0.2s;
 }
 
+/****************************************** 
+* Layout Styling
+*******************************************/
 /* Body Styling */
 body {
   min-height: 100vh;
@@ -124,4 +127,132 @@ footer .legal a {
   color: var(--pico-muted-color);
   text-decoration: none;
   margin-left: 1rem;
+}
+
+/****************************************** 
+* Reusable Component Styling
+*******************************************/
+/* Header Styling */
+.header__heading,
+.header__description {
+  color: var(--pico-contrast-inverse);
+}
+
+/* Links under form styling */
+.links {
+  text-align: center;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.links__link {
+  text-decoration: none;
+}
+
+/****************************************** 
+* Individual Template Styling
+*******************************************/
+/* Home Page */
+.hero {
+  margin-bottom: calc(var(--pico-block-spacing-vertical) * 2);
+  text-align: center;
+}
+.hero__heading {
+  font-size: 3rem;
+}
+
+.hero__description {
+  font-size: 1.5rem;
+}
+
+.login {
+  background-color: var(--pico-contrast-background);
+}
+
+.login__input {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+.login__button,
+.register__button {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.password {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 1024px) {
+  .homepage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero {
+    flex: 400;
+    text-align: left;
+  }
+
+  .login {
+    flex: 300;
+  }
+}
+
+/* Register Page */
+.register {
+  background-color: var(--pico-contrast-background);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.register__label {
+  color: var(--pico-contrast-inverse);
+}
+
+.register__input,
+.register__checkbox {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+.register__checkbox:checked {
+  background-color: var(--pico-primary);
+}
+
+.register__button {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.to-login {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.to-login_link {
+  text-decoration: none;
+}
+
+/* Forgot Password Page */
+.forgot {
+  background-color: var(--pico-contrast-background);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.forgot__input {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+.forgot__button {
+  width: 100%;
+  margin-bottom: 0.75rem;
 }
