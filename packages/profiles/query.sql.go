@@ -73,3 +73,45 @@ func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profi
 	)
 	return i, err
 }
+
+const updateProfile = `-- name: UpdateProfile :one
+UPDATE profiles 
+SET name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 
+WHERE user_id = ? 
+RETURNING id, name, bio, link, avatar, private, user_id, created_at, updated_at
+`
+
+type UpdateProfileParams struct {
+	Name      sql.NullString
+	Bio       sql.NullString
+	Link      sql.NullString
+	Avatar    sql.NullString
+	Private   sql.NullInt64
+	UpdatedAt string
+	UserID    int64
+}
+
+func (q *Queries) UpdateProfile(ctx context.Context, arg UpdateProfileParams) (Profile, error) {
+	row := q.db.QueryRowContext(ctx, updateProfile,
+		arg.Name,
+		arg.Bio,
+		arg.Link,
+		arg.Avatar,
+		arg.Private,
+		arg.UpdatedAt,
+		arg.UserID,
+	)
+	var i Profile
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Bio,
+		&i.Link,
+		&i.Avatar,
+		&i.Private,
+		&i.UserID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
