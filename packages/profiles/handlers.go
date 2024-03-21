@@ -3,8 +3,11 @@ package profiles
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
@@ -104,8 +107,48 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, data, "/profiles/edit-photo.app.tmpl")
 }
 
+// Todo: Implement photo uploa
 func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
-	// Todo: Implement photo upload
+	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
+	r.ParseMultipartForm(2 << 20)
+
+	// FormFile returns the first file for the given key `myFile`
+	// it also returns the FileHeader so we can get the Filename,
+	// the Header and the size of the file
+	file, handler, err := r.FormFile("avatar")
+	if err != nil {
+		fmt.Println("Error Retrieving the File")
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+
+	fmt.Printf("Uploaded File: %+v\n", handler.Filename)
+	fmt.Printf("File Size: %+v\n", handler.Size)
+	fmt.Printf("MIME Header: %+v\n", handler.Header)
+
+	// Get user session information
+	userSession := users.GetUserSession(r)
+
+	// Create a temporary file within our temp-images directory that follows
+	// a particular naming pattern
+	uploadDir := "uploads/" + userSession.Username + "/avatar"
+	log.Println(uploadDir)
+
+	tempFile, err := os.CreateTemp(uploadDir, "avatar-*.png")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer tempFile.Close()
+
+	// read all of the contents of our uploaded file into a byte array
+	fileBytes, err := io.ReadAll(file)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	// write this byte array to our temporary file
+	tempFile.Write(fileBytes)
 
 	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)

@@ -26,17 +26,21 @@
 
 {{ define "content" }}
   <article id="profile-photo-edit">
-    <form action="/profiles/edit/photo" method="POST" id="profile-photo__form">
+    <form
+      enctype="multipart/form-data"
+      action="/profiles/edit/photo"
+      method="POST"
+      id="profile-photo__form"
+    >
       <fieldset>
         <label for="name">Name</label>
         <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Please enter name"
-          aria-label="name"
-          {{ if .Profile.Name.Valid }}
-            value="{{ .Profile.Name.String }}"
+          type="file"
+          name="avatar"
+          id="avatar"
+          aria-label="avatar"
+          {{ if .Profile.Avatar.Valid }}
+            value="{{ .Profile.Avatar.String }}"
           {{ end }}
         />
       </fieldset>
