@@ -149,22 +149,6 @@ main {
   text-decoration: underline;
 }
 
-/* Avatar Placeholder */
-.avatar-placeholder {
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: var(--pico-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.avatar-placeholder box-icon {
-  margin-top: 0.6rem;
-}
-
 /****************************************** 
 * Reusable Component Styling
 *******************************************/
@@ -228,6 +212,10 @@ main {
 /* Form Styling */
 .form-container {
   padding: 1.5rem;
+}
+
+form button {
+  width: 100%;
 }
 
 /****************************************** 
@@ -300,8 +288,4 @@ main {
 .private-profile {
   display: flex;
   justify-content: space-between;
-}
-
-#profile__form button {
-  width: 100%;
 }

@@ -1,0 +1,47 @@
+{{ define "title" }}Edit Profile Photo{{ end }}
+
+{{ define "primary_outer" }}
+  <div style="display: none"></div>
+{{ end }}
+
+{{ define "header_outer" }}
+  <header class="header-override">
+    <div class="header-override__box">
+      <a href="/profiles/show" class="header-override__cancel">Cancel</a>
+    </div>
+    <div class="header-override__box">
+      <strong class="header-override__description">Edit Profile</strong>
+    </div>
+    <div class="header-override__box">
+      <a
+        href="#"
+        class="header-override__submit"
+        onclick="document.querySelector('#profile__form').submit();return false;"
+      >
+        Done
+      </a>
+    </div>
+  </header>
+{{ end }}
+
+{{ define "content" }}
+  <article id="profile-photo-edit">
+    <form action="/profiles/edit/photo" method="POST" id="profile-photo__form">
+      <fieldset>
+        <label for="name">Name</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Please enter name"
+          aria-label="name"
+          {{ if .Profile.Name.Valid }}
+            value="{{ .Profile.Name.String }}"
+          {{ end }}
+        />
+      </fieldset>
+
+      <button>Done</button>
+    </form>
+  </article>
+{{ end }}
