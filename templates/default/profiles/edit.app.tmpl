@@ -74,9 +74,7 @@
           id="private"
           class="toggle__checkbox"
           aria-label="private"
-          {{ if .Profile.Private.Valid }}
-            value="{{ .Profile.Private.Int64 }}"
-          {{ end }}
+          value="private"
         />
         <label for="private" class="toggle__label"></label>
       </fieldset>
