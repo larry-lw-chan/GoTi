@@ -1,8 +1,11 @@
 package pages
 
 import (
+	"errors"
 	"net/http"
+	"os"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
@@ -11,19 +14,22 @@ func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, data, "/pages/home.base.tmpl")
 }
 
-func AboutPageHandler(w http.ResponseWriter, r *http.Request) {
+func PagesHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, data, "/pages/about.base.tmpl")
-}
 
-func ContactPageHandler(w http.ResponseWriter, r *http.Request) {
-	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, data, "/pages/contact.base.tmpl")
-}
+	// Get article slug and create template path
+	pageSlug := chi.URLParam(r, "pageSlug")
+	tmpl := "/pages/" + pageSlug + ".base.tmpl"
 
-func PrivacyPageHandler(w http.ResponseWriter, r *http.Request) {
-	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, data, "/pages/privacy.base.tmpl")
+	// Check to see if template file exists
+	if _, err := os.Stat("templates/default" + tmpl); errors.Is(err, os.ErrNotExist) {
+		data["Code"] = http.StatusText(http.StatusNotFound)
+		render.Template(w, data, "/pages/not_found.base.tmpl")
+		return
+	}
+
+	// Render the template
+	render.Template(w, data, tmpl)
 }
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
