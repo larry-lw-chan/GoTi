@@ -14,21 +14,21 @@ type Location struct {
 }
 
 // Layout and Template Location
-var layout map[string][]string
-var tmplPath string
+var Layout map[string][]string
+var TmplPath string
 
 // Template Cache for storing parsed templates
 var tmplCache = map[string]*template.Template{}
 
-// Function used to declare the template path and layout location
+// Function used to declare the template path and Layout location
 func Layouts(l Location) {
-	tmplPath = l.TmplPath
-	layout = l.Layout
+	TmplPath = l.TmplPath
+	Layout = l.Layout
 
 	// Append Template Path to Layout
-	for _, path := range layout {
+	for _, path := range Layout {
 		for i, file := range path {
-			path[i] = tmplPath + file
+			path[i] = TmplPath + file
 		}
 	}
 }
@@ -63,9 +63,9 @@ func Template(w http.ResponseWriter, data map[string]interface{}, files ...strin
 }
 
 func getTmplFiles(key string, files []string) []string {
-	tmplFiles := layout[key]
+	tmplFiles := Layout[key]
 	for _, file := range files {
-		tmplFiles = append(tmplFiles, tmplPath+file)
+		tmplFiles = append(tmplFiles, TmplPath+file)
 	}
 	return tmplFiles
 }
@@ -85,7 +85,7 @@ func Partial(w http.ResponseWriter, data map[string]interface{}, files ...string
 		// Compile file list
 		var tmplFiles []string
 		for _, file := range files {
-			tmplFiles = append(tmplFiles, tmplPath+file)
+			tmplFiles = append(tmplFiles, TmplPath+file)
 		}
 
 		tmpl = template.Must(template.ParseFiles(tmplFiles...))

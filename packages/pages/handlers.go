@@ -22,7 +22,7 @@ func PagesHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl := "/pages/" + pageSlug + ".base.tmpl"
 
 	// Check to see if template file exists
-	if _, err := os.Stat("templates/default" + tmpl); errors.Is(err, os.ErrNotExist) {
+	if _, err := os.Stat(render.TmplPath + tmpl); errors.Is(err, os.ErrNotExist) {
 		data["Code"] = http.StatusText(http.StatusNotFound)
 		render.Template(w, data, "/pages/not_found.base.tmpl")
 		return
