@@ -95,10 +95,18 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 		flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
 	}
 
-	// Do more stuff later
+	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 }
 
 func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
+	data := r.Context().Value("data").(map[string]interface{})
+	render.Template(w, data, "/profiles/edit-photo.app.tmpl")
+}
 
+func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
+	// Todo: Implement photo upload
+
+	// Redirect to profile page
+	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 }

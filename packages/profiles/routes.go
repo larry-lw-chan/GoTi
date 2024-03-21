@@ -21,5 +21,6 @@ func Router() http.Handler {
 	r.Get("/edit", EditHandler)
 	r.Post("/edit", EditPostHandler)
 	r.Get("/edit/photo", EditPhotoHandler)
+	r.Post("/edit/photo", EditPhotoPostHandler)
 	return r
 }
