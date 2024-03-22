@@ -39,6 +39,15 @@ make migrate-up
 make run
 ```
 
+### Configuration
+Goti simplifies configuration by leveraging environment variables. Begin by copying the provided sample.env file into a .env file. Then, customize the variables within to align with your specific requirements.
+
+#### Mac or Linux Terminal
+
+```
+cp sample.env .env
+```
+
 ## Development Mode
 To run the development environment, install [Air](https://github.com/cosmtrek/air)
 and execute the following command in the project root directory:
