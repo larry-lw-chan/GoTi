@@ -30,7 +30,7 @@
       enctype="multipart/form-data"
       action="/profiles/edit/photo"
       method="POST"
-      id="profile-photo__form"
+      id="profile-photo-edit__form"
     >
       <fieldset>
         <label for="name">Name</label>
@@ -46,6 +46,14 @@
       </fieldset>
 
       <button>Done</button>
+    </form>
+    <br />
+    <form
+      action="/profiles/delete/photo"
+      method="POST"
+      id="profile-photo-delete__form"
+    >
+      <button>Delete</button>
     </form>
   </article>
 {{ end }}

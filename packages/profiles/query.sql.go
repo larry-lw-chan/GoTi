@@ -53,6 +53,17 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 	return i, err
 }
 
+const getProfileAvatarFromUserId = `-- name: GetProfileAvatarFromUserId :one
+SELECT avatar FROM profiles WHERE user_id = ?
+`
+
+func (q *Queries) GetProfileAvatarFromUserId(ctx context.Context, userID int64) (sql.NullString, error) {
+	row := q.db.QueryRowContext(ctx, getProfileAvatarFromUserId, userID)
+	var avatar sql.NullString
+	err := row.Scan(&avatar)
+	return avatar, err
+}
+
 const getProfileFromUserId = `-- name: GetProfileFromUserId :one
 SELECT id, name, bio, link, avatar, private, user_id, created_at, updated_at FROM profiles WHERE user_id = ?
 `

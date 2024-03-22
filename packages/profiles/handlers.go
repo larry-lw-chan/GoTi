@@ -127,9 +127,6 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 		Directory:  "avatar",
 	}
 
-	// Get Upload Directory
-	// uploadDir := filestore.GetUploadPath(userSession.Username, "avatar")
-
 	// Upload file to directory
 	filepath, err := filestore.Upload(fileUpload)
 	if err != nil {
@@ -156,4 +153,47 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
+}
+
+func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
+	// Get avatar path
+	userSession := users.GetUserSession(r)
+	queries := New(database.DB)
+
+	// Get avatar path
+	filename, err := queries.GetProfileAvatarFromUserId(context.Background(), userSession.Id)
+	if err != nil {
+		handleError(w, r, err, "Failed to get avatar path", "/profiles/show")
+		return
+	}
+
+	// Delete file from filestore
+	err = filestore.Delete(filename.String)
+	if err != nil {
+		handleError(w, r, err, "Failed to delete photo", "/profiles/show")
+		return
+	}
+
+	// Fill in update profile parameters
+	updateProfileParams := UpdateProfileParams{
+		Avatar: sql.NullString{Valid: false},
+		UserID: userSession.Id,
+	}
+
+	// Delete file path from database
+	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	if err != nil {
+		handleError(w, r, err, "Failed to delete photo link", "/profiles/show")
+		return
+	}
+
+	// Redirect to profile page
+	flash.Set(w, r, flash.SUCCESS, "Profile photo successfully deleted")
+	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
+}
+
+func handleError(w http.ResponseWriter, r *http.Request, err error, msg string, redirect string) {
+	log.Println(err)
+	flash.Set(w, r, flash.ERROR, msg)
+	http.Redirect(w, r, redirect, http.StatusSeeOther)
 }

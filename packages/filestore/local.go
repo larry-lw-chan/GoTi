@@ -10,6 +10,7 @@ import (
 /********************************************************
 * Local Filestore
 *********************************************************/
+
 // Global Variables
 var LocalFolder string = "uploads"
 
@@ -82,4 +83,13 @@ func LocalFolderOverride(folder string) {
 	if _, err := os.Stat(LocalFolder); os.IsNotExist(err) {
 		os.Mkdir(LocalFolder, 0755)
 	}
+}
+
+func LocalDelete(filename string) error {
+	// Remove the first slash from filename
+	filename = filename[1:]
+
+	// Delete the file
+	err := os.Remove(filename)
+	return err
 }

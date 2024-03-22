@@ -25,11 +25,20 @@ type FileUpload struct {
 	Directory  string
 }
 
-// Public Function that uploads a file to the selected filestore
+// Uploads a file to the selected filestore
 func Upload(fu FileUpload) (url string, err error) {
 	if Filestore == Local {
 		uploadPath, err := LocalUpload(fu)
 		return uploadPath, err
 	}
 	return "", errors.New("filestore not supported")
+}
+
+// Delete a file from the selected filestore
+func Delete(filename string) (err error) {
+	if Filestore == Local {
+		err := LocalDelete(filename)
+		return err
+	}
+	return errors.New("filestore not supported")
 }
