@@ -26,16 +26,20 @@
 
 {{ define "content" }}
   <article id="profile-photo-edit">
-    {{ if .Profile.Avatar.Valid }}
-      <div class="avatar-cropping">
+    <div id="croppie-container">
+      {{ if .Profile.Avatar.Valid }}
         <img id="croppie" src="{{ .Profile.Avatar.String }}" />
-      </div>
-    {{ end }}
-
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            initializeCroppie();
+          });
+        </script>
+      {{ end }}
+    </div>
 
     <form
       enctype="multipart/form-data"
-      action="/profiles/create/photo"
+      action="/profiles/edit/photo"
       method="POST"
       id="profile-photo-edit__form"
     >
@@ -47,9 +51,10 @@
           id="avatar"
           aria-label="avatar"
           accept="image/*"
-          {{ if .Profile.Avatar.Valid }}
-            value="{{ .Profile.Avatar.String }}"
-          {{ end }}
+          hx-post="/profiles/create/photo"
+          hx-target="#croppie-container"
+          hx-swap="innerHTML"
+          hx-encoding="multipart/form-data"
         />
       </fieldset>
       <button>Done</button>
@@ -70,17 +75,20 @@
   <script src="/assets/scripts/lib/exif.js"></script>
   <script src="/assets/scripts/lib/croppie.min.js"></script>
   <script type="application/javascript">
-    document.getElementById("avatar").onchange = function () {
-      document.getElementById("profile-photo-edit__form").submit();
-    };
-
-    /* Croppie Code*/
-    let opts = {
-      enableExif: true,
-      viewport: { width: 200, height: 200, type: "circle" },
-      boundary: { width: 300, height: 300 },
-    };
-    let c = new Croppie(document.getElementById("croppie"), opts);
+    function initializeCroppie() {
+      /* Croppie Code*/
+      let opts = {
+        enableExif: true,
+        viewport: { width: 200, height: 200, type: "circle" },
+        boundary: { width: 300, height: 300 },
+      };
+      let c = new Croppie(document.getElementById("croppie"), opts);
+    }
+    document.addEventListener("htmx:afterRequest", function (e) {
+      if (e.detail.target.id === "croppie-container") {
+        initializeCroppie();
+      }
+    });
   </script>
 {{ end }}
 

@@ -102,6 +102,8 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 
 // Uploads a photo to the server and redirect to profile avatar edit page
 func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
+	data := r.Context().Value("data").(map[string]interface{})
+
 	// Get user session information
 	userSession := users.GetUserSession(r)
 
@@ -130,13 +132,15 @@ func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
 		UpdatedAt: time.Now().String(),
 		UserID:    userSession.Id,
 	}
-	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	profile, err := queries.UpdateProfile(context.Background(), updateProfileParams)
 	if err != nil {
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
 	}
 
-	// Redirect to profile page
-	http.Redirect(w, r, "/profiles/edit/photo", http.StatusSeeOther)
+	data["Profile"] = profile
+
+	// Render Partial
+	render.Partial(w, data, "/profiles/partials/avatar.app.tmpl")
 }
 
 func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
@@ -207,12 +211,6 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get avatar path
 	filename, err := queries.GetProfileAvatarFromUserId(context.Background(), userSession.Id)
 	handleError(w, r, err, "/profiles/show")
-
-	// if !filename.Valid {
-	// 	flash.Set(w, r, flash.ERROR, "There is no photo to delete")
-	// 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
-	// 	return
-	// }
 
 	// Delete file from filestore
 	err = filestore.Delete(filename.String)
