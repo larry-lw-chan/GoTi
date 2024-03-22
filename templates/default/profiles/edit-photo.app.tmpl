@@ -26,22 +26,26 @@
 
 {{ define "content" }}
   <article id="profile-photo-edit">
-    <div id="croppie-container">
+    <div id="croppie">
       {{ if .Profile.Avatar.Valid }}
-        <img id="croppie" src="{{ .Profile.Avatar.String }}" />
-        <script>
-          document.addEventListener("DOMContentLoaded", function () {
-            initializeCroppie();
+      <script>
+        // Initialize Croppie if Avatar is already set
+        document.addEventListener("DOMContentLoaded", function () {
+          let c = initializeCroppie();
+          c.bind({
+            url: "{{ .Profile.Avatar.String }}",
           });
-        </script>
+        });
+      </script>
       {{ end }}
     </div>
 
+    <!-- Create Photo Form -->
     <form
       enctype="multipart/form-data"
-      action="/profiles/edit/photo"
+      action="/profiles/create/photo"
       method="POST"
-      id="profile-photo-edit__form"
+      id="profile-photo-create__form"
     >
       <fieldset>
         <label for="name">Name</label>
@@ -51,16 +55,22 @@
           id="avatar"
           aria-label="avatar"
           accept="image/*"
-          hx-post="/profiles/create/photo"
-          hx-target="#croppie-container"
-          hx-swap="innerHTML"
-          hx-encoding="multipart/form-data"
         />
       </fieldset>
+    </form>
+
+    <!-- Edit Photo Form -->
+    <form
+      enctype="multipart/form-data"
+      action="/profiles/create/photo"
+      method="POST"
+      id="profile-photo-edit__form"
+    >
       <button>Done</button>
     </form>
     <br />
 
+    <!-- Delete Photo Form -->
     <form
       action="/profiles/delete/photo"
       method="POST"
@@ -75,19 +85,28 @@
   <script src="/assets/scripts/lib/exif.js"></script>
   <script src="/assets/scripts/lib/croppie.min.js"></script>
   <script type="application/javascript">
+    // Croppie Initialize Function
     function initializeCroppie() {
-      /* Croppie Code*/
       let opts = {
         enableExif: true,
         viewport: { width: 200, height: 200, type: "circle" },
         boundary: { width: 300, height: 300 },
       };
-      let c = new Croppie(document.getElementById("croppie"), opts);
+      return new Croppie(document.getElementById("croppie"), opts);
     }
-    document.addEventListener("htmx:afterRequest", function (e) {
-      if (e.detail.target.id === "croppie-container") {
-        initializeCroppie();
-      }
+
+    // // Initialize Croppie after HTMX call
+    // document.addEventListener("htmx:afterSettle", function (e) {
+    //   if (e.detail.target.id === "avatar") {
+    //     let c = initializeCroppie();
+    //     c.bind({
+    //       url: `${e.detail.xhr.responseText}`,
+    //     });
+    //   }
+    // });
+
+    document.getElementById("avatar").addEventListener("change", function (e) {
+      document.getElementById("profile-photo-create__form").submit();
     });
   </script>
 {{ end }}

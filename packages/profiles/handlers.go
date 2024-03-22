@@ -139,8 +139,7 @@ func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
 
 	data["Profile"] = profile
 
-	// Render Partial
-	render.Partial(w, data, "/profiles/partials/avatar.app.tmpl")
+	http.Redirect(w, r, "/profiles/edit/photo", http.StatusSeeOther)
 }
 
 func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
