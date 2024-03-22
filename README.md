@@ -6,11 +6,11 @@ GoTi is a lightweight social networking app written in Go, designed to be light,
 ### Prerequisites
 Make sure you have the following installed before running GoTi:
 
--Git
--Docker (optional, for Docker setup)
--Go (optional, for direct Go setup)
--Make (optional, for direct Go setup)
--Node.js (optional, for development environment)
+- Git
+- Docker (optional, for Docker setup)
+- Go (optional, for direct Go setup)
+- Make (optional, for direct Go setup)
+- Node.js (optional, for development environment)
 
 ### Installation
 1. Clone project and cd into project directory
