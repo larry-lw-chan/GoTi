@@ -115,9 +115,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get the file and handler from the form
 	file, fileHeader, err := r.FormFile("avatar")
-	if err != nil {
-		log.Println(err)
-	}
+	handleError(w, r, err, "Failed to upload file", "/profiles/show")
 
 	// Place data in file struct
 	fileUpload := filestore.FileUpload{
@@ -129,12 +127,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Upload file to directory
 	filepath, err := filestore.Upload(fileUpload)
-	if err != nil {
-		log.Println(err)
-		flash.Set(w, r, flash.ERROR, "Profile update failed")
-		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
-		return
-	}
+	handleError(w, r, err, "Failed to upload file", "/profiles/show")
 
 	// Save file path to database
 	queries := New(database.DB)
@@ -145,7 +138,6 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
 	if err != nil {
-		log.Println(err)
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
 	} else {
 		flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
@@ -162,17 +154,11 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get avatar path
 	filename, err := queries.GetProfileAvatarFromUserId(context.Background(), userSession.Id)
-	if err != nil {
-		handleError(w, r, err, "Failed to get avatar path", "/profiles/show")
-		return
-	}
+	handleError(w, r, err, "Failed to get avatar path", "/profiles/show")
 
 	// Delete file from filestore
 	err = filestore.Delete(filename.String)
-	if err != nil {
-		handleError(w, r, err, "Failed to delete photo", "/profiles/show")
-		return
-	}
+	handleError(w, r, err, "Failed to delete photo", "/profiles/show")
 
 	// Fill in update profile parameters
 	updateProfileParams := UpdateProfileParams{
@@ -182,10 +168,7 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Delete file path from database
 	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
-	if err != nil {
-		handleError(w, r, err, "Failed to delete photo link", "/profiles/show")
-		return
-	}
+	handleError(w, r, err, "Failed to delete photo link", "/profiles/show")
 
 	// Redirect to profile page
 	flash.Set(w, r, flash.SUCCESS, "Profile photo successfully deleted")
@@ -193,7 +176,10 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleError(w http.ResponseWriter, r *http.Request, err error, msg string, redirect string) {
-	log.Println(err)
-	flash.Set(w, r, flash.ERROR, msg)
-	http.Redirect(w, r, redirect, http.StatusSeeOther)
+	if err != nil {
+		log.Println(err)
+		flash.Set(w, r, flash.ERROR, msg)
+		http.Redirect(w, r, redirect, http.StatusSeeOther)
+		return
+	}
 }
