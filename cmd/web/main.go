@@ -11,6 +11,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/packages/filestore"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/profiles"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
@@ -101,6 +102,12 @@ func init() {
 	if os.Getenv("PORT") != "" {
 		port = os.Getenv("PORT")
 	}
+
+	// Override the default port with user configuration
+	if os.Getenv("LOCAL_STORE") != "" {
+		filestore.LocalFolderOverride(os.Getenv("LOCAL_STORE"))
+	}
+
 }
 
 func main() {

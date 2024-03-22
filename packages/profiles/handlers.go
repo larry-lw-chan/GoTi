@@ -118,13 +118,20 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	defer file.Close()
+
+	// Place data in file struct
+	fileUpload := filestore.FileUpload{
+		File:       file,
+		FileHeader: fileHeader,
+		Username:   userSession.Username,
+		Directory:  "avatar",
+	}
 
 	// Get Upload Directory
-	uploadDir := filestore.GetUploadPath(userSession.Username, "avatar")
+	// uploadDir := filestore.GetUploadPath(userSession.Username, "avatar")
 
 	// Upload file to directory
-	filepath, err := filestore.Upload(file, fileHeader, uploadDir)
+	filepath, err := filestore.Upload(fileUpload)
 	if err != nil {
 		log.Println(err)
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
