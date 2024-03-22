@@ -95,16 +95,7 @@
       return new Croppie(document.getElementById("croppie"), opts);
     }
 
-    // // Initialize Croppie after HTMX call
-    // document.addEventListener("htmx:afterSettle", function (e) {
-    //   if (e.detail.target.id === "avatar") {
-    //     let c = initializeCroppie();
-    //     c.bind({
-    //       url: `${e.detail.xhr.responseText}`,
-    //     });
-    //   }
-    // });
-
+    // Submit file upload form when file is selected
     document.getElementById("avatar").addEventListener("change", function (e) {
       document.getElementById("profile-photo-create__form").submit();
     });
