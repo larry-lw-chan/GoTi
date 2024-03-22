@@ -38,8 +38,11 @@ func GetUploadPath(dir ...string) string {
 	return uploadPath
 }
 
-// Upload function uploads a file to the server
+// Upload a file to the server
 func Upload(file multipart.File, fh *multipart.FileHeader, uploadPath string) (url string, err error) {
+	// Close the file when we finish
+	defer file.Close()
+
 	// Print out the file name and mime type
 	fmt.Printf("Uploaded File: %+v\n", fh.Filename)
 	fmt.Printf("File Size: %+v\n", fh.Size)

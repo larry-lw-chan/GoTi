@@ -123,26 +123,28 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get Upload Directory
 	uploadDir := filestore.GetUploadPath(userSession.Username, "avatar")
 
-	// Get Upload Directory
+	// Upload file to directory
 	filepath, err := filestore.Upload(file, fileHeader, uploadDir)
 	if err != nil {
 		log.Println(err)
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
+		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
+		return
+	}
+
+	// Save file path to database
+	queries := New(database.DB)
+	updateProfileParams := UpdateProfileParams{
+		Avatar:    sql.NullString{String: filepath, Valid: true},
+		UpdatedAt: time.Now().String(),
+		UserID:    userSession.Id,
+	}
+	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	if err != nil {
+		log.Println(err)
+		flash.Set(w, r, flash.ERROR, "Profile update failed")
 	} else {
-		// Save file path to database
-		queries := New(database.DB)
-		updateProfileParams := UpdateProfileParams{
-			Avatar:    sql.NullString{String: filepath, Valid: true},
-			UpdatedAt: time.Now().String(),
-			UserID:    userSession.Id,
-		}
-		_, err := queries.UpdateProfile(context.Background(), updateProfileParams)
-		if err != nil {
-			log.Println(err)
-			flash.Set(w, r, flash.ERROR, "Profile update failed")
-		} else {
-			flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
-		}
+		flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
 	}
 
 	// Redirect to profile page
