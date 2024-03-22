@@ -20,14 +20,15 @@ cd goti
 ```
 
 ### Usage
-**Docker**
+
+####Docker
 To run GoTi using Docker, simply execute:
 ```
 docker-compose up
 ```
 
 
-**Direct Go Setup**
+####Direct Go Setup
 If you prefer to run GoTi directly, follow these steps:
 
 1. Make sure you have [Go](https://go.dev/) and [Make](https://www.gnu.org/software/make/manual/make.html) installed.
