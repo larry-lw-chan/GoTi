@@ -10,8 +10,7 @@ import (
 /********************************************************
 * Local Filestore
 *********************************************************/
-// Global Variables
-var LocalFolder string = "uploads"
+var LocalDefaultFolder string = "uploads"
 
 type LocalStore struct {
 	LocalFolder string
@@ -74,9 +73,18 @@ func (ls LocalStore) Delete(filename string) error {
 
 // GetUploadLocation function returns the path where files will be uploaded
 func (ls LocalStore) getPath(dir ...string) string {
-	uploadPath := ls.LocalFolder
+	// Create main uploads directory if it does not exist
+	if ls.LocalFolder == "" {
+		ls.LocalFolder = LocalDefaultFolder
+	}
 
-	// Create the uploads directory if it does not exist
+	// Create main uploads directory if it does not exist
+	if _, err := os.Stat(ls.LocalFolder); os.IsNotExist(err) {
+		os.Mkdir(ls.LocalFolder, 0755)
+	}
+
+	// Create the sub-directory if it does not exist
+	uploadPath := ls.LocalFolder
 	for _, d := range dir {
 		uploadPath = uploadPath + "/" + d
 		if _, err := os.Stat(uploadPath); os.IsNotExist(err) {
@@ -85,14 +93,4 @@ func (ls LocalStore) getPath(dir ...string) string {
 	}
 
 	return uploadPath
-}
-
-// Allows the local folder override
-func LocalFolderOverride(folder string) {
-	LocalFolder = folder
-
-	// Create the uploads directory if it does not exist
-	if _, err := os.Stat(LocalFolder); os.IsNotExist(err) {
-		os.Mkdir(LocalFolder, 0755)
-	}
 }
