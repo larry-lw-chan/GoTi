@@ -164,39 +164,47 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 
 func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	// userSession := users.GetUserSession(r)
+
+	// Parse Form
+	r.ParseForm()
+
+	// Get File Name
+	avatar := r.FormValue("avatar")
+
+	log.Println(avatar)
 
 	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
-	r.ParseMultipartForm(2 << 20)
+	// r.ParseMultipartForm(2 << 20)
 
 	// Get the file and handler from the form
-	file, fileHeader, err := r.FormFile("avatar")
-	handleError(w, r, err, "/profiles/show")
+	// file, fileHeader, err := r.FormFile("avatar")
+	// handleError(w, r, err, "/profiles/show")
 
-	// Place data in file struct
-	fileUpload := filestore.FileUpload{
-		File:       file,
-		FileHeader: fileHeader,
-		Directory:  userSession.Username + "/avatar",
-	}
+	// // Place data in file struct
+	// fileUpload := filestore.FileUpload{
+	// 	File:       file,
+	// 	FileHeader: fileHeader,
+	// 	Directory:  userSession.Username + "/avatar",
+	// }
 
-	// Upload file to directory
-	filepath, err := filestore.Upload(fileUpload)
-	handleError(w, r, err, "/profiles/show")
+	// // Upload file to directory
+	// filepath, err := filestore.Upload(fileUpload)
+	// handleError(w, r, err, "/profiles/show")
 
-	// Save file path to database
-	queries := New(database.DB)
-	updateProfileParams := UpdateProfileParams{
-		Avatar:    sql.NullString{String: filepath, Valid: true},
-		UpdatedAt: time.Now().String(),
-		UserID:    userSession.Id,
-	}
-	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
-	if err != nil {
-		flash.Set(w, r, flash.ERROR, "Profile update failed")
-	} else {
-		flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
-	}
+	// // Save file path to database
+	// queries := New(database.DB)
+	// updateProfileParams := UpdateProfileParams{
+	// 	Avatar:    sql.NullString{String: filepath, Valid: true},
+	// 	UpdatedAt: time.Now().String(),
+	// 	UserID:    userSession.Id,
+	// }
+	// _, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	// if err != nil {
+	// 	flash.Set(w, r, flash.ERROR, "Profile update failed")
+	// } else {
+	// 	flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
+	// }
 
 	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)

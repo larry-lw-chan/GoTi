@@ -26,19 +26,7 @@
 
 {{ define "content" }}
   <article id="profile-photo-edit">
-    <div id="croppie">
-      {{ if .Profile.Avatar.Valid }}
-      <script>
-        // Initialize Croppie if Avatar is already set
-        document.addEventListener("DOMContentLoaded", function () {
-          let c = initializeCroppie();
-          c.bind({
-            url: "{{ .Profile.Avatar.String }}",
-          });
-        });
-      </script>
-      {{ end }}
-    </div>
+    <div id="croppie"></div>
 
     <!-- Create Photo Form -->
     <form
@@ -52,7 +40,7 @@
         <input
           type="file"
           name="avatar"
-          id="avatar"
+          id="profile-photo-create___avatar"
           aria-label="avatar"
           accept="image/*"
         />
@@ -61,12 +49,12 @@
 
     <!-- Edit Photo Form -->
     <form
-      enctype="multipart/form-data"
-      action="/profiles/create/photo"
+      action="/profiles/edit/photo"
       method="POST"
       id="profile-photo-edit__form"
     >
-      <button>Done</button>
+      <input type="hidden" name="avatar" id="avatar" />
+      <button id="profile-photo-edit__button">Done</button>
     </form>
     <br />
 
@@ -85,7 +73,17 @@
   <script src="/assets/scripts/lib/exif.js"></script>
   <script src="/assets/scripts/lib/croppie.min.js"></script>
   <script type="application/javascript">
-    // Croppie Initialize Function
+    // Submit file upload
+    document
+      .getElementById("profile-photo-create___avatar")
+      .addEventListener("change", function (e) {
+        document.getElementById("profile-photo-create__form").submit();
+      });
+  </script>
+
+  {{ if .Profile.Avatar.Valid }}
+  <script type="application/javascript">
+    // Croppie Initialize
     function initializeCroppie() {
       let opts = {
         enableExif: true,
@@ -95,11 +93,32 @@
       return new Croppie(document.getElementById("croppie"), opts);
     }
 
-    // Submit file upload form when file is selected
-    document.getElementById("avatar").addEventListener("change", function (e) {
-      document.getElementById("profile-photo-create__form").submit();
+    // Start Croppie
+    let c = initializeCroppie();
+    c.bind({
+      url: "{{ .Profile.Avatar.String }}",
     });
+
+    // If the user clicks the Done button, submit the form
+    document.querySelector("#profile-photo-edit__button").addEventListener("click", function(e) {
+      e.preventDefault();
+      c.result({
+        type: "base64",
+        size: { width: 200, height: 200 },
+      }).then(function (base64) {
+        let avatar = document.getElementById("avatar");
+        avatar.value = base64;
+        document.getElementById("profile-photo-edit__form").submit();
+      });
+    });
+
+
+
+
+
+
   </script>
+  {{ end }}
 {{ end }}
 
 {{ define "style" }}
