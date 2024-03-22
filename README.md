@@ -12,23 +12,20 @@ Make sure you have the following installed before running GoTi:
 - Make (optional, for direct Go setup)
 - Node.js (optional, for development environment)
 
-### Installation
+## Installation
 1. Clone project and cd into project directory
 ```
 git clone git@github.com:larry-lw-chan/GoTi.git
 cd goti
 ```
 
-## Usage
-
-### Docker
+#### Docker
 To run GoTi using Docker, simply execute:
 ```
 docker-compose up
 ```
 
-
-### Direct Go Setup
+#### Direct Go Setup
 If you prefer to run GoTi directly, follow these steps:
 
 1. Make sure you have [Go](https://go.dev/) and [Make](https://www.gnu.org/software/make/manual/make.html) installed.
@@ -39,7 +36,7 @@ make migrate-up
 make run
 ```
 
-### Configuration
+## Configuration
 Goti simplifies configuration by leveraging environment variables. Begin by copying the provided sample.env file into a .env file. Then, customize the variables within to align with your specific requirements.
 
 #### Mac or Linux Terminal
