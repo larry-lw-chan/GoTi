@@ -26,6 +26,13 @@
 
 {{ define "content" }}
   <article id="profile-photo-edit">
+    {{ if .Profile.Avatar.Valid }}
+      <div class="avatar-cropping">
+        <img id="croppie" src="{{ .Profile.Avatar.String }}" />
+      </div>
+    {{ end }}
+
+
     <form
       enctype="multipart/form-data"
       action="/profiles/edit/photo"
@@ -39,12 +46,12 @@
           name="avatar"
           id="avatar"
           aria-label="avatar"
+          accept="image/*"
           {{ if .Profile.Avatar.Valid }}
             value="{{ .Profile.Avatar.String }}"
           {{ end }}
         />
       </fieldset>
-
       <button>Done</button>
     </form>
     <br />
@@ -58,7 +65,19 @@
   </article>
 {{ end }}
 
+{{ define "style" }}
+  <link rel="stylesheet" href="/assets/css/lib/croppie.css" />
+{{ end }}
+
 {{ define "script" }}
-  <script src="/assets/scripts/croppie.min.js"></script>
-  <script type="application/javascript"></script>
+  <script src="/assets/scripts/lib/exif.js"></script>
+  <script src="/assets/scripts/lib/croppie.min.js"></script>
+  <script type="application/javascript">
+    let opts = {
+      enableExif: true,
+      viewport: { width: 200, height: 200, type: "circle" },
+      boundary: { width: 300, height: 300 },
+    };
+    let c = new Croppie(document.getElementById("croppie"), opts);
+  </script>
 {{ end }}
