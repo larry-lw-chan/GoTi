@@ -100,6 +100,45 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 }
 
+// Uploads a photo to the server and redirect to profile avatar edit page
+func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
+	// Get user session information
+	userSession := users.GetUserSession(r)
+
+	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
+	r.ParseMultipartForm(2 << 20)
+
+	// Get the file and handler from the form
+	file, fileHeader, err := r.FormFile("avatar")
+	handleError(w, r, err, "/profiles/edit/photo")
+
+	// Place data in file struct
+	fileUpload := filestore.FileUpload{
+		File:       file,
+		FileHeader: fileHeader,
+		Directory:  userSession.Username + "/avatar",
+	}
+
+	// Upload file to directory
+	filepath, err := filestore.Upload(fileUpload)
+	handleError(w, r, err, "/profiles/edit/photo")
+
+	// Save file path to database
+	queries := New(database.DB)
+	updateProfileParams := UpdateProfileParams{
+		Avatar:    sql.NullString{String: filepath, Valid: true},
+		UpdatedAt: time.Now().String(),
+		UserID:    userSession.Id,
+	}
+	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	if err != nil {
+		flash.Set(w, r, flash.ERROR, "Profile update failed")
+	}
+
+	// Redirect to profile page
+	http.Redirect(w, r, "/profiles/edit/photo", http.StatusSeeOther)
+}
+
 func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
@@ -120,7 +159,6 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, data, "/profiles/edit-photo.app.tmpl")
 }
 
-// Todo: Implement photo upload
 func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get user session information
 	userSession := users.GetUserSession(r)

@@ -35,7 +35,7 @@
 
     <form
       enctype="multipart/form-data"
-      action="/profiles/edit/photo"
+      action="/profiles/create/photo"
       method="POST"
       id="profile-photo-edit__form"
     >
@@ -55,6 +55,7 @@
       <button>Done</button>
     </form>
     <br />
+
     <form
       action="/profiles/delete/photo"
       method="POST"
@@ -65,14 +66,15 @@
   </article>
 {{ end }}
 
-{{ define "style" }}
-  <link rel="stylesheet" href="/assets/css/lib/croppie.css" />
-{{ end }}
-
 {{ define "script" }}
   <script src="/assets/scripts/lib/exif.js"></script>
   <script src="/assets/scripts/lib/croppie.min.js"></script>
   <script type="application/javascript">
+    document.getElementById("avatar").onchange = function () {
+      document.getElementById("profile-photo-edit__form").submit();
+    };
+
+    /* Croppie Code*/
     let opts = {
       enableExif: true,
       viewport: { width: 200, height: 200, type: "circle" },
@@ -80,4 +82,8 @@
     };
     let c = new Croppie(document.getElementById("croppie"), opts);
   </script>
+{{ end }}
+
+{{ define "style" }}
+  <link rel="stylesheet" href="/assets/css/lib/croppie.css" />
 {{ end }}
