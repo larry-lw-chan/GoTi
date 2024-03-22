@@ -82,7 +82,7 @@ input:-webkit-autofill {
 }
 
 /****************************************************
-* Form Element Styling
+* Reusable Components
 ****************************************************/
 /* Toggle Style */
 .toggle__label {
@@ -129,4 +129,24 @@ input:-webkit-autofill {
   top: 0px;
   left: 0px;
   transition: all var(--transition-speed);
+}
+
+/* Button to Link Style */
+.button-to-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: var(--pico-color);
+  text-decoration: underline;
+  cursor: pointer;
+  width: auto;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+#profile-photo-delete__form {
+  text-align: center;
 }

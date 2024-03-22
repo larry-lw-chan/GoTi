@@ -1,6 +1,7 @@
 package filestore
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -62,6 +63,11 @@ func (ls LocalStore) Upload(fu FileUpload) (string, error) {
 }
 
 func (ls LocalStore) Delete(filename string) error {
+	// Make sure file is not empty
+	if filename == "" {
+		return errors.New("no file provided for deletion")
+	}
+
 	// Remove the first slash from filename
 	filename = filename[1:]
 
