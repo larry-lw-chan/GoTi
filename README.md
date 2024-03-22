@@ -49,7 +49,7 @@ air
 
 ## Coding Conventions
 GoTi follows BEM (Block, Element, Modifier) naming conventions for CSS, ensuring consistency and maintainability. All templates, JavaScript, and CSS formatting are standardized using Prettier. 
-Individual page overrides can be used the template by defining a 'style' block.  To install necessary dependencies, run:
+Individual page overrides can be done on a per template basis by defining a 'style' block.  To install necessary dependencies, run:
 
 ```
 npm install
