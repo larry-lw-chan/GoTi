@@ -1,10 +1,14 @@
 package profiles
 
 import (
+	"bytes"
 	"context"
 	"database/sql"
+	"encoding/base64"
+	"image/png"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
@@ -164,15 +168,30 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 
 func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get user session information
-	// userSession := users.GetUserSession(r)
+	userSession := users.GetUserSession(r)
 
 	// Parse Form
 	r.ParseForm()
 
-	// Get File Name
-	avatar := r.FormValue("avatar")
+	// Get File (Base64 Format) and decode
+	image := r.FormValue("avatar_base64")
+	coI := strings.Index(string(image), ",")
+	rawImage := string(image)[coI+1:]
 
-	log.Println(avatar)
+	// Encoded Image DataUrl //
+	unbased, _ := base64.StdEncoding.DecodeString(string(rawImage))
+	res := bytes.NewReader(unbased)
+
+	// Convert to PNG - Croppie Default
+	pngImage, err := png.Decode(res)
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println(pngImage)
+
+	// Generate file handler
+	// fileHeader := multipart.FileHeader{}
 
 	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
 	// r.ParseMultipartForm(2 << 20)

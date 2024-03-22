@@ -53,7 +53,7 @@
       method="POST"
       id="profile-photo-edit__form"
     >
-      <input type="hidden" name="avatar" id="avatar" />
+      <input type="hidden" name="avatar_base64" id="avatar_base64" />
       <button id="profile-photo-edit__button">Done</button>
     </form>
     <br />
@@ -106,7 +106,7 @@
         type: "base64",
         size: { width: 200, height: 200 },
       }).then(function (base64) {
-        let avatar = document.getElementById("avatar");
+        let avatar = document.getElementById("avatar_base64");
         avatar.value = base64;
         document.getElementById("profile-photo-edit__form").submit();
       });
