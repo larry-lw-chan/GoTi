@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/packages/filestore"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
-	"github.com/larry-lw-chan/goti/packages/upload"
 	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
@@ -121,10 +121,10 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 
 	// Get Upload Directory
-	uploadDir := "uploads/" + userSession.Username + "/avatar"
+	uploadDir := filestore.GetUploadPath(userSession.Username, "avatar")
 
 	// Get Upload Directory
-	filepath, err := upload.File(file, fileHeader, uploadDir)
+	filepath, err := filestore.Upload(file, fileHeader, uploadDir)
 	if err != nil {
 		log.Println(err)
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
