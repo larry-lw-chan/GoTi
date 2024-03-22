@@ -121,8 +121,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	fileUpload := filestore.FileUpload{
 		File:       file,
 		FileHeader: fileHeader,
-		Username:   userSession.Username,
-		Directory:  "avatar",
+		Directory:  userSession.Username + "/avatar",
 	}
 
 	// Upload file to directory

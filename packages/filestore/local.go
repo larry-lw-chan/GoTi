@@ -21,7 +21,6 @@ func (ls LocalStore) Upload(fu FileUpload) (string, error) {
 	// Extract from file upload struct
 	file := fu.File
 	fh := fu.FileHeader
-	username := fu.Username
 	dir := fu.Directory
 
 	// Close the file when we finish
@@ -33,7 +32,7 @@ func (ls LocalStore) Upload(fu FileUpload) (string, error) {
 	fmt.Printf("MIME Header: %+v\n", fh.Header)
 
 	// Get upload path
-	uploadPath := ls.getPath(username, dir)
+	uploadPath := ls.getPath(dir)
 
 	// Generate name parttern from file extension
 	name := strings.Split(fh.Filename, ".")

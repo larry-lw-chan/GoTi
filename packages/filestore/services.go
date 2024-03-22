@@ -22,7 +22,6 @@ type FilestoreService interface {
 type FileUpload struct {
 	File       multipart.File
 	FileHeader *multipart.FileHeader
-	Username   string
 	Directory  string
 }
 
