@@ -103,11 +103,12 @@ func init() {
 		port = os.Getenv("PORT")
 	}
 
-	// Override the default port with user configuration
+	// Override the filestore local folder with user configuration
 	if os.Getenv("LOCAL_STORE") != "" {
-		filestore.LocalFolderOverride(os.Getenv("LOCAL_STORE"))
+		filestore.FS = filestore.LocalStore{
+			LocalFolder: os.Getenv("LOCAL_STORE"),
+		}
 	}
-
 }
 
 func main() {

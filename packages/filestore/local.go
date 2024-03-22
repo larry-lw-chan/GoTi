@@ -10,12 +10,15 @@ import (
 /********************************************************
 * Local Filestore
 *********************************************************/
-
 // Global Variables
 var LocalFolder string = "uploads"
 
+type LocalStore struct {
+	LocalFolder string
+}
+
 // Main function that uploads a file to the local filestore
-func LocalUpload(fu FileUpload) (string, error) {
+func (ls LocalStore) Upload(fu FileUpload) (string, error) {
 	// Extract from file upload struct
 	file := fu.File
 	fh := fu.FileHeader
@@ -31,7 +34,7 @@ func LocalUpload(fu FileUpload) (string, error) {
 	fmt.Printf("MIME Header: %+v\n", fh.Header)
 
 	// Get upload path
-	uploadPath := getLocalPath(username, dir)
+	uploadPath := ls.getPath(username, dir)
 
 	// Generate name parttern from file extension
 	name := strings.Split(fh.Filename, ".")
@@ -60,9 +63,18 @@ func LocalUpload(fu FileUpload) (string, error) {
 	return "/" + tempFile.Name(), nil
 }
 
+func (ls LocalStore) Delete(filename string) error {
+	// Remove the first slash from filename
+	filename = filename[1:]
+
+	// Delete the file
+	err := os.Remove(filename)
+	return err
+}
+
 // GetUploadLocation function returns the path where files will be uploaded
-func getLocalPath(dir ...string) string {
-	uploadPath := LocalFolder
+func (ls LocalStore) getPath(dir ...string) string {
+	uploadPath := ls.LocalFolder
 
 	// Create the uploads directory if it does not exist
 	for _, d := range dir {
@@ -83,13 +95,4 @@ func LocalFolderOverride(folder string) {
 	if _, err := os.Stat(LocalFolder); os.IsNotExist(err) {
 		os.Mkdir(LocalFolder, 0755)
 	}
-}
-
-func LocalDelete(filename string) error {
-	// Remove the first slash from filename
-	filename = filename[1:]
-
-	// Delete the file
-	err := os.Remove(filename)
-	return err
 }
