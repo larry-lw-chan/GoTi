@@ -7,9 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 	"strings"
-	"time"
 
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/packages/filestore"
@@ -17,6 +15,10 @@ import (
 	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
+
+/****************************************************************
+* Profile Handlers
+****************************************************************/
 
 func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
@@ -28,18 +30,11 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	// Get profile information or create if not exist
 	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.Id)
 	if err != nil {
-		profileParem := CreateProfileParams{
-			Name:      sql.NullString{String: "your name", Valid: true},
-			Bio:       sql.NullString{String: "add bio", Valid: true},
-			Link:      sql.NullString{String: "add links", Valid: true},
-			Private:   sql.NullInt64{Int64: 0, Valid: true},
-			Avatar:    sql.NullString{Valid: false},
-			UserID:    userSession.Id,
-			CreatedAt: time.Now().String(),
-			UpdatedAt: time.Now().String(),
-		}
-		profile, _ = queries.CreateProfile(context.Background(), profileParem)
+		profile, err = createProfileForUser(userSession.Id)
+		handleError(w, r, err, "/profiles/show")
 	}
+
+	// Load username and profile to pass to template
 	data["Username"] = userSession.Username
 	data["Profile"] = profile
 
@@ -73,26 +68,17 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get user session information
 	userSession := users.GetUserSession(r)
-	queries := New(database.DB)
 
-	// Check if user is private
+	// Assign private to (1) if checkbox is checked ("private")
 	var private int64 = 0
 	if r.FormValue("private") == "private" {
 		private = 1
 	}
 
-	// Set Profile parameters
-	updateProfileParams := UpdateProfileParams{
-		Name:      sql.NullString{String: r.FormValue("name"), Valid: true},
-		Bio:       sql.NullString{String: r.FormValue("bio"), Valid: true},
-		Link:      sql.NullString{String: r.FormValue("link"), Valid: true},
-		Private:   sql.NullInt64{Int64: private, Valid: true},
-		UpdatedAt: time.Now().String(),
-		UserID:    userSession.Id,
-	}
-
 	// Update profile
-	_, err := queries.UpdateProfile(context.Background(), updateProfileParams)
+	name, bio, link := r.FormValue("name"), r.FormValue("bio"), r.FormValue("link")
+	_, err := updateProfileForUser(userSession.Id, name, bio, link, private)
+
 	if err != nil {
 		log.Println(err)
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
@@ -103,6 +89,10 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 }
+
+/****************************************************************
+* Profile Photo Handlers
+****************************************************************/
 
 // Uploads a photo to the server and redirect to profile avatar edit page
 func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
@@ -138,13 +128,7 @@ func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
 	handleError(w, r, err, "/profiles/edit/photo")
 
 	// Save file path to database
-	queries := New(database.DB)
-	updateProfileParams := UpdateProfileParams{
-		Avatar:    sql.NullString{String: filepath, Valid: true},
-		UpdatedAt: time.Now().String(),
-		UserID:    userSession.Id,
-	}
-	profile, err := queries.UpdateProfile(context.Background(), updateProfileParams)
+	profile, err := saveFilePathToProfile(userSession.Id, filepath)
 	if err != nil {
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
 	}
@@ -181,37 +165,28 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse Form
 	r.ParseForm()
 
-	// Get File (Base64 Format) and decode
+	// Get File in Base64 Format
 	data := r.FormValue("avatar_base64")
+
+	// Decode Base64 Image into []byte
 	coI := strings.Index(string(data), ",")
 	rawData := string(data)[coI+1:]
+	fileByte, _ := base64.StdEncoding.DecodeString(string(rawData))
 
-	// Encoded Image DataUrl //
-	image, _ := base64.StdEncoding.DecodeString(string(rawData))
-
-	/****************************************************/
-	// WARNING!!! HACK Job...  Bypassing filestore
-	/****************************************************/
-	filepath := "uploads/" + userSession.Username + "/avatar/"
-	filename := filepath + "avatar-*.png"
-
-	// Write file data to a file
-	err := os.WriteFile(filename, image, 0755)
-	if err != nil {
-		log.Println(err)
+	// Populate File Struct
+	fileUpload := filestore.FileUpload{
+		FileBytes:   fileByte,
+		NamePattern: "avatar-*.png",
+		Directory:   userSession.Username + "/avatar",
 	}
 
-	// Add Slash to Filepath
-	filename = "/" + filename
+	// Upload file to directory
+	filepath, err := filestore.Upload(fileUpload)
+	handleError(w, r, err, "/profiles/edit/photo")
 
 	// Save file path to database
-	queries := New(database.DB)
-	updateProfileParams := UpdateProfileParams{
-		Avatar:    sql.NullString{String: filename, Valid: true},
-		UpdatedAt: time.Now().String(),
-		UserID:    userSession.Id,
-	}
-	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	_, err = saveFilePathToProfile(userSession.Id, filepath)
+
 	if err != nil {
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
 	} else {
@@ -248,13 +223,4 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Redirect to profile page
 	flash.Set(w, r, flash.SUCCESS, "Profile photo successfully deleted")
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
-}
-
-func handleError(w http.ResponseWriter, r *http.Request, err error, redirect string) {
-	if err != nil {
-		log.Println(err)
-		flash.Set(w, r, flash.ERROR, err.Error())
-		http.Redirect(w, r, redirect, http.StatusSeeOther)
-		return
-	}
 }
