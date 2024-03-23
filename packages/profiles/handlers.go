@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"encoding/base64"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -116,12 +117,20 @@ func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
 	// Get the file and handler from the form
 	file, fileHeader, err := r.FormFile("avatar")
 	handleError(w, r, err, "/profiles/edit/photo")
+	defer file.Close()
+
+	// Print file information
+	filestore.PrintFileHeader(fileHeader)
+
+	// Convert File into byte slice
+	fileBytes, err := io.ReadAll(file)
+	handleError(w, r, err, "/profiles/edit/photo")
 
 	// Place data in file struct
 	fileUpload := filestore.FileUpload{
-		File:       file,
-		FileHeader: fileHeader,
-		Directory:  userSession.Username + "/avatar",
+		FileBytes:   fileBytes,
+		NamePattern: "avatar-*.png",
+		Directory:   userSession.Username + "/avatar",
 	}
 
 	// Upload file to directory

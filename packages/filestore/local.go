@@ -3,9 +3,7 @@ package filestore
 import (
 	"errors"
 	"fmt"
-	"io"
 	"os"
-	"strings"
 )
 
 /********************************************************
@@ -19,41 +17,22 @@ type LocalStore struct {
 
 // Main function that uploads a file to the local filestore
 func (ls LocalStore) Upload(fu FileUpload) (string, error) {
-	// Extract from file upload struct
-	file := fu.File
-	fh := fu.FileHeader
+	// Get file parameters
+	fileBytes := fu.FileBytes
+	namePattern := fu.NamePattern
 	dir := fu.Directory
-
-	// Close the file when we finish
-	defer file.Close()
-
-	// Print out the file name and mime type
-	fmt.Printf("Uploaded File: %+v\n", fh.Filename)
-	fmt.Printf("File Size: %+v\n", fh.Size)
-	fmt.Printf("MIME Header: %+v\n", fh.Header)
 
 	// Get upload path
 	uploadPath := ls.getPath(dir)
 
-	// Generate name parttern from file extension
-	name := strings.Split(fh.Filename, ".")
-	pattern := name[0] + "-*." + name[1]
-
 	// Create a temporary file within our temp-images directory that follows
 	// a particular naming pattern
-	tempFile, err := os.CreateTemp(uploadPath, pattern)
+	tempFile, err := os.CreateTemp(uploadPath, namePattern)
 	if err != nil {
 		fmt.Println(err)
 		return "", err
 	}
 	defer tempFile.Close()
-
-	// read all of the contents of our uploaded file into a byte array
-	fileBytes, err := io.ReadAll(file)
-	if err != nil {
-		fmt.Println(err)
-		return "", err
-	}
 
 	// write this byte array to our temporary file
 	tempFile.Write(fileBytes)

@@ -1,6 +1,7 @@
 package filestore
 
 import (
+	"log"
 	"mime/multipart"
 )
 
@@ -20,9 +21,9 @@ type FilestoreService interface {
 
 // Struct used to hold the needed file parameters
 type FileUpload struct {
-	File       multipart.File
-	FileHeader *multipart.FileHeader
-	Directory  string
+	FileBytes   []byte
+	NamePattern string
+	Directory   string
 }
 
 // Uploads a file to the selected filestore
@@ -35,4 +36,13 @@ func Upload(fu FileUpload) (url string, err error) {
 func Delete(filename string) (err error) {
 	err = FS.Delete(filename)
 	return err
+}
+
+/********************************************************
+* Misc Helper Functions
+*********************************************************/
+func PrintFileHeader(fh *multipart.FileHeader) {
+	log.Printf("Uploaded File: %+v\n", fh.Filename)
+	log.Printf("File Size: %+v\n", fh.Size)
+	log.Printf("MIME Header: %+v\n", fh.Header)
 }
