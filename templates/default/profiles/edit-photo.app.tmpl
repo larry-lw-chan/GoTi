@@ -29,7 +29,7 @@
     <div id="croppie"></div>
 
     <!-- Create Photo Form -->
-    <form
+    <!-- <form
       enctype="multipart/form-data"
       action="/profiles/create/photo"
       method="POST"
@@ -45,7 +45,7 @@
           accept="image/*"
         />
       </fieldset>
-    </form>
+    </form> -->
 
     <!-- Edit Photo Form -->
     <form
@@ -53,6 +53,13 @@
       method="POST"
       id="profile-photo-edit__form"
     >
+      <input
+        type="file"
+        name="file"
+        id="file"
+        aria-label="file"
+        accept="image/*"
+      />
       <input type="hidden" name="avatar_base64" id="avatar_base64" />
       <button id="profile-photo-edit__button">Done</button>
     </form>
@@ -73,50 +80,79 @@
   <script src="/assets/scripts/lib/exif.js"></script>
   <script src="/assets/scripts/lib/croppie.min.js"></script>
   <script type="application/javascript">
-    // Submit file upload
-    document
-      .getElementById("profile-photo-create___avatar")
-      .addEventListener("change", function (e) {
-        document.getElementById("profile-photo-create__form").submit();
-      });
-  </script>
+    // Croppie State
+    let croppie = null;
 
-  {{ if .Profile.Avatar.Valid }}
-  <script type="application/javascript">
-    // Croppie Initialize
-    function initializeCroppie() {
+    // Croppie Functions
+    function buildCroppie(id) {
       let opts = {
         enableExif: true,
         viewport: { width: 200, height: 200, type: "circle" },
         boundary: { width: 300, height: 300 },
       };
-      return new Croppie(document.getElementById("croppie"), opts);
+      return new Croppie(document.getElementById(id), opts);
     }
 
-    // Start Croppie
-    let c = initializeCroppie();
-    c.bind({
-      url: "{{ .Profile.Avatar.String }}",
+    function destroyCroppieIfExist() {
+      let oldCroppie = document.querySelector(".croppie-container");
+      if (oldCroppie) {
+        croppie.destroy();
+      }
+    }
+
+    function bindFileToCroppie(e) {
+      // Create New FileReader
+      let reader = new FileReader(file);
+
+      // Setup FileReader OnLoad Function
+      reader.onload = function (e) {
+        // Create new croppie
+        croppie = buildCroppie("croppie");
+        croppie.bind({
+          url: e.target.result,
+        });
+      };
+
+      // Read the file as DataURL
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    // Bind file to croppie when user uploads a file
+    document.getElementById("file").addEventListener("change", function (e) {
+      destroyCroppieIfExist();
+      bindFileToCroppie(e);
     });
 
     // If the user clicks the Done button, submit the form
-    document.querySelector("#profile-photo-edit__button").addEventListener("click", function(e) {
+    const profilePhotoEditBtn = document.querySelector(
+      "#profile-photo-edit__button",
+    );
+
+    // If the user clicks the Done button, submit the form
+    profilePhotoEditBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      c.result({
-        type: "base64",
-        size: { width: 200, height: 200 },
-      }).then(function (base64) {
-        let avatar = document.getElementById("avatar_base64");
-        avatar.value = base64;
-        document.getElementById("profile-photo-edit__form").submit();
+      croppie
+        .result({
+          type: "base64",
+          size: { width: 200, height: 200 },
+        })
+        .then(function (base64) {
+          let avatar = document.getElementById("avatar_base64");
+          avatar.value = base64;
+          document.getElementById("profile-photo-edit__form").submit();
+        });
+    });
+  </script>
+
+  {{ if .Profile.Avatar.Valid }}
+  <script type="application/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+      // Start Croppie
+      croppie = buildCroppie("croppie");
+      croppie.bind({
+        url: "{{ .Profile.Avatar.String }}",
       });
     });
-
-
-
-
-
-
   </script>
   {{ end }}
 {{ end }}
