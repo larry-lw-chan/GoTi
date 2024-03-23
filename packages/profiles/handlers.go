@@ -106,11 +106,9 @@ func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get the file and handler from the form
 	file, fileHeader, err := r.FormFile("avatar")
+	filestore.PrintFileHeader(fileHeader)
 	handleError(w, r, err, "/profiles/edit/photo")
 	defer file.Close()
-
-	// Print file information
-	filestore.PrintFileHeader(fileHeader)
 
 	// Convert File into byte slice
 	fileBytes, err := io.ReadAll(file)
