@@ -20,7 +20,6 @@ func Router() http.Handler {
 	r.Get("/show", ShowHandler)
 	r.Get("/edit", EditHandler)
 	r.Post("/edit", EditPostHandler)
-	r.Post("/create/photo", CreatePhotoHandler)
 	r.Get("/edit/photo", EditPhotoHandler)
 	r.Post("/edit/photo", EditPhotoPostHandler)
 	r.Post("/delete/photo", DeletePhotoPostHandler)

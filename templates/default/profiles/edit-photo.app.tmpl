@@ -27,7 +27,6 @@
 {{ define "content" }}
   <article id="profile-photo-edit">
     <div id="croppie"></div>
-
     <form
       action="/profiles/edit/photo"
       method="POST"
@@ -87,7 +86,6 @@
 
       // Setup FileReader OnLoad Function
       reader.onload = function (e) {
-        // Create new croppie
         croppie = buildCroppie(id);
         croppie.bind({
           url: e.target.result,

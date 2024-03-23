@@ -93,49 +93,6 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 /****************************************************************
 * Profile Photo Handlers
 ****************************************************************/
-
-// Uploads a photo to the server and redirect to profile avatar edit page
-func CreatePhotoHandler(w http.ResponseWriter, r *http.Request) {
-	data := r.Context().Value("data").(map[string]interface{})
-
-	// Get user session information
-	userSession := users.GetUserSession(r)
-
-	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
-	r.ParseMultipartForm(2 << 20)
-
-	// Get the file and handler from the form
-	file, fileHeader, err := r.FormFile("avatar")
-	filestore.PrintFileHeader(fileHeader)
-	handleError(w, r, err, "/profiles/edit/photo")
-	defer file.Close()
-
-	// Convert File into byte slice
-	fileBytes, err := io.ReadAll(file)
-	handleError(w, r, err, "/profiles/edit/photo")
-
-	// Place data in file struct
-	fileUpload := filestore.FileUpload{
-		FileBytes:   fileBytes,
-		NamePattern: "avatar-*.png",
-		Directory:   userSession.Username + "/avatar",
-	}
-
-	// Upload file to directory
-	filepath, err := filestore.Upload(fileUpload)
-	handleError(w, r, err, "/profiles/edit/photo")
-
-	// Save file path to database
-	profile, err := saveFilePathToProfile(userSession.Id, filepath)
-	if err != nil {
-		flash.Set(w, r, flash.ERROR, "Profile update failed")
-	}
-
-	data["Profile"] = profile
-
-	http.Redirect(w, r, "/profiles/edit/photo", http.StatusSeeOther)
-}
-
 func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
@@ -160,21 +117,42 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get user session information
 	userSession := users.GetUserSession(r)
 
-	// Parse Form
-	r.ParseForm()
+	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
+	r.ParseMultipartForm(2 << 20)
 
-	// Get File in Base64 Format
-	data := r.FormValue("avatar_base64")
+	// Determine whether file is uploaded via base64 or regular file upload
+	var fileBytes []byte
+	var namePattern string
 
-	// Decode Base64 Image into []byte
-	coI := strings.Index(string(data), ",")
-	rawData := string(data)[coI+1:]
-	fileByte, _ := base64.StdEncoding.DecodeString(string(rawData))
+	if r.FormValue("avatar_base64") != "" {
+		// Get base64 data and decode into []byte format
+		imageBase64 := r.FormValue("avatar_base64")
+		coI := strings.Index(string(imageBase64), ",")
+		rawData := string(imageBase64)[coI+1:]
+
+		// Decode base64 data and assign name pattern
+		fileBytes, _ = base64.StdEncoding.DecodeString(string(rawData))
+		namePattern = "avatar-*.png" // croppie defaults to png
+	} else {
+		// Get the file and handler from the form
+		file, fileHeader, err := r.FormFile("avatar")
+		filestore.PrintFileHeader(fileHeader)
+		handleError(w, r, err, "/profiles/edit/photo")
+		defer file.Close()
+
+		// Convert File into byte slice
+		fileBytes, err = io.ReadAll(file)
+		handleError(w, r, err, "/profiles/edit/photo")
+
+		// Get name pattern from file header
+		ext := strings.Split(fileHeader.Filename, ".")[1]
+		namePattern = "avatar-*." + ext
+	}
 
 	// Populate File Struct
 	fileUpload := filestore.FileUpload{
-		FileBytes:   fileByte,
-		NamePattern: "avatar-*.png",
+		FileBytes:   fileBytes,
+		NamePattern: namePattern,
 		Directory:   userSession.Username + "/avatar",
 	}
 
