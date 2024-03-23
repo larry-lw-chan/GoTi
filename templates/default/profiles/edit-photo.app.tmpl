@@ -103,24 +103,21 @@
     });
 
     // If the user clicks the Done button, submit the form
-    const profilePhotoEditBtn = document.querySelector(
-      "#profile-photo-edit__button",
-    );
-
-    // If the user clicks the Done button, submit the form
-    profilePhotoEditBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      croppie
-        .result({
-          type: "base64",
-          size: { width: 200, height: 200 },
-        })
-        .then(function (base64) {
-          let avatar = document.getElementById("avatar_base64");
-          avatar.value = base64;
-          document.getElementById("profile-photo-edit__form").submit();
-        });
-    });
+    document
+      .querySelector("#profile-photo-edit__button")
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        croppie
+          .result({
+            type: "base64",
+            size: { width: 200, height: 200 },
+          })
+          .then(function (base64) {
+            let avatar = document.getElementById("avatar_base64");
+            avatar.value = base64;
+            document.getElementById("profile-photo-edit__form").submit();
+          });
+      });
   </script>
 
   {{ if .Profile.Avatar.Valid }}

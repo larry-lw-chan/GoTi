@@ -3,11 +3,15 @@ package profiles
 import (
 	"context"
 	"database/sql"
+	"encoding/base64"
+	"io"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/packages/filestore"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
 )
 
@@ -56,6 +60,40 @@ func saveFilePathToProfile(userID int64, filepath string) (Profile, error) {
 	}
 	profile, err := queries.UpdateProfile(context.Background(), updateProfileParams)
 	return profile, err
+}
+
+func decodeBase64Image(base64Image string) ([]byte, string, error) {
+	// Decode base64 image
+	coI := strings.Index(string(base64Image), ",")
+	rawData := string(base64Image)[coI+1:]
+
+	// Decode base64 data and assign name pattern
+	fileBytes, err := base64.StdEncoding.DecodeString(string(rawData))
+	if err != nil {
+		return nil, "", nil
+	}
+	namePattern := "avatar-*.png" // croppie defaults to png
+	return fileBytes, namePattern, err
+}
+
+func handleMultipartFile(w http.ResponseWriter, r *http.Request) ([]byte, string) {
+	// Get the file and handler from the form
+	file, fileHeader, err := r.FormFile("avatar")
+	handleError(w, r, err, "/profiles/edit/photo")
+	defer file.Close()
+
+	// Print File Header Log
+	filestore.PrintFileHeader(fileHeader)
+
+	// Convert File into byte slice
+	fileBytes, err := io.ReadAll(file)
+	handleError(w, r, err, "/profiles/edit/photo")
+
+	// Get name pattern from file header
+	ext := strings.Split(fileHeader.Filename, ".")[1]
+	namePattern := "avatar-*." + ext
+
+	return fileBytes, namePattern
 }
 
 /****************************************************************

@@ -3,11 +3,8 @@ package profiles
 import (
 	"context"
 	"database/sql"
-	"encoding/base64"
-	"io"
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/packages/filestore"
@@ -123,30 +120,15 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Determine whether file is uploaded via base64 or regular file upload
 	var fileBytes []byte
 	var namePattern string
+	var err error
 
+	// Choose between base64 or file upload depending on form input avatar_base64
 	if r.FormValue("avatar_base64") != "" {
-		// Get base64 data and decode into []byte format
-		imageBase64 := r.FormValue("avatar_base64")
-		coI := strings.Index(string(imageBase64), ",")
-		rawData := string(imageBase64)[coI+1:]
-
-		// Decode base64 data and assign name pattern
-		fileBytes, _ = base64.StdEncoding.DecodeString(string(rawData))
-		namePattern = "avatar-*.png" // croppie defaults to png
+		Base64Image := r.FormValue("avatar_base64")
+		fileBytes, namePattern, err = decodeBase64Image(Base64Image)
+		handleError(w, r, err, "/profiles/edit/photo")
 	} else {
-		// Get the file and handler from the form
-		file, fileHeader, err := r.FormFile("avatar")
-		filestore.PrintFileHeader(fileHeader)
-		handleError(w, r, err, "/profiles/edit/photo")
-		defer file.Close()
-
-		// Convert File into byte slice
-		fileBytes, err = io.ReadAll(file)
-		handleError(w, r, err, "/profiles/edit/photo")
-
-		// Get name pattern from file header
-		ext := strings.Split(fileHeader.Filename, ".")[1]
-		namePattern = "avatar-*." + ext
+		fileBytes, namePattern = handleMultipartFile(w, r)
 	}
 
 	// Populate File Struct
