@@ -28,36 +28,17 @@
   <article id="profile-photo-edit">
     <div id="croppie"></div>
 
-    <!-- Create Photo Form -->
-    <!-- <form
-      enctype="multipart/form-data"
-      action="/profiles/create/photo"
-      method="POST"
-      id="profile-photo-create__form"
-    >
-      <fieldset>
-        <label for="name">Name</label>
-        <input
-          type="file"
-          name="avatar"
-          id="profile-photo-create___avatar"
-          aria-label="avatar"
-          accept="image/*"
-        />
-      </fieldset>
-    </form> -->
-
-    <!-- Edit Photo Form -->
     <form
       action="/profiles/edit/photo"
       method="POST"
       id="profile-photo-edit__form"
+      enctype="multipart/form-data"
     >
       <input
         type="file"
-        name="file"
-        id="file"
-        aria-label="file"
+        name="avatar"
+        id="avatar"
+        aria-label="avatar"
         accept="image/*"
       />
       <input type="hidden" name="avatar_base64" id="avatar_base64" />
@@ -100,14 +81,14 @@
       }
     }
 
-    function bindFileToCroppie(e) {
+    function bindFileToCroppie(e, id) {
       // Create New FileReader
-      let reader = new FileReader(file);
+      let reader = new FileReader();
 
       // Setup FileReader OnLoad Function
       reader.onload = function (e) {
         // Create new croppie
-        croppie = buildCroppie("croppie");
+        croppie = buildCroppie(id);
         croppie.bind({
           url: e.target.result,
         });
@@ -118,9 +99,9 @@
     }
 
     // Bind file to croppie when user uploads a file
-    document.getElementById("file").addEventListener("change", function (e) {
+    document.getElementById("avatar").addEventListener("change", function (e) {
       destroyCroppieIfExist();
-      bindFileToCroppie(e);
+      bindFileToCroppie(e, "croppie");
     });
 
     // If the user clicks the Done button, submit the form
@@ -146,8 +127,8 @@
 
   {{ if .Profile.Avatar.Valid }}
   <script type="application/javascript">
+    // Build Croppie and bind with the current avatar URL
     document.addEventListener("DOMContentLoaded", function () {
-      // Start Croppie
       croppie = buildCroppie("croppie");
       croppie.bind({
         url: "{{ .Profile.Avatar.String }}",
