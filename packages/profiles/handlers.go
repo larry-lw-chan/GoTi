@@ -1,13 +1,12 @@
 package profiles
 
 import (
-	"bytes"
 	"context"
 	"database/sql"
 	"encoding/base64"
-	"image/png"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -174,56 +173,41 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	// Get File (Base64 Format) and decode
-	image := r.FormValue("avatar_base64")
-	coI := strings.Index(string(image), ",")
-	rawImage := string(image)[coI+1:]
+	data := r.FormValue("avatar_base64")
+	coI := strings.Index(string(data), ",")
+	rawData := string(data)[coI+1:]
 
 	// Encoded Image DataUrl //
-	unbased, _ := base64.StdEncoding.DecodeString(string(rawImage))
-	res := bytes.NewReader(unbased)
+	image, _ := base64.StdEncoding.DecodeString(string(rawData))
 
-	// Convert to PNG - Croppie Default
-	pngImage, err := png.Decode(res)
+	/****************************************************/
+	// WARNING!!! HACK Job...  Bypassing filestore
+	/****************************************************/
+	filepath := "uploads/" + userSession.Username + "/avatar/"
+	filename := filepath + "avatar-*.png"
+
+	// Write file data to a file
+	err := os.WriteFile(filename, image, 0755)
 	if err != nil {
 		log.Println(err)
 	}
 
-	log.Println(pngImage)
+	// Add Slash to Filepath
+	filename = "/" + filename
 
-	// Generate file handler
-	// fileHeader := multipart.FileHeader{}
-
-	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
-	// r.ParseMultipartForm(2 << 20)
-
-	// Get the file and handler from the form
-	// file, fileHeader, err := r.FormFile("avatar")
-	// handleError(w, r, err, "/profiles/show")
-
-	// // Place data in file struct
-	// fileUpload := filestore.FileUpload{
-	// 	File:       file,
-	// 	FileHeader: fileHeader,
-	// 	Directory:  userSession.Username + "/avatar",
-	// }
-
-	// // Upload file to directory
-	// filepath, err := filestore.Upload(fileUpload)
-	// handleError(w, r, err, "/profiles/show")
-
-	// // Save file path to database
-	// queries := New(database.DB)
-	// updateProfileParams := UpdateProfileParams{
-	// 	Avatar:    sql.NullString{String: filepath, Valid: true},
-	// 	UpdatedAt: time.Now().String(),
-	// 	UserID:    userSession.Id,
-	// }
-	// _, err = queries.UpdateProfile(context.Background(), updateProfileParams)
-	// if err != nil {
-	// 	flash.Set(w, r, flash.ERROR, "Profile update failed")
-	// } else {
-	// 	flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
-	// }
+	// Save file path to database
+	queries := New(database.DB)
+	updateProfileParams := UpdateProfileParams{
+		Avatar:    sql.NullString{String: filename, Valid: true},
+		UpdatedAt: time.Now().String(),
+		UserID:    userSession.Id,
+	}
+	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	if err != nil {
+		flash.Set(w, r, flash.ERROR, "Profile update failed")
+	} else {
+		flash.Set(w, r, flash.SUCCESS, "Profile successfully updated")
+	}
 
 	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
