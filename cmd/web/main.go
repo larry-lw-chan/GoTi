@@ -11,14 +11,14 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/database"
-	"github.com/larry-lw-chan/goti/packages/auth"
-	"github.com/larry-lw-chan/goti/packages/filestore"
-	"github.com/larry-lw-chan/goti/packages/pages"
-	"github.com/larry-lw-chan/goti/packages/profiles"
-	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
-	"github.com/larry-lw-chan/goti/packages/threads"
-	"github.com/larry-lw-chan/goti/packages/timelines"
-	"github.com/larry-lw-chan/goti/packages/utils/render"
+	"github.com/larry-lw-chan/goti/internal/auth"
+	"github.com/larry-lw-chan/goti/internal/filestore"
+	"github.com/larry-lw-chan/goti/internal/pages"
+	"github.com/larry-lw-chan/goti/internal/profiles"
+	"github.com/larry-lw-chan/goti/internal/sessions/cookie"
+	"github.com/larry-lw-chan/goti/internal/threads"
+	"github.com/larry-lw-chan/goti/internal/timelines"
+	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
 
 // Define the path to the templates

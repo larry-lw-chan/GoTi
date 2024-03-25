@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
+	"github.com/larry-lw-chan/goti/internal/sessions/cookie"
 )
 
 // Auth Session Value key

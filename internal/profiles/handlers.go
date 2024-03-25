@@ -7,10 +7,10 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
-	"github.com/larry-lw-chan/goti/packages/auth"
-	"github.com/larry-lw-chan/goti/packages/filestore"
-	"github.com/larry-lw-chan/goti/packages/sessions/flash"
-	"github.com/larry-lw-chan/goti/packages/utils/render"
+	"github.com/larry-lw-chan/goti/internal/auth"
+	"github.com/larry-lw-chan/goti/internal/filestore"
+	"github.com/larry-lw-chan/goti/internal/sessions/flash"
+	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
 
 /****************************************************************

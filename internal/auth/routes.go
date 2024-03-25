@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/larry-lw-chan/goti/packages/sessions/flash"
+	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 )
 
 // Authentication Routes

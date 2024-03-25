@@ -11,8 +11,8 @@ import (
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
-	"github.com/larry-lw-chan/goti/packages/filestore"
-	"github.com/larry-lw-chan/goti/packages/sessions/flash"
+	"github.com/larry-lw-chan/goti/internal/filestore"
+	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 )
 
 /****************************************************************

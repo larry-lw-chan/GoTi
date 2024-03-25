@@ -3,7 +3,7 @@ package auth
 import (
 	"net/http"
 
-	"github.com/larry-lw-chan/goti/packages/sessions/flash"
+	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 )
 
 func CheckIfAuthenticated(next http.Handler) http.Handler {

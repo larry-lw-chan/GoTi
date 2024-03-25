@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
-	"github.com/larry-lw-chan/goti/packages/sessions/flash"
-	"github.com/larry-lw-chan/goti/packages/threads"
-	"github.com/larry-lw-chan/goti/packages/utils/render"
+	"github.com/larry-lw-chan/goti/internal/sessions/flash"
+	"github.com/larry-lw-chan/goti/internal/threads"
+	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
 
 func TimelineIndexHandler(w http.ResponseWriter, r *http.Request) {

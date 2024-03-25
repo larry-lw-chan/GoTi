@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
-	"github.com/larry-lw-chan/goti/packages/utils/render"
+	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
 
 func HomePageHandler(w http.ResponseWriter, r *http.Request) {
