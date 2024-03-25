@@ -14,11 +14,11 @@ var (
 
 type CreateProfileValidation struct {
 	Username string `validate:"required,min=4,max=15"`
-	Name     string
-	Bio      string
-	Link     string
-	Avatar   string
-	Private  int64 `validate:"number"`
+	Name     string `validate:"omitempty,min=4,max=50"`
+	Bio      string `validate:"omitempty,min=4,max=250"`
+	Link     string `validate:"omitempty,url"`
+	Avatar   string `validate:"omitempty,url"`
+	Private  int64  `validate:"number"`
 }
 
 func validateCreateProfile(r *http.Request, private int64) (errs []error) {

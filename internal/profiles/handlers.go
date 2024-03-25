@@ -72,7 +72,7 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 		private = 1
 	}
 
-	// Serverside Validation
+	// Serverside Form Validation
 	errs := validateCreateProfile(r, private)
 	if errs != nil {
 		var message string
