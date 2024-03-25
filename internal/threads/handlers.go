@@ -68,7 +68,8 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		// Handle Error
-		flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		// flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
 	} else {
 		data["Threads"] = threads
 	}

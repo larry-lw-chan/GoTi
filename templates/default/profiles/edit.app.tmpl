@@ -35,6 +35,9 @@
           id="username"
           placeholder="Please enter username"
           aria-label="username"
+          {{ if .Profile.Username }}
+            value="{{ .Profile.Username }}"
+          {{ end }}
         />
       </fieldset>
 

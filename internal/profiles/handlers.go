@@ -54,7 +54,6 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Load username and profile to pass to template
-	data["Username"] = userSession.Username
 	data["Profile"] = profile
 
 	// Load user into profile
