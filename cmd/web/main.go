@@ -23,7 +23,7 @@ import (
 
 // Define the path to the templates
 var path string = "templates/default"
-var port string = ":3000"
+var port string = ":8080"
 
 func routes() *chi.Mux {
 	// Define Routes Here
