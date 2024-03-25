@@ -40,7 +40,7 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 	threadParam := CreateThreadParams{
 		Content:   r.FormValue("content"),
 		ThreadID:  sql.NullInt64{Valid: false},
-		UserID:    userSession.Id,
+		UserID:    userSession.ID,
 		CreatedAt: time.Now().String(),
 		UpdatedAt: time.Now().String(),
 	}

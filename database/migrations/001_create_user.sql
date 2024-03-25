@@ -2,6 +2,7 @@
 -- +goose StatementBegin
 CREATE TABLE users (
 	"id"			INTEGER NOT NULL UNIQUE,
+	"uuid"			TEXT NOT NULL UNIQUE,
 	"username"		TEXT NOT NULL UNIQUE,
 	"email"			TEXT NOT NULL UNIQUE,
 	"password"		TEXT NOT NULL,

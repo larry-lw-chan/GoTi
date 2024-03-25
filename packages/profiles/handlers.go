@@ -25,9 +25,9 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	queries := New(database.DB)
 
 	// Get profile information or create if not exist
-	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.Id)
+	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.ID)
 	if err != nil {
-		profile, err = createProfileForUser(userSession.Id)
+		profile, err = createProfileForUser(userSession.ID)
 		handleError(w, r, err, "/profiles/show")
 	}
 
@@ -47,7 +47,7 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 	queries := New(database.DB)
 
 	// Get profile information
-	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.Id)
+	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.ID)
 	if err != nil {
 		log.Println(err)
 	}
@@ -74,7 +74,7 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Update profile
 	name, bio, link := r.FormValue("name"), r.FormValue("bio"), r.FormValue("link")
-	_, err := updateProfileForUser(userSession.Id, name, bio, link, private)
+	_, err := updateProfileForUser(userSession.ID, name, bio, link, private)
 
 	if err != nil {
 		log.Println(err)
@@ -98,7 +98,7 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 	queries := New(database.DB)
 
 	// Get profile information
-	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.Id)
+	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.ID)
 	if err != nil {
 		log.Println(err)
 	}
@@ -143,7 +143,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	handleError(w, r, err, "/profiles/edit/photo")
 
 	// Save file path to database
-	_, err = saveFilePathToProfile(userSession.Id, filepath)
+	_, err = saveFilePathToProfile(userSession.ID, filepath)
 
 	if err != nil {
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
@@ -161,7 +161,7 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	queries := New(database.DB)
 
 	// Get avatar path
-	filename, err := queries.GetProfileAvatarFromUserId(context.Background(), userSession.Id)
+	filename, err := queries.GetProfileAvatarFromUserId(context.Background(), userSession.ID)
 	handleError(w, r, err, "/profiles/show")
 
 	// Delete file from filestore
@@ -171,7 +171,7 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Fill in update profile parameters
 	updateProfileParams := UpdateProfileParams{
 		Avatar: sql.NullString{Valid: false},
-		UserID: userSession.Id,
+		UserID: userSession.ID,
 	}
 
 	// Delete file path from database

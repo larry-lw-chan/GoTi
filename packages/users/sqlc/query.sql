@@ -5,6 +5,6 @@ SELECT * FROM users WHERE email = ?;
 SELECT * FROM users WHERE username = ?;
 
 -- name: CreateUser :one
-INSERT INTO users (username, email, password, created_at, updated_at) 
-VALUES (?, ?, ?, ?, ?)
+INSERT INTO users (uuid, username, email, password, created_at, updated_at) 
+VALUES (?, ?, ?, ?, ?, ?)
 RETURNING *;

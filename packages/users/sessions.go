@@ -12,7 +12,7 @@ const USER_SESSION string = "user-session"
 
 // User Session Struct
 type UserSession struct {
-	Id            int64
+	ID            int64
 	Username      string
 	Authenticated bool
 }
@@ -32,7 +32,7 @@ func CreateUserSession(w http.ResponseWriter, r *http.Request, user *User) {
 
 	// Create User Session and set it to the session
 	userSession := &UserSession{
-		Id:            user.Id,
+		ID:            user.ID,
 		Username:      user.Username,
 		Authenticated: true,
 	}

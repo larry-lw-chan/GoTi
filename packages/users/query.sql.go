@@ -10,12 +10,13 @@ import (
 )
 
 const createUser = `-- name: CreateUser :one
-INSERT INTO users (username, email, password, created_at, updated_at) 
-VALUES (?, ?, ?, ?, ?)
-RETURNING id, username, email, password, created_at, updated_at
+INSERT INTO users (uuid, username, email, password, created_at, updated_at) 
+VALUES (?, ?, ?, ?, ?, ?)
+RETURNING id, uuid, username, email, password, created_at, updated_at
 `
 
 type CreateUserParams struct {
+	Uuid      string
 	Username  string
 	Email     string
 	Password  string
@@ -25,6 +26,7 @@ type CreateUserParams struct {
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
 	row := q.db.QueryRowContext(ctx, createUser,
+		arg.Uuid,
 		arg.Username,
 		arg.Email,
 		arg.Password,
@@ -33,7 +35,8 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 	)
 	var i User
 	err := row.Scan(
-		&i.Id,
+		&i.ID,
+		&i.Uuid,
 		&i.Username,
 		&i.Email,
 		&i.Password,
@@ -44,14 +47,15 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 }
 
 const getUserFromEmail = `-- name: GetUserFromEmail :one
-SELECT id, username, email, password, created_at, updated_at FROM users WHERE email = ?
+SELECT id, uuid, username, email, password, created_at, updated_at FROM users WHERE email = ?
 `
 
 func (q *Queries) GetUserFromEmail(ctx context.Context, email string) (User, error) {
 	row := q.db.QueryRowContext(ctx, getUserFromEmail, email)
 	var i User
 	err := row.Scan(
-		&i.Id,
+		&i.ID,
+		&i.Uuid,
 		&i.Username,
 		&i.Email,
 		&i.Password,
@@ -62,14 +66,15 @@ func (q *Queries) GetUserFromEmail(ctx context.Context, email string) (User, err
 }
 
 const getUserFromUsername = `-- name: GetUserFromUsername :one
-SELECT id, username, email, password, created_at, updated_at FROM users WHERE username = ?
+SELECT id, uuid, username, email, password, created_at, updated_at FROM users WHERE username = ?
 `
 
 func (q *Queries) GetUserFromUsername(ctx context.Context, username string) (User, error) {
 	row := q.db.QueryRowContext(ctx, getUserFromUsername, username)
 	var i User
 	err := row.Scan(
-		&i.Id,
+		&i.ID,
+		&i.Uuid,
 		&i.Username,
 		&i.Email,
 		&i.Password,
