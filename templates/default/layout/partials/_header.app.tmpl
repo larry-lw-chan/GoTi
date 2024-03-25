@@ -1,31 +1,33 @@
 {{ define "header_inner" }}
-<div id="logo">
-  <a href="/profiles/show">
-    <img src="/assets/images/logoIcon.svg" alt="Logo" />
-  </a>
-</div>
-<div id="hamburger">
-  <div class="bar1"></div>
-  <div class="bar2"></div>
-  <div class="bar3"></div>
-</div>
-<div id="secondary-menu">
-  <ul class="links">
-    <li><a href="#">Appearance</a></li>
-    <li><a href="#">Settings</a></li>
-    <li><a href="#">Saved</a></li>
-    <li><a href="#">Your likes</a></li>
-    <li><a href="/users/logout">Log Out</a></li>
-  </ul>
-</div>
+  <div id="logo">
+    <a href="/profiles/show">
+      <img src="/assets/images/logoIcon.svg" alt="Logo" />
+    </a>
+  </div>
+  <div id="hamburger">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
+  <div id="secondary-menu">
+    <ul class="links">
+      <li><a href="#">Appearance</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#">Saved</a></li>
+      <li><a href="#">Your likes</a></li>
+      <li><a href="/auth/logout">Log Out</a></li>
+    </ul>
+  </div>
 
-<script type="application/javascript">
-  window.onload = function () {
-    // Hamburger Menu Toggle
-    document.getElementById("hamburger").addEventListener("click", function () {
-      let header = document.querySelector("header");
-      header.classList.toggle("change");
-    });
-  };
-</script>
+  <script type="application/javascript">
+    window.onload = function () {
+      // Hamburger Menu Toggle
+      document
+        .getElementById("hamburger")
+        .addEventListener("click", function () {
+          let header = document.querySelector("header");
+          header.classList.toggle("change");
+        });
+    };
+  </script>
 {{ end }}

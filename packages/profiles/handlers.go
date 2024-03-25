@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/packages/auth"
 	"github.com/larry-lw-chan/goti/packages/filestore"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
-	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
@@ -21,7 +21,7 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 	queries := New(database.DB)
 
 	// Get profile information or create if not exist
@@ -43,7 +43,7 @@ func EditHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 	queries := New(database.DB)
 
 	// Get profile information
@@ -64,7 +64,7 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 
 	// Assign private to (1) if checkbox is checked ("private")
 	var private int64 = 0
@@ -94,7 +94,7 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 	queries := New(database.DB)
 
 	// Get profile information
@@ -112,7 +112,7 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 
 func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 
 	// Parse our multipart form, 2 << 20 specifies a maximum upload of 2 MB files
 	r.ParseMultipartForm(2 << 20)
@@ -157,7 +157,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Get avatar path
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 	queries := New(database.DB)
 
 	// Get avatar path

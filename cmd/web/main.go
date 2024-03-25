@@ -11,13 +11,13 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/packages/auth"
 	"github.com/larry-lw-chan/goti/packages/filestore"
 	"github.com/larry-lw-chan/goti/packages/pages"
 	"github.com/larry-lw-chan/goti/packages/profiles"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 	"github.com/larry-lw-chan/goti/packages/threads"
 	"github.com/larry-lw-chan/goti/packages/timelines"
-	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
@@ -50,7 +50,7 @@ func routes() *chi.Mux {
 
 	// Register Package Routes
 	r.Mount("/", pages.Router())
-	r.Mount("/users", users.Router())
+	r.Mount("/auth", auth.Router())
 	r.Mount("/profiles", profiles.Router())
 	r.Mount("/threads", threads.Router())
 	r.Mount("/timelines", timelines.Router())

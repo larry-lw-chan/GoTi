@@ -6,7 +6,7 @@
       <h1 class="header__heading">Login to Goti</h1>
       <p class="header__description">Login with your GoTi credentials.</p>
     </div>
-    <form action="/users/login" method="post" id="login__form">
+    <form action="/auth/login" method="post" id="login__form">
       <fieldset>
         <input
           type="email"
@@ -31,10 +31,8 @@
       <button class="login__button">Login</button>
     </form>
     <div class="links">
-      <a href="/users/register" class="links__link">Register?</a>
-      <a href="/users/forgot-password" class="links__link">
-        Forgot password?
-      </a>
+      <a href="/auth/register" class="links__link">Register?</a>
+      <a href="/auth/forgot-password" class="links__link"> Forgot password? </a>
     </div>
   </article>
 {{ end }}

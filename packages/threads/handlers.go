@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/packages/auth"
 	"github.com/larry-lw-chan/goti/packages/sessions/flash"
-	"github.com/larry-lw-chan/goti/packages/users"
 	"github.com/larry-lw-chan/goti/packages/utils/render"
 )
 
@@ -33,7 +33,7 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get user session information
-	userSession := users.GetUserSession(r)
+	userSession := auth.GetUserSession(r)
 
 	// Create new thread
 	queries := New(database.DB)

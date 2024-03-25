@@ -1,4 +1,4 @@
-package users
+package auth
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 *************************************************/
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, data, "/users/login.base.tmpl")
+	render.Template(w, data, "/auth/login.base.tmpl")
 }
 
 func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +29,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 			message += err.Error() + "<br />"
 		}
 		flash.Set(w, r, flash.ERROR, message)
-		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
 		return
 	}
 
@@ -43,13 +43,13 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 	} else {
 		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
-		http.Redirect(w, r, "/users/login", http.StatusSeeOther)
+		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
 	}
 }
 
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	render.Template(w, data, "/users/register.base.tmpl")
+	render.Template(w, data, "/auth/register.base.tmpl")
 }
 
 func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +63,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 			message += err.Error() + "<br />"
 		}
 		flash.Set(w, r, flash.ERROR, message)
-		http.Redirect(w, r, "/users/register", http.StatusSeeOther)
+		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 
 	// Generate Hashed Password
@@ -90,7 +90,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
 	} else {
 		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
-		http.Redirect(w, r, "/users/register", http.StatusSeeOther)
+		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 	}
 }
 
@@ -100,5 +100,5 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, nil, "/users/forgot-password.base.tmpl")
+	render.Template(w, nil, "/auth/forgot-password.base.tmpl")
 }
