@@ -1,5 +1,6 @@
 CREATE TABLE profiles (
     "id" 	            INTEGER PRIMARY KEY,
+	"username"			TEXT NOT NULL UNIQUE,
     "name"				TEXT,
 	"bio"				TEXT,
 	"link"				TEXT,

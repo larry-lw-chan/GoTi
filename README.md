@@ -81,10 +81,10 @@ make migrate-down
 make seed
 ```
 
-Goti also makes heavy use of [SQLC](https://sqlc.dev/) for generating database query code.  Use the following Make shortcut for easy SQLC generation (fill ? with appropriate package name):
+Goti also makes heavy use of [SQLC](https://sqlc.dev/) for generating database query code.  Use the following Make shortcut for easy SQLC generation (fill ? with appropriate internal package name):
 
 ```
-make package=? sqlc
+make internal=? sqlc
 ```
 
 ## License

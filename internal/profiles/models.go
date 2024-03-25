@@ -10,6 +10,7 @@ import (
 
 type Profile struct {
 	ID        int64
+	Username  string
 	Name      sql.NullString
 	Bio       sql.NullString
 	Link      sql.NullString

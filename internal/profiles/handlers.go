@@ -27,8 +27,9 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	// Get profile information or create if not exist
 	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.ID)
 	if err != nil {
-		profile, err = createProfileForUser(userSession.ID)
-		handleError(w, r, err, "/profiles/show")
+		flash.Set(w, r, flash.NOTICE, "Please complete your user profile")
+		http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
+		return
 	}
 
 	// Load username and profile to pass to template
@@ -72,9 +73,21 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 		private = 1
 	}
 
-	// Update profile
-	name, bio, link := r.FormValue("name"), r.FormValue("bio"), r.FormValue("link")
-	_, err := updateProfileForUser(userSession.ID, name, bio, link, private)
+	// Serverside Validation
+	errs := validateCreateProfile(r, private)
+	if errs != nil {
+		var message string
+		for _, err := range errs {
+			message += err.Error() + "; "
+		}
+		flash.Set(w, r, flash.ERROR, message)
+		http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
+		return
+	}
+
+	// Create or Update Profile
+	username, name, bio, link := r.FormValue("username"), r.FormValue("name"), r.FormValue("bio"), r.FormValue("link")
+	_, err := updateOrCreateUserProfile(username, name, bio, link, private, userSession.ID)
 
 	if err != nil {
 		log.Println(err)

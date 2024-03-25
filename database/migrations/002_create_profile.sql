@@ -6,6 +6,7 @@
 -- +goose StatementBegin
 CREATE TABLE profiles (
     "id" 	            INTEGER NOT NULL UNIQUE,
+	"username"			TEXT NOT NULL UNIQUE,
     "name"				TEXT,
 	"bio"				TEXT,
 	"link"				TEXT,

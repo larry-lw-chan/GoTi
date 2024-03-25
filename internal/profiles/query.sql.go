@@ -11,12 +11,13 @@ import (
 )
 
 const createProfile = `-- name: CreateProfile :one
-INSERT INTO profiles (name, bio, link, avatar, private, user_id, created_at, updated_at) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-RETURNING id, name, bio, link, avatar, private, user_id, created_at, updated_at
+INSERT INTO profiles (username, name, bio, link, avatar, private, user_id, created_at, updated_at) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+RETURNING id, username, name, bio, link, avatar, private, user_id, created_at, updated_at
 `
 
 type CreateProfileParams struct {
+	Username  string
 	Name      sql.NullString
 	Bio       sql.NullString
 	Link      sql.NullString
@@ -29,6 +30,7 @@ type CreateProfileParams struct {
 
 func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (Profile, error) {
 	row := q.db.QueryRowContext(ctx, createProfile,
+		arg.Username,
 		arg.Name,
 		arg.Bio,
 		arg.Link,
@@ -41,6 +43,7 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 	var i Profile
 	err := row.Scan(
 		&i.ID,
+		&i.Username,
 		&i.Name,
 		&i.Bio,
 		&i.Link,
@@ -65,7 +68,7 @@ func (q *Queries) GetProfileAvatarFromUserId(ctx context.Context, userID int64) 
 }
 
 const getProfileFromUserId = `-- name: GetProfileFromUserId :one
-SELECT id, name, bio, link, avatar, private, user_id, created_at, updated_at FROM profiles WHERE user_id = ?
+SELECT id, username, name, bio, link, avatar, private, user_id, created_at, updated_at FROM profiles WHERE user_id = ?
 `
 
 func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profile, error) {
@@ -73,6 +76,7 @@ func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profi
 	var i Profile
 	err := row.Scan(
 		&i.ID,
+		&i.Username,
 		&i.Name,
 		&i.Bio,
 		&i.Link,
@@ -87,12 +91,13 @@ func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profi
 
 const updateProfile = `-- name: UpdateProfile :one
 UPDATE profiles 
-SET name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 
+SET username = ?, name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 
 WHERE user_id = ? 
-RETURNING id, name, bio, link, avatar, private, user_id, created_at, updated_at
+RETURNING id, username, name, bio, link, avatar, private, user_id, created_at, updated_at
 `
 
 type UpdateProfileParams struct {
+	Username  string
 	Name      sql.NullString
 	Bio       sql.NullString
 	Link      sql.NullString
@@ -104,6 +109,7 @@ type UpdateProfileParams struct {
 
 func (q *Queries) UpdateProfile(ctx context.Context, arg UpdateProfileParams) (Profile, error) {
 	row := q.db.QueryRowContext(ctx, updateProfile,
+		arg.Username,
 		arg.Name,
 		arg.Bio,
 		arg.Link,
@@ -115,6 +121,7 @@ func (q *Queries) UpdateProfile(ctx context.Context, arg UpdateProfileParams) (P
 	var i Profile
 	err := row.Scan(
 		&i.ID,
+		&i.Username,
 		&i.Name,
 		&i.Bio,
 		&i.Link,

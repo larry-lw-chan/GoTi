@@ -18,14 +18,29 @@ import (
 /****************************************************************
 * Data Handling Logic
 ****************************************************************/
-func createProfileForUser(userID int64) (Profile, error) {
+func updateOrCreateUserProfile(username, name, bio, link string, private, userID int64) (Profile, error) {
+	queries := New(database.DB)
+
+	// If profile does not exists, then create a new profile else update the existing profile
+	_, err := queries.GetProfileFromUserId(context.Background(), userID)
+	if err != nil {
+		return createUserProfile(username, name, bio, link, private, userID)
+	} else {
+		profile, err := updateUserProfile(username, name, bio, link, private, userID)
+		return profile, err
+	}
+
+}
+
+func createUserProfile(username, name, bio, link string, private, userID int64) (Profile, error) {
 	queries := New(database.DB)
 
 	profileParem := CreateProfileParams{
-		Name:      sql.NullString{String: "your name", Valid: true},
-		Bio:       sql.NullString{String: "add bio", Valid: true},
-		Link:      sql.NullString{String: "add links", Valid: true},
-		Private:   sql.NullInt64{Int64: 0, Valid: true},
+		Username:  username,
+		Name:      sql.NullString{String: name, Valid: true},
+		Bio:       sql.NullString{String: bio, Valid: true},
+		Link:      sql.NullString{String: link, Valid: true},
+		Private:   sql.NullInt64{Int64: private, Valid: true},
 		Avatar:    sql.NullString{Valid: false},
 		UserID:    userID,
 		CreatedAt: time.Now().String(),
@@ -36,9 +51,12 @@ func createProfileForUser(userID int64) (Profile, error) {
 	return profile, err
 }
 
-func updateProfileForUser(userID int64, name, bio, link string, private int64) (Profile, error) {
+func updateUserProfile(username, name, bio, link string, private, userID int64) (Profile, error) {
 	queries := New(database.DB)
+
+	// Update profile
 	updateProfileParams := UpdateProfileParams{
+		Username:  username,
 		Name:      sql.NullString{String: name, Valid: true},
 		Bio:       sql.NullString{String: bio, Valid: true},
 		Link:      sql.NullString{String: link, Valid: true},
@@ -46,7 +64,6 @@ func updateProfileForUser(userID int64, name, bio, link string, private int64) (
 		UpdatedAt: time.Now().String(),
 		UserID:    userID,
 	}
-	// Update profile
 	profile, err := queries.UpdateProfile(context.Background(), updateProfileParams)
 	return profile, err
 }

@@ -32,7 +32,7 @@ db:
 
 # Generate SQLC for selected package.  Example: make package=users sqlc
 sqlc:
-	sqlc generate -f ./packages/$(package)/sqlc/sqlc.yaml
+	sqlc generate -f ./internal/$(internal)/sqlc/sqlc.yaml
 
 # Run the app
 run:
