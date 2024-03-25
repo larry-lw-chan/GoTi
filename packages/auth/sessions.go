@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/larry-lw-chan/goti/packages/sessions/cookie"
 )
 
@@ -71,4 +72,11 @@ func DeleteUserSession(w http.ResponseWriter, r *http.Request) {
 	session.Values["user"] = UserSession{}
 	session.Options.MaxAge = -1
 	session.Save(r, w)
+}
+
+/*************************************************
+* Helper Functions
+*************************************************/
+func generateUUID() string {
+	return uuid.New().String()
 }

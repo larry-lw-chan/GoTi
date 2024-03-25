@@ -11,7 +11,7 @@ func Router() http.Handler {
 	r := chi.NewRouter()
 
 	// Load Flash Middleware
-	r.Use(flash.TryGetFlash)
+	r.Use(flash.CheckForFlash)
 
 	// Login and Register Routes
 	r.Get("/", HomePageHandler)

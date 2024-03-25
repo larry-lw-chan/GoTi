@@ -72,6 +72,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Insert new user into database
 	queries := New(database.DB)
 	createUser := CreateUserParams{
+		Uuid:      generateUUID(),
 		Username:  r.FormValue("username"),
 		Email:     r.FormValue("email"),
 		Password:  hashPwd,
