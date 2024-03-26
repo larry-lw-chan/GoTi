@@ -73,11 +73,21 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Serverside Form Validation
-	errs := validateCreateProfile(r, private)
+	createProfileValidation := CreateProfileValidation{
+		Username: r.FormValue("username"),
+		Name:     r.FormValue("name"),
+		Bio:      r.FormValue("bio"),
+		Link:     r.FormValue("link"),
+		Avatar:   r.FormValue("avatar"),
+		Private:  private,
+	}
+
+	errs := validateCreateProfile(createProfileValidation)
+
 	if errs != nil {
 		var message string
 		for _, err := range errs {
-			message += err.Error() + "; "
+			message += err.Error() + ". "
 		}
 		flash.Set(w, r, flash.ERROR, message)
 		http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)

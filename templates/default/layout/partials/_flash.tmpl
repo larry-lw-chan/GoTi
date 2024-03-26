@@ -1,9 +1,8 @@
 {{ define "flash" }}
-
-{{ if .Flash.Message }}
-<div class="flash {{ .Flash.Type }}">
-  {{ .Flash.Message }}
-</div>
-{{ end }}
+  {{ if .Flash.Message }}
+    <div class="flash {{ .Flash.Type }}">
+      {{ .Flash.Message }}
+    </div>
+  {{ end }}
 
 {{ end }}

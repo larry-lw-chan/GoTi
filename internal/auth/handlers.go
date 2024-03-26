@@ -26,7 +26,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	if errs != nil {
 		var message string
 		for _, err := range errs {
-			message += err.Error() + "<br />"
+			message += err.Error() + ". "
 		}
 		flash.Set(w, r, flash.ERROR, message)
 		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)

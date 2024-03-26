@@ -3,7 +3,6 @@ package translate
 import (
 	"fmt"
 
-	"github.com/go-playground/locales"
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
@@ -11,12 +10,14 @@ import (
 )
 
 var (
-	english locales.Translator      = en.New()
-	uni     *ut.UniversalTranslator = ut.New(english, english)
+	uni *ut.UniversalTranslator
 )
 
 // Errors translates validation errors into human friendly messages
 func Errors(err error, validate *validator.Validate) (errs []error) {
+	english := en.New()
+	uni = ut.New(english, english)
+
 	if err == nil {
 		return nil
 	}

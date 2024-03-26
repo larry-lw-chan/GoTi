@@ -1,8 +1,6 @@
 package profiles
 
 import (
-	"net/http"
-
 	"github.com/go-playground/validator/v10"
 	"github.com/larry-lw-chan/goti/internal/utils/translate"
 )
@@ -21,18 +19,10 @@ type CreateProfileValidation struct {
 	Private  int64  `validate:"number"`
 }
 
-func validateCreateProfile(r *http.Request, private int64) (errs []error) {
+func validateCreateProfile(createProfileValidation CreateProfileValidation) (errs []error) {
 	// Validate User Input
 	validate = validator.New()
 
-	createProfileValidation := CreateProfileValidation{
-		Username: r.FormValue("username"),
-		Name:     r.FormValue("name"),
-		Bio:      r.FormValue("bio"),
-		Link:     r.FormValue("link"),
-		Avatar:   r.FormValue("avatar"),
-		Private:  private,
-	}
 	vErrs := validate.Struct(&createProfileValidation)
 	if vErrs != nil {
 		errs = append(errs, translate.Errors(vErrs, validate)...)
