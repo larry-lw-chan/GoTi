@@ -58,6 +58,13 @@
         .onSuccess((event) => {
           document.getElementById("thread__form").submit();
         });
+
+      // Submit Form on Done Click
+      document
+        .querySelector(".header-override__submit")
+        .addEventListener("click", (e) => {
+          document.getElementById("thread__form").submit();
+        });
     });
   </script>
 {{ end }}

@@ -118,6 +118,7 @@ SELECT threads.id, content, username, avatar
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
 WHERE threads.user_id = ?
+ORDER BY threads.created_at desc
 `
 
 type GetUserThreadsRow struct {
