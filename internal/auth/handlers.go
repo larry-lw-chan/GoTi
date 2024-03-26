@@ -1,11 +1,8 @@
 package auth
 
 import (
-	"context"
 	"net/http"
-	"time"
 
-	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
@@ -61,19 +58,9 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Generate Hashed Password
-	hashPwd := HashPassword([]byte(r.FormValue("password")))
-
-	// Insert new user into database
-	queries := New(database.DB)
-	createUser := CreateUserParams{
-		Uuid:      generateUUID(),
-		Email:     r.FormValue("email"),
-		Password:  hashPwd,
-		CreatedAt: time.Now().String(),
-		UpdatedAt: time.Now().String(),
-	}
-	user, err := queries.CreateUser(context.Background(), createUser)
+	// Create new user
+	email, password := r.FormValue("email"), r.FormValue("password")
+	user, err := CreateNewUser(email, password)
 
 	// Check to make sure there is no existing user with that email
 	if err != nil {
@@ -83,7 +70,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create user session and redirect to profile page
-	CreateUserSession(w, r, &user)
+	CreateUserSession(w, r, user)
 	flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
 	http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
 }

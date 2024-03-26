@@ -3,13 +3,14 @@ package auth
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/larry-lw-chan/goti/database"
 	"golang.org/x/crypto/bcrypt"
 )
 
 /*************************************************
-* Authenticate User
+* Authentication
 *************************************************/
 func AuthenticateUser(email, password string) (*User, bool) {
 	// Find user by email
@@ -24,6 +25,22 @@ func AuthenticateUser(email, password string) (*User, bool) {
 		return nil, false
 	}
 	return &user, true
+}
+
+func CreateNewUser(email, password string) (*User, error) {
+	hashPwd := HashPassword([]byte(password)) // Hash Password
+
+	queries := New(database.DB)
+	createUser := CreateUserParams{
+		Uuid:      generateUUID(),
+		Email:     email,
+		Password:  hashPwd,
+		CreatedAt: time.Now().String(),
+		UpdatedAt: time.Now().String(),
+	}
+	user, err := queries.CreateUser(context.Background(), createUser)
+
+	return &user, err
 }
 
 /*************************************************
