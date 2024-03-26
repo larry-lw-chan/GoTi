@@ -1,6 +1,9 @@
 -- name: GetProfileFromUserId :one
 SELECT * FROM profiles WHERE user_id = ?;
 
+-- name: GetProfileFromUsername :one
+SELECT * FROM profiles WHERE username = ?;
+
 -- name: GetProfileAvatarFromUserId :one
 SELECT avatar FROM profiles WHERE user_id = ?;
 

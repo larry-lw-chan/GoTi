@@ -89,6 +89,28 @@ func (q *Queries) GetProfileFromUserId(ctx context.Context, userID int64) (Profi
 	return i, err
 }
 
+const getProfileFromUsername = `-- name: GetProfileFromUsername :one
+SELECT id, username, name, bio, link, avatar, private, user_id, created_at, updated_at FROM profiles WHERE username = ?
+`
+
+func (q *Queries) GetProfileFromUsername(ctx context.Context, username string) (Profile, error) {
+	row := q.db.QueryRowContext(ctx, getProfileFromUsername, username)
+	var i Profile
+	err := row.Scan(
+		&i.ID,
+		&i.Username,
+		&i.Name,
+		&i.Bio,
+		&i.Link,
+		&i.Avatar,
+		&i.Private,
+		&i.UserID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const updateProfile = `-- name: UpdateProfile :one
 UPDATE profiles 
 SET username = ?, name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 

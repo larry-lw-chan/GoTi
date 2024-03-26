@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/internal/auth"
 	"github.com/larry-lw-chan/goti/internal/filestore"
@@ -102,6 +103,22 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Redirect to profile page
 	http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
+}
+
+func ShowProfileHandler(w http.ResponseWriter, r *http.Request) {
+	data := r.Context().Value("data").(map[string]interface{})
+	username := chi.URLParam(r, "username") // Get user session information from chi
+
+	// Get profile information
+	queries := New(database.DB)
+	profile, err := queries.GetProfileFromUsername(context.Background(), username)
+	if err != nil {
+		log.Println(err)
+	}
+	data["Profile"] = profile
+
+	// Load username and profile to pass to template
+	render.Template(w, data, "/profiles/show-profile.app.tmpl")
 }
 
 /****************************************************************
