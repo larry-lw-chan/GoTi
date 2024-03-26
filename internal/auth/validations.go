@@ -8,11 +8,11 @@ import (
 	"github.com/larry-lw-chan/goti/internal/utils/translate"
 )
 
-// use a single instance , it caches struct info
-var (
-	validate *validator.Validate
-)
+/************************************************************
+* Validations
+***********************************************************/
 
+// Create User Validation
 type CreateUserValidation struct {
 	Email    string `validate:"required,email"`
 	Password string `validate:"required,min=8"`
@@ -30,7 +30,7 @@ func validateCreateUser(r *http.Request) (errs []error) {
 	}
 
 	// Validate User Input
-	validate = validator.New()
+	validate := validator.New()
 	createUser := CreateUserValidation{
 		Email:    r.FormValue("email"),
 		Password: r.FormValue("password"),
@@ -40,7 +40,7 @@ func validateCreateUser(r *http.Request) (errs []error) {
 		errs = append(errs, translate.Errors(vErrs, validate)...)
 	}
 
-	// Return nil if no errors
+	// Returns nil if no errors
 	return errs
 }
 
@@ -52,7 +52,7 @@ type LoginUserValidation struct {
 
 func validateLoginUser(r *http.Request) (errs []error) {
 	// Validate User Input
-	validate = validator.New()
+	validate := validator.New()
 
 	loginUser := LoginUserValidation{
 		Email:    r.FormValue("email"),
@@ -64,6 +64,6 @@ func validateLoginUser(r *http.Request) (errs []error) {
 		errs = append(errs, translate.Errors(vErrs, validate)...)
 	}
 
-	// Return nil if no errors
+	// Returns nil if no errors
 	return errs
 }

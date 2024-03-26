@@ -24,11 +24,8 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle Form Validation
 	errs := validateLoginUser(r)
 	if errs != nil {
-		var message string
-		for _, err := range errs {
-			message += err.Error() + "<br /> "
-		}
-		flash.Set(w, r, flash.ERROR, message)
+		messages := getErrorMessages(errs)
+		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
 		return
 	}
@@ -58,12 +55,10 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle Form Validation
 	errs := validateCreateUser(r)
 	if errs != nil {
-		var message string
-		for _, err := range errs {
-			message += err.Error() + "<br />"
-		}
-		flash.Set(w, r, flash.ERROR, message)
+		messages := getErrorMessages(errs)
+		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
+		return
 	}
 
 	// Generate Hashed Password
@@ -78,20 +73,19 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 		CreatedAt: time.Now().String(),
 		UpdatedAt: time.Now().String(),
 	}
-	queries.CreateUser(context.Background(), createUser)
+	user, err := queries.CreateUser(context.Background(), createUser)
 
-	// Authenticate user
-	user, isAuthenticated := AuthenticateUser(r.FormValue("email"), r.FormValue("password"))
-
-	// Check if provided password matches
-	if isAuthenticated {
-		flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
-		CreateUserSession(w, r, user)
-		http.Redirect(w, r, "/profiles/show", http.StatusSeeOther)
-	} else {
-		flash.Set(w, r, flash.ERROR, "User not found or password incorrect")
+	// Check to make sure there is no existing user with that email
+	if err != nil {
+		flash.Set(w, r, flash.ERROR, "This email is already registered")
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
+		return
 	}
+
+	// Create user session and redirect to profile page
+	CreateUserSession(w, r, &user)
+	flash.Set(w, r, flash.SUCCESS, "Registration Worked!")
+	http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
