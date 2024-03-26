@@ -2,22 +2,15 @@ package pages
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/google/uuid"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
 
 func HomePageHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-
-	// Testing
-	test := uuid.New().String()
-	log.Println(test)
-
 	render.Template(w, data, "/pages/home.base.tmpl")
 }
 

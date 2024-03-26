@@ -2,6 +2,7 @@ package flash
 
 import (
 	"context"
+	"html/template"
 	"net/http"
 )
 
@@ -12,7 +13,8 @@ func CheckForFlash(next http.Handler) http.Handler {
 
 		// Get the flash message
 		if flash := Get(w, r); flash != nil {
-			data["Flash"] = flash
+			data["FlashType"] = flash.Type
+			data["FlashMessage"] = template.HTML(flash.Message)
 		}
 
 		// Create a new context with the data map
