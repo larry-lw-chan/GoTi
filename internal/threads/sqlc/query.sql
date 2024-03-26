@@ -10,7 +10,7 @@ JOIN profiles ON profiles.user_id = threads.user_id;
 
 
 -- name: GetUserThreads :many
-SELECT content, username, avatar
+SELECT threads.id, content, username, avatar
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
 WHERE threads.user_id = ?;

@@ -16,9 +16,10 @@ func Router() http.Handler {
 	r.Use(flash.CheckForFlash)
 	r.Use(auth.CheckIfAuthenticated)
 
-	// Profile Routes
+	// Thread Routes
 	r.Get("/new", NewThreadHandler)
 	r.Post("/new", NewPostThreadHandler)
+	r.Get("/{thread_id}", ShowThreadHandler)
 
 	// Partial Routes for HTMX usage
 	r.Get("/user-threads", UserThreadsHandler)

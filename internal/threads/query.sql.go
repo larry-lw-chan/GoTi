@@ -81,13 +81,14 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 }
 
 const getUserThreads = `-- name: GetUserThreads :many
-SELECT content, username, avatar
+SELECT threads.id, content, username, avatar
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
 WHERE threads.user_id = ?
 `
 
 type GetUserThreadsRow struct {
+	ID       int64
 	Content  string
 	Username string
 	Avatar   sql.NullString
@@ -102,7 +103,12 @@ func (q *Queries) GetUserThreads(ctx context.Context, userID int64) ([]GetUserTh
 	var items []GetUserThreadsRow
 	for rows.Next() {
 		var i GetUserThreadsRow
-		if err := rows.Scan(&i.Content, &i.Username, &i.Avatar); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Content,
+			&i.Username,
+			&i.Avatar,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)

@@ -2,18 +2,22 @@ package threads
 
 import (
 	"database/sql"
+	"log"
 	"net/http"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/internal/auth"
 	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
 
+/********************************************************
+* Threads
+*********************************************************/
 func NewThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-
 	render.Template(w, data, "/threads/new.app.tmpl")
 }
 
@@ -54,6 +58,17 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 	// Set flash message and render template
 	flash.Set(w, r, flash.SUCCESS, "New thread created.")
 	http.Redirect(w, r, "/threads/new", http.StatusSeeOther)
+}
+
+func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
+	data := r.Context().Value("data").(map[string]interface{})
+
+	// Get thread_id from URL
+	thread_id := chi.URLParam(r, "thread_id")
+
+	log.Println(thread_id)
+
+	render.Template(w, data, "/threads/show.app.tmpl")
 }
 
 /********************************************************
