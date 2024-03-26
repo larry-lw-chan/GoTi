@@ -43,17 +43,9 @@ CREATE TABLE likes (
 
 
 -- Schema from other packages to allow for foreign key constraints
-CREATE TABLE users (
-    "id" 	            INTEGER PRIMARY KEY,
-    "username"			TEXT NOT NULL UNIQUE,
-	"email"				TEXT NOT NULL UNIQUE,
-	"password"			TEXT NOT NULL,
-	"created_at"  		TEXT NOT NULL,
-	"updated_at"	    TEXT NOT NULL
-);
-
 CREATE TABLE profiles (
     "id" 	            INTEGER PRIMARY KEY,
+	"username"			TEXT NOT NULL UNIQUE,
     "name"				TEXT,
 	"bio"				TEXT,
 	"link"				TEXT,

@@ -48,7 +48,6 @@ func (q *Queries) CreateThread(ctx context.Context, arg CreateThreadParams) (Thr
 const getAllThreads = `-- name: GetAllThreads :many
 SELECT content, username, avatar
 FROM threads
-JOIN users ON users.id = threads.user_id
 JOIN profiles ON profiles.user_id = threads.user_id
 `
 
@@ -67,6 +66,42 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 	var items []GetAllThreadsRow
 	for rows.Next() {
 		var i GetAllThreadsRow
+		if err := rows.Scan(&i.Content, &i.Username, &i.Avatar); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getUserThreads = `-- name: GetUserThreads :many
+SELECT content, username, avatar
+FROM threads
+JOIN profiles ON profiles.user_id = threads.user_id
+WHERE threads.user_id = ?
+`
+
+type GetUserThreadsRow struct {
+	Content  string
+	Username string
+	Avatar   sql.NullString
+}
+
+func (q *Queries) GetUserThreads(ctx context.Context, userID int64) ([]GetUserThreadsRow, error) {
+	rows, err := q.db.QueryContext(ctx, getUserThreads, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []GetUserThreadsRow
+	for rows.Next() {
+		var i GetUserThreadsRow
 		if err := rows.Scan(&i.Content, &i.Username, &i.Avatar); err != nil {
 			return nil, err
 		}

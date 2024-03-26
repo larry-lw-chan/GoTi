@@ -62,9 +62,12 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
+	// Get user session information
+	userSession := auth.GetUserSession(r)
+
 	// Temp Solution - Get all Threads
 	queries := New(database.DB)
-	threads, err := queries.GetAllThreads(r.Context())
+	threads, err := queries.GetUserThreads(r.Context(), userSession.ID)
 
 	if err != nil {
 		// Handle Error

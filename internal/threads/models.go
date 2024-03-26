@@ -26,6 +26,7 @@ type Like struct {
 
 type Profile struct {
 	ID        int64
+	Username  string
 	Name      sql.NullString
 	Bio       sql.NullString
 	Link      sql.NullString
@@ -50,15 +51,6 @@ type ThreadsHashtag struct {
 	ID        int64
 	ThreadID  sql.NullInt64
 	HashtagID int64
-	CreatedAt string
-	UpdatedAt string
-}
-
-type User struct {
-	ID        int64
-	Username  string
-	Email     string
-	Password  string
 	CreatedAt string
 	UpdatedAt string
 }

@@ -59,8 +59,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create new user
-	email, password := r.FormValue("email"), r.FormValue("password")
-	user, err := CreateNewUser(email, password)
+	user, err := CreateNewUser(r.FormValue("email"), r.FormValue("password"))
 
 	// Check to make sure there is no existing user with that email
 	if err != nil {

@@ -6,5 +6,11 @@ RETURNING *;
 -- name: GetAllThreads :many
 SELECT content, username, avatar
 FROM threads
-JOIN users ON users.id = threads.user_id
 JOIN profiles ON profiles.user_id = threads.user_id;
+
+
+-- name: GetUserThreads :many
+SELECT content, username, avatar
+FROM threads
+JOIN profiles ON profiles.user_id = threads.user_id
+WHERE threads.user_id = ?;
