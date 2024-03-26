@@ -13,7 +13,7 @@ var (
 )
 
 type NewThreadValidation struct {
-	Content string `validate:"required,min=4,max=15"`
+	Content string `validate:"required,min=4,max=250"`
 }
 
 func validateNewThread(r *http.Request) (errs []error) {

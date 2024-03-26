@@ -18,16 +18,6 @@
     >
       <fieldset>
         <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Username"
-          class="register__input"
-          aria-label="Text"
-        />
-      </fieldset>
-      <fieldset>
-        <input
           type="email"
           name="email"
           id="email"
@@ -85,22 +75,6 @@
     // Validate Registration Form
     const validator = new window.JustValidate("#register__form");
     validator
-      .addField("#username", [
-        {
-          rule: "required",
-          message: "Username is required",
-        },
-        {
-          rule: "minLength",
-          value: 3,
-          message: "Username should be at least 3 characters",
-        },
-        {
-          rule: "maxLength",
-          value: 20,
-          message: "Username should be at most 20 characters",
-        },
-      ])
       .addField("#email", [
         {
           rule: "required",

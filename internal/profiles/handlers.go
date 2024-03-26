@@ -32,8 +32,7 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Load username and profile to pass to template
-	data["Username"] = userSession.Username
+	// Load username and profile to pass to templateUsername
 	data["Profile"] = profile
 
 	// Load user into profile
@@ -125,8 +124,7 @@ func EditPhotoHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	// Load username and profile to pass to template
-	data["Username"] = userSession.Username
+	// Load profile to pass to template
 	data["Profile"] = profile
 
 	render.Template(w, data, "/profiles/edit-photo.app.tmpl")
@@ -157,7 +155,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	fileUpload := filestore.FileUpload{
 		FileBytes:   fileBytes,
 		NamePattern: namePattern,
-		Directory:   userSession.Username + "/avatar",
+		Directory:   userSession.Uuid + "/avatar",
 	}
 
 	// Upload file to directory

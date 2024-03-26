@@ -14,7 +14,6 @@ var (
 )
 
 type CreateUserValidation struct {
-	Username string `validate:"required,min=4,max=15"`
 	Email    string `validate:"required,email"`
 	Password string `validate:"required,min=8"`
 }
@@ -32,9 +31,7 @@ func validateCreateUser(r *http.Request) (errs []error) {
 
 	// Validate User Input
 	validate = validator.New()
-
 	createUser := CreateUserValidation{
-		Username: r.FormValue("username"),
 		Email:    r.FormValue("email"),
 		Password: r.FormValue("password"),
 	}

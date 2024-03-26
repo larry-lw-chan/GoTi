@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"io"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -118,7 +117,7 @@ func handleMultipartFile(w http.ResponseWriter, r *http.Request) ([]byte, string
 ****************************************************************/
 func handleError(w http.ResponseWriter, r *http.Request, err error, redirect string) {
 	if err != nil {
-		log.Println(err)
+		// log.Println(err)
 		flash.Set(w, r, flash.ERROR, err.Error())
 		http.Redirect(w, r, redirect, http.StatusSeeOther)
 		return

@@ -9,7 +9,6 @@ import ()
 type User struct {
 	ID        int64
 	Uuid      string
-	Username  string
 	Email     string
 	Password  string
 	CreatedAt string

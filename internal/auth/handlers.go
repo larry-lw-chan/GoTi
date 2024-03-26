@@ -60,7 +60,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	if errs != nil {
 		var message string
 		for _, err := range errs {
-			message += err.Error() + "<br />"
+			message += err.Error() + ".  "
 		}
 		flash.Set(w, r, flash.ERROR, message)
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
@@ -73,7 +73,6 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	queries := New(database.DB)
 	createUser := CreateUserParams{
 		Uuid:      generateUUID(),
-		Username:  r.FormValue("username"),
 		Email:     r.FormValue("email"),
 		Password:  hashPwd,
 		CreatedAt: time.Now().String(),

@@ -4,6 +4,8 @@
       {{ template "thread" . }}
     {{ end }}
   {{ else }}
-    <button>Start your first thread</button>
+    <a href="/threads/new">
+      <button>Start your first thread</button>
+    </a>
   {{ end }}
 </div>

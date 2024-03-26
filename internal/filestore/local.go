@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
 /********************************************************
@@ -23,7 +24,8 @@ func (ls LocalStore) Upload(fu FileUpload) (string, error) {
 	dir := fu.Directory
 
 	// Get upload path
-	uploadPath := ls.getPath(dir)
+	dirList := strings.Split(dir, "/")
+	uploadPath := ls.getPath(dirList...)
 
 	// Create a temporary file within our temp-images directory that follows
 	// a particular naming pattern
