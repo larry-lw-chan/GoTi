@@ -1,3 +1,14 @@
+/****************************************************
+* Global Variable
+****************************************************/
+:root {
+  --pico-font-size: 100%;
+}
+
+/****************************************************
+* Reusable Components
+****************************************************/
+
 /* Hamburger Styling */
 #hamburger .bar1,
 #hamburger .bar2,
@@ -81,9 +92,6 @@ input:-webkit-autofill {
   margin-bottom: var(--pico-spacing);
 }
 
-/****************************************************
-* Reusable Components
-****************************************************/
 /* Toggle Style */
 .toggle__label {
   position: relative;
