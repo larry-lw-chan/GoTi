@@ -36,3 +36,6 @@ tmp
 
 # Ignore node_modules
 node_modules
+
+# Ignore Caddy Folder
+caddy

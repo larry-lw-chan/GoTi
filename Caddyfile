@@ -1,0 +1,8 @@
+# Replace goti.localhost with your application's domain (example.com)
+goti.localhost {
+  # goti-app:8080 is the docker container running the Goti application
+  # in our case it's exposed on port 8080 by default
+  reverse_proxy goti-app:8080  {
+    header_down Strict-Transport-Security max-age=31536000;
+  }
+}

@@ -1,11 +1,26 @@
 version: "3"
 services:
-  dev:
+  # Run the Goti Applicaton
+  goti-app:
     restart: on-failure
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 80:3000
+      - 8080:8080
     volumes:
       - .:/app
+
+  # Run the Caddy Server
+  caddy:
+      image: caddy:2.7.6
+      container_name: caddy-service
+      restart: unless-stopped
+      ports:
+          - "80:80"
+          - "443:443"
+      volumes:            
+      - $PWD/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/caddy/site:/srv
+      - $PWD/caddy/caddy_data:/data
+      - $PWD/caddy/caddy_data:/config  
