@@ -159,7 +159,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Upload file to directory
-	filepath, err := filestore.Upload(fileUpload)
+	filepath, err := filestore.Upload(&fileUpload)
 	handleError(w, r, err, "/profiles/edit/photo")
 
 	// Save file path to database

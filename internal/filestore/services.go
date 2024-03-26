@@ -15,7 +15,7 @@ var FS FilestoreService = LocalStore{
 
 // Interface used to define the filestore service
 type FilestoreService interface {
-	Upload(fu FileUpload) (string, error)
+	Upload(fu *FileUpload) (string, error)
 	Delete(filename string) error
 }
 
@@ -27,7 +27,7 @@ type FileUpload struct {
 }
 
 // Uploads a file to the selected filestore
-func Upload(fu FileUpload) (url string, err error) {
+func Upload(fu *FileUpload) (url string, err error) {
 	uploadPath, err := FS.Upload(fu)
 	return uploadPath, err
 }

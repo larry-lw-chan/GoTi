@@ -17,7 +17,7 @@ type LocalStore struct {
 }
 
 // Main function that uploads a file to the local filestore
-func (ls LocalStore) Upload(fu FileUpload) (string, error) {
+func (ls LocalStore) Upload(fu *FileUpload) (string, error) {
 	// Get file parameters
 	fileBytes := fu.FileBytes
 	namePattern := fu.NamePattern
