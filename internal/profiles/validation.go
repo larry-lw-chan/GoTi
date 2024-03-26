@@ -2,7 +2,7 @@ package profiles
 
 import (
 	"github.com/go-playground/validator/v10"
-	"github.com/larry-lw-chan/goti/internal/utils/translate"
+	"github.com/larry-lw-chan/goti/internal/helper"
 )
 
 // use a single instance , it caches struct info
@@ -25,7 +25,7 @@ func validateCreateProfile(createProfileValidation CreateProfileValidation) (err
 
 	vErrs := validate.Struct(&createProfileValidation)
 	if vErrs != nil {
-		errs = append(errs, translate.Errors(vErrs, validate)...)
+		errs = append(errs, helper.TranslateErrors(vErrs, validate)...)
 	}
 
 	// Return nil if no errors

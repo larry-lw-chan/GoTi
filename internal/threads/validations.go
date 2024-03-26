@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/larry-lw-chan/goti/internal/utils/translate"
+	"github.com/larry-lw-chan/goti/internal/helper"
 )
 
 // use a single instance , it caches struct info
@@ -26,7 +26,7 @@ func validateNewThread(r *http.Request) (errs []error) {
 
 	vErrs := validate.Struct(&newThread)
 	if vErrs != nil {
-		errs = append(errs, translate.Errors(vErrs, validate)...)
+		errs = append(errs, helper.TranslateErrors(vErrs, validate)...)
 	}
 
 	// Return nil if no errors

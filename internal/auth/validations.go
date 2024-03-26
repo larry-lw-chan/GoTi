@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/larry-lw-chan/goti/internal/utils/translate"
+	"github.com/larry-lw-chan/goti/internal/helper"
 )
 
 /************************************************************
@@ -38,7 +38,7 @@ func validateCreateUser(cuv *CreateUserValidation) (errs []error) {
 	}
 	vErrs := validate.Struct(&createUser)
 	if vErrs != nil {
-		errs = append(errs, translate.Errors(vErrs, validate)...)
+		errs = append(errs, helper.TranslateErrors(vErrs, validate)...)
 	}
 
 	// Returns nil if no errors
@@ -62,7 +62,7 @@ func validateLoginUser(luv *LoginUserValidation) (errs []error) {
 
 	vErrs := validate.Struct(&loginUser)
 	if vErrs != nil {
-		errs = append(errs, translate.Errors(vErrs, validate)...)
+		errs = append(errs, helper.TranslateErrors(vErrs, validate)...)
 	}
 
 	// Returns nil if no errors
