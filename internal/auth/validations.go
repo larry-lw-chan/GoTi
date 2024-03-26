@@ -2,7 +2,6 @@ package auth
 
 import (
 	"errors"
-	"net/http"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/larry-lw-chan/goti/internal/utils/translate"
@@ -14,26 +13,28 @@ import (
 
 // Create User Validation
 type CreateUserValidation struct {
-	Email    string `validate:"required,email"`
-	Password string `validate:"required,min=8"`
+	Email           string `validate:"required,email"`
+	Password        string `validate:"required,min=8"`
+	ConfirmPassword string `validate:"required"`
+	Privacy         string `validate:"required"`
 }
 
-func validateCreateUser(r *http.Request) (errs []error) {
+func validateCreateUser(cuv *CreateUserValidation) (errs []error) {
 	// Check if passwords match
-	if r.FormValue("password") != r.FormValue("confirm_password") {
+	if cuv.Password != cuv.ConfirmPassword {
 		errs = append(errs, errors.New("passwords do not match"))
 	}
 
 	// Check if privacy policy is agreed
-	if r.FormValue("privacy") == "off" {
+	if cuv.Privacy == "off" {
 		errs = append(errs, errors.New("please agree to the privacy policy"))
 	}
 
 	// Validate User Input
 	validate := validator.New()
 	createUser := CreateUserValidation{
-		Email:    r.FormValue("email"),
-		Password: r.FormValue("password"),
+		Email:    cuv.Email,
+		Password: cuv.Password,
 	}
 	vErrs := validate.Struct(&createUser)
 	if vErrs != nil {
@@ -50,13 +51,13 @@ type LoginUserValidation struct {
 	Password string `validate:"required,min=8"`
 }
 
-func validateLoginUser(r *http.Request) (errs []error) {
+func validateLoginUser(luv *LoginUserValidation) (errs []error) {
 	// Validate User Input
 	validate := validator.New()
 
 	loginUser := LoginUserValidation{
-		Email:    r.FormValue("email"),
-		Password: r.FormValue("password"),
+		Email:    luv.Email,
+		Password: luv.Password,
 	}
 
 	vErrs := validate.Struct(&loginUser)

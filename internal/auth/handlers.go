@@ -19,7 +19,12 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	// Handle Form Validation
-	errs := validateLoginUser(r)
+	luv := LoginUserValidation{
+		Email:    r.FormValue("email"),
+		Password: r.FormValue("password"),
+	}
+	errs := validateLoginUser(&luv)
+
 	if errs != nil {
 		messages := getErrorMessages(errs)
 		flash.Set(w, r, flash.ERROR, messages)
@@ -50,7 +55,15 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
 	// Handle Form Validation
-	errs := validateCreateUser(r)
+	cuv := CreateUserValidation{
+		Email:           r.FormValue("email"),
+		Password:        r.FormValue("password"),
+		ConfirmPassword: r.FormValue("confirm_password"),
+		Privacy:         r.FormValue("privacy"),
+	}
+
+	errs := validateCreateUser(&cuv)
+
 	if errs != nil {
 		messages := getErrorMessages(errs)
 		flash.Set(w, r, flash.ERROR, messages)
