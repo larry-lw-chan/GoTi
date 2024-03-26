@@ -82,7 +82,6 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 
 func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
-	queries := New(database.DB)
 
 	// Get thread_id from URL
 	thread_id := chi.URLParam(r, "thread_id")
@@ -94,9 +93,21 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	queries.GetThreadByID(r.Context(), int64(id))
 
-	render.Template(w, data, "/threads/show.app.tmpl", "/threads/partials/thread.app.tmpl")
+	// Get thread from id
+	queries := New(database.DB)
+	thread, err := queries.GetThreadByID(r.Context(), int64(id))
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to get thread.  Please contact support.")
+		http.Redirect(w, r, "/threads", http.StatusSeeOther)
+		return
+	}
+
+	// Move stuff to thread
+	data["Thread"] = thread
+
+	render.Template(w, data, "/threads/show.app.tmpl")
 }
 
 /********************************************************
