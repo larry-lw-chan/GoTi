@@ -67,14 +67,25 @@ func updateUserProfile(username, name, bio, link string, private, userID int64) 
 	return profile, err
 }
 
-func saveFilePathToProfile(userID int64, filepath string) (Profile, error) {
+func createAvatarFilePath(userID int64, filepath string) (Profile, error) {
 	queries := New(database.DB)
-	updateProfileParams := UpdateProfileParams{
+	updateProfileAvatarParams := UpdateProfileAvatarParams{
 		Avatar:    sql.NullString{String: filepath, Valid: true},
 		UpdatedAt: time.Now().String(),
 		UserID:    userID,
 	}
-	profile, err := queries.UpdateProfile(context.Background(), updateProfileParams)
+	profile, err := queries.UpdateProfileAvatar(context.Background(), updateProfileAvatarParams)
+	return profile, err
+}
+
+func deleteAvatarFilePath(userID int64) (Profile, error) {
+	queries := New(database.DB)
+	updateProfileAvatarParams := UpdateProfileAvatarParams{
+		Avatar:    sql.NullString{String: "", Valid: false},
+		UpdatedAt: time.Now().String(),
+		UserID:    userID,
+	}
+	profile, err := queries.UpdateProfileAvatar(context.Background(), updateProfileAvatarParams)
 	return profile, err
 }
 
@@ -122,4 +133,11 @@ func handleError(w http.ResponseWriter, r *http.Request, err error, redirect str
 		http.Redirect(w, r, redirect, http.StatusSeeOther)
 		return
 	}
+}
+
+func getErrorMessages(errs []error) (message string) {
+	for _, err := range errs {
+		message += err.Error() + "<br />"
+	}
+	return message
 }

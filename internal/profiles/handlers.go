@@ -2,7 +2,6 @@ package profiles
 
 import (
 	"context"
-	"database/sql"
 	"log"
 	"net/http"
 
@@ -84,11 +83,8 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 	errs := validateCreateProfile(createProfileValidation)
 
 	if errs != nil {
-		var message string
-		for _, err := range errs {
-			message += err.Error() + "<br /> "
-		}
-		flash.Set(w, r, flash.ERROR, message)
+		messages := getErrorMessages(errs)
+		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
 		return
 	}
@@ -163,7 +159,7 @@ func EditPhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	handleError(w, r, err, "/profiles/edit/photo")
 
 	// Save file path to database
-	_, err = saveFilePathToProfile(userSession.ID, filepath)
+	_, err = createAvatarFilePath(userSession.ID, filepath)
 
 	if err != nil {
 		flash.Set(w, r, flash.ERROR, "Profile update failed")
@@ -189,13 +185,7 @@ func DeletePhotoPostHandler(w http.ResponseWriter, r *http.Request) {
 	handleError(w, r, err, "/profiles/show")
 
 	// Fill in update profile parameters
-	updateProfileParams := UpdateProfileParams{
-		Avatar: sql.NullString{Valid: false},
-		UserID: userSession.ID,
-	}
-
-	// Delete file path from database
-	_, err = queries.UpdateProfile(context.Background(), updateProfileParams)
+	_, err = deleteAvatarFilePath(userSession.ID)
 	handleError(w, r, err, "/profiles/show")
 
 	// Redirect to profile page

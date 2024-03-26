@@ -14,3 +14,10 @@ UPDATE profiles
 SET username = ?, name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 
 WHERE user_id = ? 
 RETURNING *;
+
+
+-- name: UpdateProfileAvatar :one
+UPDATE profiles 
+SET avatar = ?, updated_at = ? 
+WHERE user_id = ? 
+RETURNING *;

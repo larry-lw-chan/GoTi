@@ -153,7 +153,7 @@ main {
 * Reusable Component Styling
 *******************************************/
 /* Avatar Placeholder */
-.avatar-placeholder {
+.avatar {
   width: 2.5rem;
   height: 2.5rem;
   background-color: var(--pico-color);
