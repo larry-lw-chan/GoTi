@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
-	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 	"github.com/larry-lw-chan/goti/internal/threads"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
@@ -18,7 +17,8 @@ func TimelineIndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		// Handle Error
-		flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		// flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
 	} else {
 		data["Threads"] = threads
 	}
