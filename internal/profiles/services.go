@@ -124,7 +124,7 @@ func handleMultipartFile(w http.ResponseWriter, r *http.Request) ([]byte, string
 }
 
 /****************************************************************
-* Helper Functions
+* Package Specific Helper
 ****************************************************************/
 func handleError(w http.ResponseWriter, r *http.Request, err error, redirect string) {
 	if err != nil {
