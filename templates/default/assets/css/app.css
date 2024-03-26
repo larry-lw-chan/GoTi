@@ -175,8 +175,11 @@ main {
   gap: 1rem;
   margin-bottom: 1rem;
   padding: 1rem;
-  border: 1px solid var(--pico-muted-color);
-  border-radius: 0.5rem;
+  border-bottom: 1px solid var(--pico-secondary-border);
+  border-radius: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
   position: relative;
   z-index: 0;
 }
