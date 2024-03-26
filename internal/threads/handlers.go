@@ -2,6 +2,7 @@ package threads
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -9,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/internal/auth"
+	"github.com/larry-lw-chan/goti/internal/helper"
 	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
@@ -27,11 +29,8 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle Form Validation
 	errs := validateNewThread(r)
 	if errs != nil {
-		var message string
-		for _, err := range errs {
-			message += err.Error() + "\n"
-		}
-		flash.Set(w, r, flash.ERROR, message)
+		messages := helper.GetErrorMessages(errs)
+		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/threads/new", http.StatusSeeOther)
 		return
 	}
@@ -41,6 +40,7 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create new thread
 	queries := New(database.DB)
+
 	threadParam := CreateThreadParams{
 		Content:   r.FormValue("content"),
 		ThreadID:  sql.NullInt64{Valid: false},
@@ -48,16 +48,19 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 		CreatedAt: time.Now().String(),
 		UpdatedAt: time.Now().String(),
 	}
-	_, err := queries.CreateThread(r.Context(), threadParam)
+
+	thread, err := queries.CreateThread(r.Context(), threadParam)
+
 	if err != nil {
 		flash.Set(w, r, flash.ERROR, "Failed to create new thread.  Please contact support.")
 		http.Redirect(w, r, "/threads/new", http.StatusSeeOther)
 		return
 	}
 
-	// Set flash message and render template
+	// Set flash message and redirect to thread page
+	thread_path := "/threads/" + fmt.Sprint(thread.ID)
 	flash.Set(w, r, flash.SUCCESS, "New thread created.")
-	http.Redirect(w, r, "/threads/new", http.StatusSeeOther)
+	http.Redirect(w, r, thread_path, http.StatusSeeOther)
 }
 
 func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {

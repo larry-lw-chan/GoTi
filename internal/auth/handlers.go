@@ -3,6 +3,7 @@ package auth
 import (
 	"net/http"
 
+	"github.com/larry-lw-chan/goti/internal/helper"
 	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
@@ -26,7 +27,7 @@ func LoginPostHandler(w http.ResponseWriter, r *http.Request) {
 	errs := validateLoginUser(&luv)
 
 	if errs != nil {
-		messages := getErrorMessages(errs)
+		messages := helper.GetErrorMessages(errs)
 		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/auth/login", http.StatusSeeOther)
 		return
@@ -65,7 +66,7 @@ func RegisterPostHandler(w http.ResponseWriter, r *http.Request) {
 	errs := validateCreateUser(&cuv)
 
 	if errs != nil {
-		messages := getErrorMessages(errs)
+		messages := helper.GetErrorMessages(errs)
 		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/auth/register", http.StatusSeeOther)
 		return

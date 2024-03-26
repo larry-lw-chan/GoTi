@@ -134,10 +134,3 @@ func handleError(w http.ResponseWriter, r *http.Request, err error, redirect str
 		return
 	}
 }
-
-func getErrorMessages(errs []error) (message string) {
-	for _, err := range errs {
-		message += err.Error() + "<br />"
-	}
-	return message
-}

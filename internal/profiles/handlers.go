@@ -9,6 +9,7 @@ import (
 	"github.com/larry-lw-chan/goti/database"
 	"github.com/larry-lw-chan/goti/internal/auth"
 	"github.com/larry-lw-chan/goti/internal/filestore"
+	"github.com/larry-lw-chan/goti/internal/helper"
 	"github.com/larry-lw-chan/goti/internal/sessions/flash"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
@@ -84,7 +85,7 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 	errs := validateCreateProfile(createProfileValidation)
 
 	if errs != nil {
-		messages := getErrorMessages(errs)
+		messages := helper.GetErrorMessages(errs)
 		flash.Set(w, r, flash.ERROR, messages)
 		http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
 		return

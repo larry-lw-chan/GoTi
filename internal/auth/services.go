@@ -58,13 +58,3 @@ func CheckPasswordHash(pwd, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(pwd))
 	return err == nil
 }
-
-/************************************************************
-* Helper Methods
-***********************************************************/
-func getErrorMessages(errs []error) (message string) {
-	for _, err := range errs {
-		message += err.Error() + "<br />"
-	}
-	return message
-}
