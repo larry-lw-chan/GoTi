@@ -33,7 +33,7 @@
           type="text"
           name="username"
           id="username"
-          placeholder="Please enter username"
+          placeholder="Please enter username (required)"
           aria-label="username"
           {{ if .Profile.Username }}
             value="{{ .Profile.Username }}"
@@ -47,23 +47,10 @@
           type="text"
           name="name"
           id="name"
-          placeholder="Please enter name"
+          placeholder="Please enter your name"
           aria-label="name"
           {{ if .Profile.Name.Valid }}
             value="{{ .Profile.Name.String }}"
-          {{ end }}
-        />
-      </fieldset>
-      <fieldset>
-        <label for="bio">Bio</label>
-        <input
-          type="text"
-          name="bio"
-          id="bio"
-          placeholder="Write bio"
-          aria-label="bio"
-          {{ if .Profile.Bio.Valid }}
-            value="{{ .Profile.Bio.String }}"
           {{ end }}
         />
       </fieldset>
@@ -73,12 +60,25 @@
           type="text"
           name="link"
           id="link"
-          placeholder="Add link"
+          placeholder="Please add a link to your website"
           aria-label="link"
           {{ if .Profile.Link.Valid }}
             value="{{ .Profile.Link.String }}"
           {{ end }}
         />
+      </fieldset>
+      <fieldset>
+        <label for="bio">Bio</label>
+        <textarea
+          rows="3"
+          name="bio"
+          id="bio"
+          placeholder="Please enter a short bio that's under 300 characters."
+          aria-label="bio"
+          {{ if .Profile.Bio.Valid }}
+            value="{{ .Profile.Bio.String }}"
+          {{ end }}
+        ></textarea>
       </fieldset>
       <fieldset class="private-profile">
         <span>Private Profile</span>
@@ -94,7 +94,6 @@
               checked
             {{ end }}
           {{ end }}
-
         />
         <label for="private" class="toggle__label"></label>
       </fieldset>
@@ -102,4 +101,53 @@
       <button>Done</button>
     </form>
   </article>
+{{ end }}
+
+{{ define "script" }}
+  <script type="text/javascript">
+    window.addEventListener("load", (e) => {
+      const validator = new window.JustValidate("#profile__form");
+      validator
+        .addField("#username", [
+          {
+            rule: "required",
+            message: "Username is required",
+          },
+        ])
+        .addField("#name", [
+          {
+            rule: "minLength",
+            value: 4,
+            message: "Full name should be at least 4 characters",
+          },
+          {
+            rule: "maxLength",
+            value: 50,
+            message: "Full name should be at most 50 characters",
+          },
+        ])
+        .addField("#link", [
+          {
+            rule: "minLength",
+            value: 4,
+            message: "Link should be at least 4 characters and be a url",
+          },
+        ])
+        .addField("#bio", [
+          {
+            rule: "minLength",
+            value: 4,
+            message: "Biography should be at least 4 characters",
+          },
+          {
+            rule: "maxLength",
+            value: 300,
+            message: "Biography should be at most 300 characters",
+          },
+        ])
+        .onSuccess((event) => {
+          document.getElementById("profile__form").submit();
+        });
+    });
+  </script>
 {{ end }}
