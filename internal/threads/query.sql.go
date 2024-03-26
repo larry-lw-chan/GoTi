@@ -46,12 +46,13 @@ func (q *Queries) CreateThread(ctx context.Context, arg CreateThreadParams) (Thr
 }
 
 const getAllThreads = `-- name: GetAllThreads :many
-SELECT content, username, avatar
+SELECT threads.id, content, username, avatar
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
 `
 
 type GetAllThreadsRow struct {
+	ID       int64
 	Content  string
 	Username string
 	Avatar   sql.NullString
@@ -66,7 +67,12 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 	var items []GetAllThreadsRow
 	for rows.Next() {
 		var i GetAllThreadsRow
-		if err := rows.Scan(&i.Content, &i.Username, &i.Avatar); err != nil {
+		if err := rows.Scan(
+			&i.ID,
+			&i.Content,
+			&i.Username,
+			&i.Avatar,
+		); err != nil {
 			return nil, err
 		}
 		items = append(items, i)
