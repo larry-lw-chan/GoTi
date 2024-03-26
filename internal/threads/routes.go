@@ -17,6 +17,7 @@ func Router() http.Handler {
 	r.Use(auth.CheckIfAuthenticated)
 
 	// Thread Routes
+	r.Get("/", IndexThreadHandler)
 	r.Get("/new", NewThreadHandler)
 	r.Post("/new", NewPostThreadHandler)
 	r.Get("/{thread_id}", ShowThreadHandler)

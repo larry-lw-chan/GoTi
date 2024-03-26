@@ -86,6 +86,32 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 	return items, nil
 }
 
+const getThreadByID = `-- name: GetThreadByID :one
+SELECT threads.id, content, username, avatar
+FROM threads
+JOIN profiles ON profiles.user_id = threads.user_id
+WHERE threads.id = ?
+`
+
+type GetThreadByIDRow struct {
+	ID       int64
+	Content  string
+	Username string
+	Avatar   sql.NullString
+}
+
+func (q *Queries) GetThreadByID(ctx context.Context, id int64) (GetThreadByIDRow, error) {
+	row := q.db.QueryRowContext(ctx, getThreadByID, id)
+	var i GetThreadByIDRow
+	err := row.Scan(
+		&i.ID,
+		&i.Content,
+		&i.Username,
+		&i.Avatar,
+	)
+	return i, err
+}
+
 const getUserThreads = `-- name: GetUserThreads :many
 SELECT threads.id, content, username, avatar
 FROM threads

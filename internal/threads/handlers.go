@@ -3,8 +3,8 @@ package threads
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -18,6 +18,23 @@ import (
 /********************************************************
 * Threads
 *********************************************************/
+func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
+	data := r.Context().Value("data").(map[string]any)
+
+	// Algo - Get all Threads
+	queries := New(database.DB)
+	threads, err := queries.GetAllThreads(r.Context())
+
+	if err != nil {
+		data["Threads"] = nil
+	} else {
+		data["Threads"] = threads
+	}
+
+	render.Template(w, data, "/threads/index.app.tmpl", "/threads/partials/thread.app.tmpl")
+
+}
+
 func NewThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 	render.Template(w, data, "/threads/new.app.tmpl")
@@ -65,13 +82,21 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 
 func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
+	queries := New(database.DB)
 
 	// Get thread_id from URL
 	thread_id := chi.URLParam(r, "thread_id")
+	id, err := strconv.ParseInt(thread_id, 10, 64)
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to get thread.  Please contact support.")
+		http.Redirect(w, r, "/threads", http.StatusSeeOther)
+		return
 
-	log.Println(thread_id)
+	}
+	queries.GetThreadByID(r.Context(), int64(id))
 
-	render.Template(w, data, "/threads/show.app.tmpl")
+	render.Template(w, data, "/threads/show.app.tmpl", "/threads/partials/thread.app.tmpl")
 }
 
 /********************************************************
