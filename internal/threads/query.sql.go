@@ -49,6 +49,7 @@ const getAllThreads = `-- name: GetAllThreads :many
 SELECT threads.id, content, username, avatar
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+ORDER BY threads.created_at desc
 `
 
 type GetAllThreadsRow struct {
