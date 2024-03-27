@@ -15,6 +15,8 @@ import (
 	"github.com/larry-lw-chan/goti/internal/filestore"
 	"github.com/larry-lw-chan/goti/internal/pages"
 	"github.com/larry-lw-chan/goti/internal/profiles"
+	"github.com/larry-lw-chan/goti/internal/relationships"
+	"github.com/larry-lw-chan/goti/internal/search"
 	"github.com/larry-lw-chan/goti/internal/sessions/cookie"
 	"github.com/larry-lw-chan/goti/internal/threads"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
@@ -52,6 +54,8 @@ func routes() *chi.Mux {
 	r.Mount("/auth", auth.Router())
 	r.Mount("/profiles", profiles.Router())
 	r.Mount("/threads", threads.Router())
+	r.Mount("/search", search.Router())
+	r.Mount("/relationships", relationships.Router())
 
 	// Custom Error Handling
 	r.NotFound(pages.NotFoundHandler)
