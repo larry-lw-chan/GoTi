@@ -3,6 +3,15 @@
     <div class="flash {{ .FlashType }}">
       {{ .FlashMessage }}
     </div>
-  {{ end }}
 
+    <script type="application/javascript">
+      // Remove flash messages after 5 seconds
+      let flash = document.querySelector(".flash");
+      if (flash) {
+        setTimeout(() => {
+          flash.style.display = "none";
+        }, 5000);
+      }
+    </script>
+  {{ end }}
 {{ end }}
