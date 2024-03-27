@@ -28,6 +28,14 @@
           let header = document.querySelector("header");
           header.classList.toggle("change");
         });
+
+      // Close Hamburger Menu on click outside
+      document.addEventListener("click", function (e) {
+        let header = document.querySelector("header");
+        if (e.target.id !== "hamburger" && !header.contains(e.target)) {
+          header.classList.remove("change");
+        }
+      });
     };
   </script>
 {{ end }}
