@@ -116,12 +116,21 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
+	// Get user_id from URL
+	userId := chi.URLParam(r, "user_id")
+	userID, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
+	}
+
 	// Get user session information
-	userSession := auth.GetUserSession(r)
+	// userSession := auth.GetUserSession(r)
 
 	// Temp Solution - Get all Threads
 	queries := New(database.DB)
-	threads, err := queries.GetUserThreads(r.Context(), userSession.ID)
+	threads, err := queries.GetUserThreads(r.Context(), userID)
 
 	if err != nil {
 		// Handle Error

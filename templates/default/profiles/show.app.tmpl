@@ -50,7 +50,7 @@
       <a
         href="#"
         class="active activity__link"
-        hx-get="/threads/user-threads"
+        hx-get="/threads/user-threads/{{ .Profile.UserID }}"
         hx-target="#display"
         hx-swap="innerHTML"
         hx-trigger="load, click"
