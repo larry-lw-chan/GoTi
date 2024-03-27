@@ -31,7 +31,7 @@ func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Template(w, data, "/threads/index.app.tmpl", "/threads/partials/thread.app.tmpl")
+	render.Template(w, data, "/threads/index.app.tmpl", "/threads/__thread.app.tmpl")
 
 }
 
@@ -140,13 +140,13 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Partial(w, data, "/threads/partials/user_threads.app.tmpl", "/threads/partials/thread.app.tmpl")
+	render.Partial(w, data, "/threads/user_threads.app.tmpl", "/threads/__thread.app.tmpl")
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, nil, "/threads/partials/user_replies.app.tmpl")
+	render.Partial(w, nil, "/threads/user_replies.app.tmpl")
 }
 
 func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, nil, "/threads/partials/user_repost.app.tmpl")
+	render.Partial(w, nil, "/threads/user_repost.app.tmpl")
 }

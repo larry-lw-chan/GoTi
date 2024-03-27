@@ -231,6 +231,27 @@ form button {
   width: 100%;
 }
 
+/* Relationship Component Styling */
+.toolbar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.toolbar__link {
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  text-decoration: none;
+  color: var(--pico-primary-inverse);
+  display: inline-block;
+  padding: 0.25rem 1.5rem;
+}
+
+.toolbar__link.active {
+  background-color: var(--pico-primary-inverse);
+  color: var(--pico-primary);
+}
+
 /****************************************** 
 * Individual Template Styling
 *******************************************/

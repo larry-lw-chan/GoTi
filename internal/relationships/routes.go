@@ -17,6 +17,10 @@ func Router() http.Handler {
 	r.Use(auth.CheckIfAuthenticated)
 
 	// Relationship Routes
-	r.Get("/", IndexThreadHandler)
+	r.Get("/", IndexRelationHandler)
+
+	// Relationship Partials
+	r.Get("/all", AllRelationHandler)
+
 	return r
 }

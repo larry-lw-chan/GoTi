@@ -71,17 +71,17 @@ func loadTemplates() {
 		Layout: map[string][]string{
 			"base": {
 				"/layout/base.tmpl",
-				"/layout/partials/_flash.tmpl",
-				"/layout/partials/_header.base.tmpl",
-				"/layout/partials/_footer.base.tmpl",
-				"/layout/partials/_javascript.base.tmpl",
+				"/layout/__flash.tmpl",
+				"/layout/__header.base.tmpl",
+				"/layout/__footer.base.tmpl",
+				"/layout/__javascript.base.tmpl",
 			},
 			"app": {
 				"/layout/app.tmpl",
-				"/layout/partials/_flash.tmpl",
-				"/layout/partials/_header.app.tmpl",
-				"/layout/partials/_primary.app.tmpl",
-				"/layout/partials/_javascript.app.tmpl",
+				"/layout/__flash.tmpl",
+				"/layout/__header.app.tmpl",
+				"/layout/__primary.app.tmpl",
+				"/layout/__javascript.app.tmpl",
 			},
 		},
 	})
