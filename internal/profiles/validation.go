@@ -11,11 +11,10 @@ var (
 )
 
 type CreateProfileValidation struct {
-	Username string `validate:"required,min=4,max=15"`
+	Username string `validate:"required,alphanum,min=4,max=15"`
 	Name     string `validate:"omitempty,min=4,max=50"`
 	Bio      string `validate:"omitempty,min=4,max=300"`
 	Link     string `validate:"omitempty,url"`
-	Avatar   string `validate:"omitempty,url"`
 	Private  int64  `validate:"number"`
 }
 

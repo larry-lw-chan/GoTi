@@ -14,7 +14,7 @@ RETURNING *;
 
 -- name: UpdateProfile :one
 UPDATE profiles 
-SET username = ?, name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 
+SET username = ?, name = ?, bio = ?, link = ?, private = ?, updated_at = ? 
 WHERE user_id = ? 
 RETURNING *;
 

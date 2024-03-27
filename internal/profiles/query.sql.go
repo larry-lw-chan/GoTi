@@ -113,7 +113,7 @@ func (q *Queries) GetProfileFromUsername(ctx context.Context, username string) (
 
 const updateProfile = `-- name: UpdateProfile :one
 UPDATE profiles 
-SET username = ?, name = ?, bio = ?, link = ?, avatar = ?, private = ?, updated_at = ? 
+SET username = ?, name = ?, bio = ?, link = ?, private = ?, updated_at = ? 
 WHERE user_id = ? 
 RETURNING id, username, name, bio, link, avatar, private, user_id, created_at, updated_at
 `
@@ -123,7 +123,6 @@ type UpdateProfileParams struct {
 	Name      sql.NullString
 	Bio       sql.NullString
 	Link      sql.NullString
-	Avatar    sql.NullString
 	Private   sql.NullInt64
 	UpdatedAt string
 	UserID    int64
@@ -135,7 +134,6 @@ func (q *Queries) UpdateProfile(ctx context.Context, arg UpdateProfileParams) (P
 		arg.Name,
 		arg.Bio,
 		arg.Link,
-		arg.Avatar,
 		arg.Private,
 		arg.UpdatedAt,
 		arg.UserID,

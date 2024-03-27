@@ -96,7 +96,6 @@ func EditPostHandler(w http.ResponseWriter, r *http.Request) {
 		Name:     r.FormValue("name"),
 		Bio:      r.FormValue("bio"),
 		Link:     r.FormValue("link"),
-		Avatar:   r.FormValue("avatar"),
 		Private:  private,
 	}
 
