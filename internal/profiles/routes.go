@@ -25,7 +25,7 @@ func Router() http.Handler {
 	r.Post("/delete/photo", DeletePhotoPostHandler)
 
 	// Show Other User Profiles Routes
-	r.Get("/{username}", ShowHandler)
+	r.Get("/show/{username}", ShowHandler)
 
 	return r
 }
