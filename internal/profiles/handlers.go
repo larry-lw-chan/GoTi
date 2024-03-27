@@ -21,20 +21,38 @@ import (
 func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
-	// Get user session information
+	// Get username from chi and session information
+	username := chi.URLParam(r, "username")
 	userSession := auth.GetUserSession(r)
 	queries := New(database.DB)
 
-	// Get profile information or create if not exist
-	profile, err := queries.GetProfileFromUserId(context.Background(), userSession.ID)
-	if err != nil {
-		flash.Set(w, r, flash.NOTICE, "Please complete your user profile")
-		http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
-		return
+	// Get profile information by username or user session if username is empty
+	var profile Profile
+	var err error
+	if username != "" {
+		profile, err = queries.GetProfileFromUsername(context.Background(), username)
+		if err != nil {
+			helper.PageNotFound(w, http.StatusNotFound)
+			return
+		}
+	} else {
+		profile, err = queries.GetProfileFromUserId(context.Background(), userSession.ID)
+		if err != nil {
+			flash.Set(w, r, flash.NOTICE, "Please complete your user profile")
+			http.Redirect(w, r, "/profiles/edit", http.StatusSeeOther)
+			return
+		}
 	}
 
 	// Load username and profile to pass to templateUsername
 	data["Profile"] = profile
+
+	// Check if profile belongs to user
+	if profile.UserID == userSession.ID {
+		data["EditProfile"] = true
+	} else {
+		data["EditProfile"] = false
+	}
 
 	// Load user into profile
 	render.Template(w, data, "/profiles/show.app.tmpl")

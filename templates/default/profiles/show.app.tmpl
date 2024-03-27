@@ -36,11 +36,14 @@
       </div>
     </div>
   </div>
-  <div id="edit-profile">
-    <a href="/profiles/edit">
-      <button class="edit-profile__button">Edit Profile</button>
-    </a>
-  </div>
+  {{ if .EditProfile }}
+    <div id="edit-profile">
+      <a href="/profiles/edit">
+        <button class="edit-profile__button">Edit Profile</button>
+      </a>
+    </div>
+  {{ end }}
+
 
   <div id="activity">
     <div id="activity__menu">
