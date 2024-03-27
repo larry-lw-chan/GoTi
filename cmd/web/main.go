@@ -11,11 +11,11 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/joho/godotenv"
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/internal/activities"
 	"github.com/larry-lw-chan/goti/internal/auth"
 	"github.com/larry-lw-chan/goti/internal/filestore"
 	"github.com/larry-lw-chan/goti/internal/pages"
 	"github.com/larry-lw-chan/goti/internal/profiles"
-	"github.com/larry-lw-chan/goti/internal/relationships"
 	"github.com/larry-lw-chan/goti/internal/search"
 	"github.com/larry-lw-chan/goti/internal/sessions/cookie"
 	"github.com/larry-lw-chan/goti/internal/threads"
@@ -55,7 +55,7 @@ func routes() *chi.Mux {
 	r.Mount("/profiles", profiles.Router())
 	r.Mount("/threads", threads.Router())
 	r.Mount("/search", search.Router())
-	r.Mount("/relationships", relationships.Router())
+	r.Mount("/activities", activities.Router())
 
 	// Custom Error Handling
 	r.NotFound(pages.NotFoundHandler)
