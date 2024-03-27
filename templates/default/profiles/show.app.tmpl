@@ -59,7 +59,7 @@
       <a
         href="#"
         class="activity__link"
-        hx-get="/threads/user-replies"
+        hx-get="/threads/user-replies/{{ .Profile.UserID }}"
         hx-target="#display"
         hx-swap="innerHTML"
         >Replies</a
@@ -67,7 +67,7 @@
       <a
         href="#"
         class="activity__link"
-        hx-get="/threads/user-repost"
+        hx-get="/threads/user-repost/{{ .Profile.UserID }}"
         hx-target="#display"
         hx-swap="innerHTML"
         >Repost</a
