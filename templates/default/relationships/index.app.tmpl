@@ -1,5 +1,36 @@
 {{ define "title" }}Relationship{{ end }}
 
 {{ define "content" }}
-  <h1>Relationship Index</h1>
+  <div id="relationship">
+    <div id="toolbar" class="toolbar">
+      <a href="#" class="toolbar__link active">All</a>
+      <a href="#" class="toolbar__link">Follows</a>
+      <a href="#" class="toolbar__link">Replies</a>
+      <a href="#" class="toolbar__link">Repost</a>
+    </div>
+  </div>
+{{ end }}
+
+{{ define "style" }}
+  <style type="text/css">
+    .toolbar {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .toolbar__link {
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      text-decoration: none;
+      color: var(--pico-primary-inverse);
+      display: inline-block;
+      padding: 0.25rem 1.5rem;
+    }
+
+    .toolbar__link.active {
+      background-color: var(--pico-primary-inverse);
+      color: var(--pico-primary);
+    }
+  </style>
 {{ end }}
