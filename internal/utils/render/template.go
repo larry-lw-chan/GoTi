@@ -8,8 +8,15 @@ import (
 )
 
 /****************************************************
-* render Template
+* Custom Template Functions
 ****************************************************/
+var funcMap = template.FuncMap{}
+
+/****************************************************
+* Render Template and Partial
+****************************************************/
+var tmplCache = map[string]*template.Template{}
+
 func Template(w http.ResponseWriter, data map[string]interface{}, files ...string) {
 	// get main template
 	tmplName := files[0]
@@ -25,7 +32,7 @@ func Template(w http.ResponseWriter, data map[string]interface{}, files ...strin
 	// if not available, parse and cache template
 	if !ok {
 		tmplFiles := getTmplFiles(layoutName, files)
-		tmpl = template.Must(template.ParseFiles(tmplFiles...))
+		tmpl = template.Must(template.New(tmplName).Funcs(funcMap).ParseFiles(tmplFiles...))
 		tmplCache[tmplName] = tmpl
 	}
 
@@ -42,4 +49,30 @@ func getTmplFiles(key string, files []string) []string {
 		tmplFiles = append(tmplFiles, TmplPath+file)
 	}
 	return tmplFiles
+}
+
+func Partial(w http.ResponseWriter, data map[string]interface{}, files ...string) {
+	// get main template
+	tmplName := files[0]
+
+	// get template from cache
+	tmpl, ok := tmplCache[tmplName]
+
+	// if not available, parse and cache partial
+	if !ok {
+		// Compile file list
+		var tmplFiles []string
+		for _, file := range files {
+			tmplFiles = append(tmplFiles, TmplPath+file)
+		}
+
+		tmpl = template.Must(template.ParseFiles(tmplFiles...))
+		tmplCache[tmplName] = tmpl
+	}
+
+	// Execute partial
+	err := tmpl.Execute(w, data)
+	if err != nil {
+		log.Println(err)
+	}
 }
