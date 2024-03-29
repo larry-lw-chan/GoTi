@@ -104,7 +104,11 @@ func main() {
 	loadTemplates()
 
 	// Initialize session store
-	cookie.InitializeStore()
+	cookie.NewStore(cookie.Options{
+		AuthKey:       os.Getenv("AUTH_KEY"),
+		EncryptionKey: os.Getenv("ENCRYPTION_KEY"),
+		MaxAge:        os.Getenv("MAX_AGE"),
+	})
 
 	// Connect to the database
 	db := database.Connect()
