@@ -1,7 +1,7 @@
 {{ define "title" }}Relationship{{ end }}
 
 {{ define "content" }}
-  <div id="relationship">
+  <div id="activities">
     <div id="toolbar" class="toolbar">
       <a
         href="#"
@@ -13,23 +13,74 @@
       >
         All
       </a>
-      <a href="#" class="toolbar__link">Follows</a>
-      <a href="#" class="toolbar__link">Replies</a>
-      <a href="#" class="toolbar__link">Repost</a>
+      <a
+        href="#"
+        class="toolbar__link"
+        hx-get="/activities/follows"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        hx-trigger="load, click"
+      >
+        Follows
+      </a>
+      <a
+        href="#"
+        class="toolbar__link"
+        hx-get="/activities/replies"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        hx-trigger="load, click"
+      >
+        Replies
+      </a>
+      <a
+        href="#"
+        class="toolbar__link"
+        hx-get="/activities/repost"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        hx-trigger="load, click"
+      >
+        Repost
+      </a>
     </div>
-    <div id="display"></div>
+    <div id="display" class="profile-list"></div>
   </div>
 {{ end }}
 
 {{ define "style" }}
   <style type="text/css">
-    .avatar {
-      width: 4.5rem;
-      height: 4.5rem;
-      float: right;
+    .toolbar {
+      margin-bottom: 2rem;
     }
+
+    .profile-list {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .profile {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--pico-secondary-background);
+    }
+
+    .profile__image {
+      flex: 0 0 2.5rem;
+    }
+
+    .profile__content {
+      margin: 0 auto 0 0;
+    }
+
+    .profile__button {
+      padding: 0.25rem 1rem;
+    }
+
     .avatar-placeholder__icon {
-      margin-top: 1.6rem;
+      margin-top: 1.5rem;
     }
   </style>
 {{ end }}

@@ -1,0 +1,29 @@
+{{ define "profile-partial" }}
+  <div class="profile">
+    <div class="profile__image">
+      {{ if .Avatar.Valid }}
+        <div class="avatar">
+          <img src="{{ .Avatar.String }}" alt="{{ .Username }}" />
+        </div>
+      {{ else }}
+        <div class="avatar">
+          <a href="/profiles/edit/{{ .Username }}">
+            <box-icon
+              name="user"
+              color="white"
+              type="solid"
+              size="3rem"
+              class="avatar-placeholder__icon"
+            ></box-icon>
+          </a>
+        </div>
+      {{ end }}
+    </div>
+    <div class="profile__content">
+      <h6>{{ .Username }}</h6>
+    </div>
+    <div class="profile__actions">
+      <button class="profile__button">Follow</button>
+    </div>
+  </div>
+{{ end }}

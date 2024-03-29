@@ -314,12 +314,10 @@ form button {
   border-bottom: 1px solid var(--pico-primary-border);
 }
 
-#display {
-  position: relative;
-}
-
 /* Profiles - Edit Page */
 .private-profile {
   display: flex;
   justify-content: space-between;
 }
+
+/* Activities */

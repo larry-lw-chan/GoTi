@@ -20,7 +20,10 @@ func Router() http.Handler {
 	r.Get("/", IndexActivityHandler)
 
 	// Relationship Partials
-	r.Get("/all", AllRelationsHandler)
+	r.Get("/all", GetAllHandler)
+	r.Get("/follows", GetFollowHandler)
+	r.Get("/replies", GetRepliesHandler)
+	r.Get("/repost", GetRepostHandler)
 
 	return r
 }
