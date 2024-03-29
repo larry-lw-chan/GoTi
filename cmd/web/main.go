@@ -24,6 +24,7 @@ import (
 
 // Define the path to the templates
 var path string = "templates/default"
+var layoutFolder string = "layout"
 var port string = ":8080"
 
 func routes() *chi.Mux {
@@ -66,24 +67,9 @@ func routes() *chi.Mux {
 
 // Inject Template Layouts
 func loadTemplates() {
-	render.Layouts(render.Location{
-		TmplPath: path,
-		Layout: map[string][]string{
-			"base": {
-				"/layout/base.tmpl",
-				"/layout/__flash.tmpl",
-				"/layout/__header.base.tmpl",
-				"/layout/__footer.base.tmpl",
-				"/layout/__javascript.base.tmpl",
-			},
-			"app": {
-				"/layout/app.tmpl",
-				"/layout/__flash.tmpl",
-				"/layout/__header.app.tmpl",
-				"/layout/__primary.app.tmpl",
-				"/layout/__javascript.app.tmpl",
-			},
-		},
+	render.New(render.Location{
+		TmplPath:     path,
+		LayoutFolder: layoutFolder,
 	})
 }
 
