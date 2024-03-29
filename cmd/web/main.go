@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/larry-lw-chan/goti/database"
+	"github.com/larry-lw-chan/goti/internal/filestore"
 	"github.com/larry-lw-chan/goti/internal/sessions/cookie"
 	"github.com/larry-lw-chan/goti/internal/utils/render"
 )
@@ -17,6 +18,7 @@ type Config struct {
 	AuthKey       string
 	EncryptionKey string
 	MaxAge        string
+	Filestore     filestore.FilestoreService
 }
 
 func main() {
@@ -25,10 +27,14 @@ func main() {
 		TmplPath:     "templates/default",
 		LayoutFolder: "layout",
 		Port:         ":8080",
+		Filestore:    filestore.LocalStore{},
 	}
 
 	// Load User ENV Configurations
 	loadEnvConfig(&c)
+
+	// Set Filestore
+	filestore.FS = c.Filestore
 
 	// Load Templates
 	render.New(render.Options{

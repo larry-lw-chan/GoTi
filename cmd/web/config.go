@@ -25,10 +25,21 @@ func loadEnvConfig(c *Config) {
 		c.Port = os.Getenv("PORT")
 	}
 
-	// Override the filestore local folder with user configuration
-	if os.Getenv("LOCAL_STORE") != "" {
-		filestore.FS = filestore.LocalStore{
-			LocalFolder: os.Getenv("LOCAL_STORE"),
+	/*********************************************
+	* Filestore Configurations
+	*********************************************/
+	if os.Getenv("FILESTORE") != "" {
+		if os.Getenv("FILESTORE") == "local" {
+			// Create a new local filestore
+			localFS := filestore.LocalStore{}
+
+			// Override the default local folder with user configuration
+			if os.Getenv("LOCAL_FOLDER") != "" {
+				localFS.LocalFolder = os.Getenv("LOCAL_FOLDER")
+			}
+
+			// Set the filestore to the local filestore
+			c.Filestore = localFS
 		}
 	}
 
