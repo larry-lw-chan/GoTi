@@ -1,4 +1,11 @@
 <div id="user-replies">
-  <h2>User Replies</h2>
-  <p>ToDo</p>
+  {{ if .Threads }}
+    {{ range .Threads }}
+      {{ template "thread" . }}
+    {{ end }}
+  {{ else }}
+    <a href="/threads/new">
+      <button>Start your first thread</button>
+    </a>
+  {{ end }}
 </div>

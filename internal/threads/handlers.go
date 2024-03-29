@@ -124,9 +124,6 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = nil
 	}
 
-	// Get user session information
-	// userSession := auth.GetUserSession(r)
-
 	// Temp Solution - Get all Threads
 	queries := New(database.DB)
 	threads, err := queries.GetUserThreads(r.Context(), userID)
@@ -143,9 +140,54 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, nil, "/threads/user_replies.app.tmpl")
+	data := r.Context().Value("data").(map[string]interface{})
+
+	// Get user_id from URL
+	userId := chi.URLParam(r, "user_id")
+	userID, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
+	}
+
+	// Temp Solution - Get all Threads
+	queries := New(database.DB)
+	threads, err := queries.GetUserThreads(r.Context(), userID)
+
+	if err != nil {
+		// Handle Error
+		// flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
+	} else {
+		data["Threads"] = threads
+	}
+	render.Partial(w, data, "/threads/user_replies.app.tmpl", "/threads/__thread.app.tmpl")
 }
 
 func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
-	render.Partial(w, nil, "/threads/user_repost.app.tmpl")
+	data := r.Context().Value("data").(map[string]interface{})
+
+	// Get user_id from URL
+	userId := chi.URLParam(r, "user_id")
+	userID, err := strconv.ParseInt(userId, 10, 64)
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
+	}
+
+	// Temp Solution - Get all Threads
+	queries := New(database.DB)
+	threads, err := queries.GetUserThreads(r.Context(), userID)
+
+	if err != nil {
+		// Handle Error
+		// flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
+		data["Threads"] = nil
+	} else {
+		data["Threads"] = threads
+	}
+
+	render.Partial(w, data, "/threads/user_repost.app.tmpl", "/threads/__thread.app.tmpl")
 }
