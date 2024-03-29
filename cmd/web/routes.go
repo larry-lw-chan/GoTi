@@ -14,7 +14,7 @@ import (
 	"github.com/larry-lw-chan/goti/internal/threads"
 )
 
-func routes() *chi.Mux {
+func routes(c *Config) *chi.Mux {
 	// Define Routes Here
 	r := chi.NewRouter()
 
@@ -30,7 +30,7 @@ func routes() *chi.Mux {
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	// Asset File Server
-	assetFS := http.FileServer(http.Dir(tmplPath + "/assets"))
+	assetFS := http.FileServer(http.Dir(c.TmplPath + "/assets"))
 	r.Handle("/assets/*", http.StripPrefix("/assets/", assetFS))
 
 	// Local Upload File Server

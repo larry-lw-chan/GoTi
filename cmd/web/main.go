@@ -48,9 +48,9 @@ func main() {
 	defer db.Close() // Defer close the database connection
 
 	// Load Routes
-	r := routes()
+	r := routes(&c)
 
 	// Start Server
-	fmt.Println("Server is running at " + port)
-	http.ListenAndServe(port, r)
+	fmt.Println("Server is running at " + c.Port)
+	http.ListenAndServe(c.Port, r)
 }
