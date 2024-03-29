@@ -5,21 +5,28 @@ import (
 	"strings"
 )
 
-// Function used to declare the template path and Layout location
-var Layout map[string][]string = make(map[string][]string)
-var TmplPath string
-var LayoutFolder = "layout"
+// Default path to the templates
+var TmplPath string = "templates/default"
+var LayoutFolder string = "layout"
 
-type Location struct {
+// Layout Map
+var Layout map[string][]string = make(map[string][]string)
+
+// Location struct to define the path to the templates
+type Options struct {
 	TmplPath     string
 	LayoutFolder string
 }
 
-// Layout and partials automatically sorted into Layout Map
-// by following the naming convention
-func New(l Location) {
-	TmplPath = l.TmplPath
-	LayoutFolder = l.LayoutFolder
+// Layout/partials automatically sorted into Layout Map based on naming convention
+func New(o Options) {
+	// Set the TmplPath and LayoutFolder
+	if o.TmplPath != "" {
+		TmplPath = o.TmplPath
+	}
+	if o.LayoutFolder != "" {
+		LayoutFolder = o.LayoutFolder
+	}
 
 	// Get list of layout file names
 	layoutDir := TmplPath + "/" + LayoutFolder + "/"

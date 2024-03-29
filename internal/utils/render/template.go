@@ -8,12 +8,7 @@ import (
 )
 
 /****************************************************
-* Custom Template Functions
-****************************************************/
-var funcMap = template.FuncMap{}
-
-/****************************************************
-* Render Template and Partial
+* Template and Partial
 ****************************************************/
 var tmplCache = map[string]*template.Template{}
 

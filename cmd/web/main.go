@@ -23,7 +23,7 @@ import (
 )
 
 // Define the path to the templates
-var path string = "templates/default"
+var tmplPath string = "templates/default"
 var layoutFolder string = "layout"
 var port string = ":8080"
 
@@ -43,7 +43,7 @@ func routes() *chi.Mux {
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	// Asset File Server
-	assetFS := http.FileServer(http.Dir(path + "/assets"))
+	assetFS := http.FileServer(http.Dir(tmplPath + "/assets"))
 	r.Handle("/assets/*", http.StripPrefix("/assets/", assetFS))
 
 	// Local Upload File Server
@@ -67,8 +67,8 @@ func routes() *chi.Mux {
 
 // Inject Template Layouts
 func loadTemplates() {
-	render.New(render.Location{
-		TmplPath:     path,
+	render.New(render.Options{
+		TmplPath:     tmplPath,
 		LayoutFolder: layoutFolder,
 	})
 }
@@ -78,12 +78,12 @@ func init() {
 	// Load .env file
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file")
 	}
 
 	// Override the default template path with user configuration
 	if os.Getenv("TEMPLATE_PATH") != "" {
-		path = os.Getenv("TEMPLATE_PATH")
+		tmplPath = os.Getenv("TEMPLATE_PATH")
 	}
 
 	// Override the default port with user configuration
