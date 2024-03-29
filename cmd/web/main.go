@@ -27,7 +27,9 @@ func main() {
 		TmplPath:     "templates/default",
 		LayoutFolder: "layout",
 		Port:         ":8080",
-		Filestore:    filestore.LocalStore{},
+		Filestore: filestore.LocalStore{
+			LocalFolder: "uploads",
+		},
 	}
 
 	// Load ENV Configurations

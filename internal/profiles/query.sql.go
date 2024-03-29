@@ -56,6 +56,44 @@ func (q *Queries) CreateProfile(ctx context.Context, arg CreateProfileParams) (P
 	return i, err
 }
 
+const getAllProfiles = `-- name: GetAllProfiles :many
+SELECT id, username, name, bio, link, avatar, private, user_id, created_at, updated_at FROM profiles
+`
+
+func (q *Queries) GetAllProfiles(ctx context.Context) ([]Profile, error) {
+	rows, err := q.db.QueryContext(ctx, getAllProfiles)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Profile
+	for rows.Next() {
+		var i Profile
+		if err := rows.Scan(
+			&i.ID,
+			&i.Username,
+			&i.Name,
+			&i.Bio,
+			&i.Link,
+			&i.Avatar,
+			&i.Private,
+			&i.UserID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getProfileAvatarFromUserId = `-- name: GetProfileAvatarFromUserId :one
 SELECT avatar FROM profiles WHERE user_id = ?
 `

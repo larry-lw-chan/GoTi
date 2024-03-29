@@ -93,14 +93,6 @@
 
 {{ define "script" }}
   <script type="application/javascript">
-    // Toggle active class on menu items
-    const menu = document.querySelector("#activity__menu");
-
-    menu.addEventListener("click", (e) => {
-      if (e.target.tagName === "A") {
-        menu.querySelector(".active").classList.remove("active");
-        e.target.classList.add("active");
-      }
-    });
+    toggleActive("#activity__menu");
   </script>
 {{ end }}

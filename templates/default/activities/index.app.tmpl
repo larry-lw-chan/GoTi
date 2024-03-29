@@ -3,15 +3,39 @@
 {{ define "content" }}
   <div id="relationship">
     <div id="toolbar" class="toolbar">
-      <a href="#" class="toolbar__link active">All</a>
+      <a
+        href="#"
+        class="toolbar__link active"
+        hx-get="/activities/all"
+        hx-target="#display"
+        hx-swap="innerHTML"
+        hx-trigger="load, click"
+      >
+        All
+      </a>
       <a href="#" class="toolbar__link">Follows</a>
       <a href="#" class="toolbar__link">Replies</a>
       <a href="#" class="toolbar__link">Repost</a>
     </div>
-    <div id="content"></div>
+    <div id="display"></div>
   </div>
 {{ end }}
 
 {{ define "style" }}
-  <style type="text/css"></style>
+  <style type="text/css">
+    .avatar {
+      width: 4.5rem;
+      height: 4.5rem;
+      float: right;
+    }
+    .avatar-placeholder__icon {
+      margin-top: 1.6rem;
+    }
+  </style>
+{{ end }}
+
+{{ define "script" }}
+  <script type="application/javascript">
+    toggleActive("#toolbar");
+  </script>
 {{ end }}

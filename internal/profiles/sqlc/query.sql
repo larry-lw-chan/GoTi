@@ -1,3 +1,6 @@
+-- name: GetAllProfiles :many
+SELECT * FROM profiles;
+
 -- name: GetProfileFromUserId :one
 SELECT * FROM profiles WHERE user_id = ?;
 
