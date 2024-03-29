@@ -18,5 +18,6 @@ func Router() http.Handler {
 
 	// Relationship Routes
 	r.Get("/", IndexThreadHandler)
+
 	return r
 }

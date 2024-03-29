@@ -9,9 +9,6 @@ import (
 	"github.com/gorilla/sessions"
 )
 
-/*************************************************
-* COOKIE STORE INITIALIZATION
-*************************************************/
 // Options for the cookie store
 type Options struct {
 	AuthKey       string
@@ -20,11 +17,12 @@ type Options struct {
 }
 
 // Defaults for the cookie store
-const MAX_AGE int = 604800
+const (
+	MAX_AGE int    = 604800
+	STORE   string = "cookie-store"
+)
 
-// STORE is the cookie key and var Store is the cookie store
-const STORE string = "cookie-store"
-
+// Store is the cookie store
 var Store *sessions.CookieStore
 
 func NewStore(o Options) {

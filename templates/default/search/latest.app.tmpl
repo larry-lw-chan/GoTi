@@ -1,0 +1,12 @@
+<h1>Latest Threads</h1>
+<div id="latest-trends">
+  {{ if .Threads }}
+    {{ range .Threads }}
+      {{ template "thread" . }}
+    {{ end }}
+  {{ else }}
+    <a href="/threads/new">
+      <button>Start the first thread</button>
+    </a>
+  {{ end }}
+</div>

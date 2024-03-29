@@ -1,5 +1,96 @@
 {{ define "title" }}Search{{ end }}
 
 {{ define "content" }}
-  <h1>Search Index</h1>
+  <div id="search">
+    <form action="/search" method="GET" class="search__form">
+      <fieldset>
+        <input type="text" name="q" placeholder="Search" />
+      </fieldset>
+      <button class="search__btn">
+        <box-icon name="search" color="white"></box-icon>
+      </button>
+    </form>
+  </div>
+
+  <div id="latest-trends">
+    <h6>Latest Trends</h6>
+    {{ if .Threads }}
+      {{ range $i, $t := .Threads }}
+        <article class="trend">
+          <aside class="trend__aside">
+            <div class="trend__ranking">
+              {{ $i }}
+            </div>
+          </aside>
+          <div class="trend__container">
+            <h6 class="trend__username">
+              <a
+                href="/profiles/show/{{ $t.Username }}"
+                class="trend-username__link"
+                >{{ $t.Username }}</a
+              >
+            </h6>
+            <div class="trend__content">
+              <a href="/threads/show/{{ $t.ID }}" class="trend-content__link">
+                {{ $t.Content }}
+              </a>
+            </div>
+          </div>
+        </article>
+      {{ end }}
+    {{ else }}
+      <a href="/threads/new">
+        <button>Start the first thread</button>
+      </a>
+    {{ end }}
+  </div>
+{{ end }}
+
+{{ define "style" }}
+  <style>
+    .search__form {
+      display: flex;
+    }
+
+    .search__btn {
+      flex: 0 0 50px;
+      height: 50px;
+    }
+
+    .trend {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .trend__ranking {
+      border: 1px solid var(--pico-secondary-background);
+      padding: 0.5rem 1rem;
+      border-radius: 50%;
+    }
+
+    .trend__container {
+      flex: 1;
+    }
+
+    .trend__username {
+      margin-bottom: 0.2rem;
+    }
+
+    .trend-username__link {
+      color: var(--pico-primary-inverse);
+      text-decoration: none;
+    }
+
+    .trend-content__link {
+      color: var(--pico-primary-color);
+      text-decoration: none;
+    }
+  </style>
+{{ end }}
+
+{{ define "scripts" }}
+  <script>
+    document.querySelector("#search input[type='text']").focus();
+  </script>
 {{ end }}

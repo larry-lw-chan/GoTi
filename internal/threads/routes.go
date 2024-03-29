@@ -20,7 +20,7 @@ func Router() http.Handler {
 	r.Get("/", IndexThreadHandler)
 	r.Get("/new", NewThreadHandler)
 	r.Post("/new", NewPostThreadHandler)
-	r.Get("/{thread_id}", ShowThreadHandler)
+	r.Get("/show/{thread_id}", ShowThreadHandler)
 
 	// Partial Routes for HTMX usage
 	r.Get("/user-threads/{user_id}", UserThreadsHandler)

@@ -42,7 +42,7 @@ Goti simplifies configuration by leveraging environment variables. Begin by copy
 #### Mac or Linux Terminal
 
 ```
-cp sample.env .env
+cp .env.example .env
 ```
 
 ## Development Mode

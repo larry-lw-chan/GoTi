@@ -91,7 +91,6 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 		flash.Set(w, r, flash.ERROR, "Failed to get thread.  Please contact support.")
 		http.Redirect(w, r, "/threads", http.StatusSeeOther)
 		return
-
 	}
 
 	// Get thread from id
