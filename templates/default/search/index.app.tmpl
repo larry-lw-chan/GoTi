@@ -27,8 +27,9 @@
               <a
                 href="/profiles/show/{{ $t.Username }}"
                 class="trend-username__link"
-                >{{ $t.Username }}</a
               >
+                {{ $t.Username }}
+              </a>
             </h6>
             <div class="trend__content">
               <a href="/threads/show/{{ $t.ID }}" class="trend-content__link">
@@ -44,49 +45,6 @@
       </a>
     {{ end }}
   </div>
-{{ end }}
-
-{{ define "style" }}
-  <style>
-    .search__form {
-      display: flex;
-    }
-
-    .search__btn {
-      flex: 0 0 50px;
-      height: 50px;
-    }
-
-    .trend {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .trend__ranking {
-      border: 1px solid var(--pico-secondary-background);
-      padding: 0.5rem 1rem;
-      border-radius: 50%;
-    }
-
-    .trend__container {
-      flex: 1;
-    }
-
-    .trend__username {
-      margin-bottom: 0.2rem;
-    }
-
-    .trend-username__link {
-      color: var(--pico-primary-inverse);
-      text-decoration: none;
-    }
-
-    .trend-content__link {
-      color: var(--pico-primary-color);
-      text-decoration: none;
-    }
-  </style>
 {{ end }}
 
 {{ define "scripts" }}

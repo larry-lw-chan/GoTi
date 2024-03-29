@@ -290,6 +290,12 @@ form button {
   border-color: var(--pico-secondary-border);
 }
 
+.private-profile {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Activities */
 #activity {
   margin-top: 1rem;
 }
@@ -314,10 +320,68 @@ form button {
   border-bottom: 1px solid var(--pico-primary-border);
 }
 
-/* Profiles - Edit Page */
-.private-profile {
+/* Search - Index Page */
+.search__form {
   display: flex;
-  justify-content: space-between;
 }
 
-/* Activities */
+.search__btn {
+  flex: 0 0 50px;
+  height: 50px;
+}
+
+.trend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trend__ranking {
+  border: 1px solid var(--pico-secondary-background);
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+}
+
+.trend__container {
+  flex: 1;
+}
+
+.trend__username {
+  margin-bottom: 0.2rem;
+}
+
+.trend-username__link {
+  color: var(--pico-primary-inverse);
+  text-decoration: none;
+}
+
+.trend-content__link {
+  color: var(--pico-primary-color);
+  text-decoration: none;
+}
+
+/* Profile - Index Page */
+.profile-list {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--pico-secondary-background);
+}
+
+.profile__image {
+  flex: 0 0 2.5rem;
+}
+
+.profile__content {
+  margin: 0 auto 0 0;
+}
+
+.profile__button {
+  padding: 0.25rem 1rem;
+}
