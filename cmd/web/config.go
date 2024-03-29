@@ -8,11 +8,11 @@ import (
 	"github.com/larry-lw-chan/goti/internal/filestore"
 )
 
-func loadEnvConfig(c *Config) {
+func loadConfig(c *Config) {
 	// Load .env file
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("Error loading .env file")
+		log.Println("No .env file found.  Please create one based on the .env.example file")
 	}
 
 	// Override the default template path with user configuration

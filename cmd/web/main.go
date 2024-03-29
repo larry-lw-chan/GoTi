@@ -30,8 +30,8 @@ func main() {
 		Filestore:    filestore.LocalStore{},
 	}
 
-	// Load User ENV Configurations
-	loadEnvConfig(&c)
+	// Load ENV Configurations
+	loadConfig(&c)
 
 	// Set Filestore
 	filestore.FS = c.Filestore
