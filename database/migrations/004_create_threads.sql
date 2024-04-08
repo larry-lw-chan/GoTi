@@ -14,7 +14,7 @@ CREATE TABLE threads (
 
 CREATE TABLE likes (
     "id" 	            INTEGER NOT NULL UNIQUE,
-	"thread_id"			INTEGER,
+	"thread_id"			INTEGER NOT NULL,
 	"user_id"			INTEGER NOT NULL,
 	"created_at"  		TEXT NOT NULL,
 	"updated_at"	    TEXT NOT NULL,

@@ -22,6 +22,9 @@ func Router() http.Handler {
 	r.Post("/new", NewPostThreadHandler)
 	r.Get("/show/{thread_id}", ShowThreadHandler)
 
+	// Like Routes
+	r.Post("/likes/{thread_id}", LikeThreadHandler)
+
 	// Partial Routes for HTMX usage
 	r.Get("/user-threads/{user_id}", UserThreadsHandler)
 	r.Get("/user-replies/{user_id}", UserRepliesHandler)
