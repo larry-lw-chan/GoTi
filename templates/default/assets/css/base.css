@@ -132,12 +132,6 @@ footer {
 /****************************************** 
 * Reusable Component Styling
 *******************************************/
-/* Header Styling */
-.dark .header__heading,
-.dark .header__description {
-  color: var(--pico-contrast-inverse);
-}
-
 /* Links under form styling */
 .links {
   text-align: center;
@@ -196,29 +190,10 @@ footer {
   }
 }
 
-.dark .login {
-  background-color: var(--pico-contrast-background);
-}
-
-.dark .login__input {
-  background-color: var(--pico-contrast-background);
-  color: var(--pico-contrast-inverse);
-}
-
 /* Register Page */
 .register {
   max-width: 700px;
   margin: 0 auto;
-}
-
-.dark .register__label {
-  color: var(--pico-contrast-inverse);
-}
-
-.dark .register__input,
-.dark .register__checkbox {
-  background-color: var(--pico-contrast-background);
-  color: var(--pico-contrast-inverse);
 }
 
 .register__checkbox:checked {
@@ -239,19 +214,10 @@ footer {
   text-decoration: none;
 }
 
-.dark .register {
-  background-color: var(--pico-contrast-background);
-}
-
 /* Forgot Password Page */
 .forgot {
   max-width: 700px;
   margin: 0 auto;
-}
-
-.dark .forgot__input {
-  background-color: var(--pico-contrast-background);
-  color: var(--pico-contrast-inverse);
 }
 
 .forgot__button {
@@ -259,6 +225,40 @@ footer {
   margin-bottom: 0.75rem;
 }
 
-.dark .forgot {
+/* Dark Mode Styling */
+[data-theme="dark"] .header__heading,
+[data-theme="dark"] .header__description {
+  color: var(--pico-contrast-inverse);
+}
+
+[data-theme="dark"] .register {
+  background-color: var(--pico-contrast-background);
+}
+
+[data-theme="dark"] .register__label {
+  color: var(--pico-contrast-inverse);
+}
+
+[data-theme="dark"] .register__input,
+[data-theme="dark"] .register__checkbox {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+[data-theme="dark"] .login {
+  background-color: var(--pico-contrast-background);
+}
+
+[data-theme="dark"] .login__input {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+[data-theme="dark"] .forgot__input {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+[data-theme="dark"] .forgot {
   background-color: var(--pico-contrast-background);
 }
