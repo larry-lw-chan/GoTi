@@ -110,6 +110,37 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 /********************************************************
+* Likes
+*********************************************************/
+func LikeThreadHandler(w http.ResponseWriter, r *http.Request) {
+	// Get userID from sessions
+	userSession := auth.GetUserSession(r)
+	userId := userSession.ID
+
+	// Get thread_id from URL
+	threadIdStr := chi.URLParam(r, "thread_id")
+	threadId, err := strconv.ParseInt(threadIdStr, 10, 64)
+	handleLikeError(w, r, err)
+
+	// Check if user already liked thread
+	message, err := likeOrUnlikeThread(r.Context(), threadId, userId)
+	handleLikeError(w, r, err)
+
+	// Add Like to Flash Message
+	flash.Set(w, r, flash.SUCCESS, message)
+	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
+}
+
+func handleLikeError(w http.ResponseWriter, r *http.Request, err error) {
+	if err != nil {
+		// Handle Error
+		flash.Set(w, r, flash.ERROR, "Failed to like thread.  Please contact support.")
+		http.Redirect(w, r, "/threads", http.StatusSeeOther)
+		return
+	}
+}
+
+/********************************************************
 * Partials
 *********************************************************/
 func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {

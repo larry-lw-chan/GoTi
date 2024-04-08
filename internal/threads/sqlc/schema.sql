@@ -30,7 +30,7 @@ CREATE TABLE threads_hashtags (
 
 CREATE TABLE likes (
     "id" 	            INTEGER PRIMARY KEY,
-	"thread_id"			INTEGER,
+	"thread_id"			INTEGER NOT NULL,
 	"user_id"			INTEGER NOT NULL,
 	"created_at"  		TEXT NOT NULL,
 	"updated_at"	    TEXT NOT NULL,

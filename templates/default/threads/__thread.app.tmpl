@@ -27,7 +27,7 @@
         </a>
       </div>
       <div class="thread__icons">
-        <a href="#">
+        <a href="#" hx-post="/threads/likes/{{ .ID }}" hx-swap="none">
           <box-icon name="heart" color="white"></box-icon>
         </a>
         <a href="#">
@@ -39,6 +39,15 @@
         <a href="#">
           <box-icon name="share" color="white"></box-icon>
         </a>
+      </div>
+      <div class="thread__status">
+        <span class="thread__status__likes">
+          {{ if .Likes }}
+            {{ .Likes }} likes
+          {{ else }}
+            0 likes
+          {{ end }}
+        </span>
       </div>
     </div>
   </article>

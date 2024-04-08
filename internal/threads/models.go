@@ -17,7 +17,7 @@ type Hashtag struct {
 
 type Like struct {
 	ID        int64
-	ThreadID  sql.NullInt64
+	ThreadID  int64
 	UserID    int64
 	CreatedAt string
 	UpdatedAt string
