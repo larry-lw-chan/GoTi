@@ -2,6 +2,7 @@ package threads
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
@@ -11,32 +12,30 @@ import (
 * Data Handling Logic
 ****************************************************************/
 // Algo - Like or Unlike a thread
-func likeOrUnlikeThread(context context.Context, threadId, userId int64) (message string, err error) {
+func likeOrUnlikeThread(context context.Context, threadId, userId int64) (likeStatus bool, err error) {
 	queries := New(database.DB)
 
-	// Get all likes for a thread
-	likes, err := queries.GetLikes(context, GetLikesParams{
+	// See if user has liked the thread
+	_, err = queries.CheckIfUserLikedThread(context, CheckIfUserLikedThreadParams{
 		UserID:   userId,
 		ThreadID: threadId,
 	})
-	if err != nil {
-		return "", err
-	}
 
-	// If user has not liked the thread, then like the thread
-	if len(likes) == 0 {
+	if err == sql.ErrNoRows {
+		// If user has not liked the thread, then like the thread
 		queries.InsertLike(context, InsertLikeParams{
 			ThreadID:  threadId,
 			UserID:    userId,
 			CreatedAt: time.Now().String(),
 			UpdatedAt: time.Now().String(),
 		})
-		return "Liked thread", nil
+		return true, nil
 	} else {
+		// If user has liked the thread, then unlike the thread
 		queries.DeleteLike(context, DeleteLikeParams{
 			ThreadID: threadId,
 			UserID:   userId,
 		})
-		return "Deleted Like", nil
+		return false, nil
 	}
 }

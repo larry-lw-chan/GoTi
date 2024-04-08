@@ -113,6 +113,8 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 * Likes
 *********************************************************/
 func LikeThreadHandler(w http.ResponseWriter, r *http.Request) {
+	data := r.Context().Value("data").(map[string]interface{})
+
 	// Get userID from sessions
 	userSession := auth.GetUserSession(r)
 	userId := userSession.ID
@@ -123,12 +125,16 @@ func LikeThreadHandler(w http.ResponseWriter, r *http.Request) {
 	handleLikeError(w, r, err)
 
 	// Check if user already liked thread
-	message, err := likeOrUnlikeThread(r.Context(), threadId, userId)
+	likeStatus, err := likeOrUnlikeThread(r.Context(), threadId, userId)
 	handleLikeError(w, r, err)
 
+	// Render Result
+	data["LikeStatus"] = likeStatus
+	render.Partial(w, data, "/threads/__icon_status.app.tmpl")
+
 	// Add Like to Flash Message
-	flash.Set(w, r, flash.SUCCESS, message)
-	http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
+	// flash.Set(w, r, flash.SUCCESS, message)
+	// http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
 }
 
 func handleLikeError(w http.ResponseWriter, r *http.Request, err error) {

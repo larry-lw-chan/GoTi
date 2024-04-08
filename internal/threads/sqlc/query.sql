@@ -32,7 +32,7 @@ JOIN profiles ON profiles.user_id = threads.user_id
 WHERE threads.id = ?;
 
 
--- name: GetLikes :many
+-- name: CheckIfUserLikedThread :one
 SELECT *
 FROM likes
 WHERE thread_id = ? AND user_id = ?;

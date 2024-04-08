@@ -10,6 +10,31 @@ import (
 	"database/sql"
 )
 
+const checkIfUserLikedThread = `-- name: CheckIfUserLikedThread :one
+SELECT id, thread_id, user_id, created_at, updated_at, "foreign"
+FROM likes
+WHERE thread_id = ? AND user_id = ?
+`
+
+type CheckIfUserLikedThreadParams struct {
+	ThreadID int64
+	UserID   int64
+}
+
+func (q *Queries) CheckIfUserLikedThread(ctx context.Context, arg CheckIfUserLikedThreadParams) (Like, error) {
+	row := q.db.QueryRowContext(ctx, checkIfUserLikedThread, arg.ThreadID, arg.UserID)
+	var i Like
+	err := row.Scan(
+		&i.ID,
+		&i.ThreadID,
+		&i.UserID,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.Foreign,
+	)
+	return i, err
+}
+
 const createThread = `-- name: CreateThread :one
 INSERT INTO threads (content, thread_id, user_id, created_at, updated_at)
 VALUES (?, ?, ?, ?, ?)
@@ -102,47 +127,6 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 			&i.Username,
 			&i.Avatar,
 			&i.Likes,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const getLikes = `-- name: GetLikes :many
-SELECT id, thread_id, user_id, created_at, updated_at, "foreign"
-FROM likes
-WHERE thread_id = ? AND user_id = ?
-`
-
-type GetLikesParams struct {
-	ThreadID int64
-	UserID   int64
-}
-
-func (q *Queries) GetLikes(ctx context.Context, arg GetLikesParams) ([]Like, error) {
-	rows, err := q.db.QueryContext(ctx, getLikes, arg.ThreadID, arg.UserID)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []Like
-	for rows.Next() {
-		var i Like
-		if err := rows.Scan(
-			&i.ID,
-			&i.ThreadID,
-			&i.UserID,
-			&i.CreatedAt,
-			&i.UpdatedAt,
-			&i.Foreign,
 		); err != nil {
 			return nil, err
 		}
