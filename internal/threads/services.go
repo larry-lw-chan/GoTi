@@ -3,7 +3,6 @@ package threads
 import (
 	"context"
 	"database/sql"
-	"log"
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
@@ -47,6 +46,5 @@ func getLikeCounts(context context.Context, threadId int64) (likeCount int64, er
 	if err != nil {
 		return 0, err
 	}
-	log.Println(likeCount)
 	return likeCount, nil
 }

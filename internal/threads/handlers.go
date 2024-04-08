@@ -136,7 +136,7 @@ func LikeThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data["LikeStatus"] = likeStatus
 	data["LikeCount"] = likeCount
 	data["ThreadId"] = threadId
-	render.Partial(w, data, "/threads/__icon_status.app.tmpl")
+	render.Partial(w, data, "/threads/thread_icon_status.app.tmpl")
 }
 
 func handleLikeError(w http.ResponseWriter, r *http.Request, err error) {
@@ -221,8 +221,6 @@ func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
 	threads, err := queries.GetUserThreads(r.Context(), userID)
 
 	if err != nil {
-		// Handle Error
-		// flash.Set(w, r, flash.ERROR, "Failed to get threads.  Please contact support.")
 		data["Threads"] = nil
 	} else {
 		data["Threads"] = threads

@@ -33,11 +33,11 @@
             hx-post="/threads/likes/{{ .ID }}"
             hx-target="closest .thread__interactive"
           >
-            {{ if .Likes }}
-              <box-icon name="heart" color="white" type="solid"></box-icon>
-            {{ else }}
-              <box-icon name="heart" color="white"></box-icon>
-            {{ end }}
+            <box-icon
+              name="heart"
+              color="white"
+              {{ if .Likes }}type="solid"{{ end }}
+            ></box-icon>
           </a>
           <a href="#">
             <box-icon name="chat" color="white"></box-icon>
