@@ -1,46 +1,46 @@
 {{ define "base" }}
+  <!doctype html>
+  <html lang="en" data-theme="light">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>{{ block "title" . }}Goti{{ end }}</title>
 
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ block "title" .}}Goti{{ end }}</title>
+      <link rel="icon" href="/assets/images/favicon.svg" type="image/x-icon" />
 
-    <link rel="icon" href="/assets/images/favicon.svg" type="image/x-icon" />
+      <!-- Eventually we will allow custom Pico themes editing a config file -->
+      <link rel="stylesheet" href="/assets/css/themes/pico.green.css" />
+      <link rel="stylesheet" href="/assets/css/global.css" />
+      <link rel="stylesheet" href="/assets/css/base.css" />
+    </head>
+    <body>
+      {{ block "header_outer" . }}
+        <header>{{ template "header_inner" . }}</header>
+      {{ end }}
 
-    <!-- Eventually we will allow custom Pico themes editing a config file -->
-    <link rel="stylesheet" href="/assets/css/themes/pico.min.css" />
-    <link rel="stylesheet" href="/assets/css/global.css" />
-    <link rel="stylesheet" href="/assets/css/base.css" />
-  </head>
-  <body>
-    {{ block "header_outer" .}}
-    <header>{{ template "header_inner" .}}</header>
-    {{ end }}
+      {{ block "main" . }}
+        <main>
+          <div class="container">
+            {{ template "flash" . }}
+            {{ template "content" . }}
+          </div>
+        </main>
+      {{ end }}
 
-    {{ block "main" .}}
-    <main>
-      <div class="container">
-        {{ template "flash" .}}
-        {{ template "content" .}}
-      </div>
-    </main>
-    {{ end }}
+      {{ block "footer_outer" . }}
+        <footer class="container">
+          {{ template "footer_inner" . }}
+        </footer>
+      {{ end }}
 
-    {{ block "footer_outer" .}}
-    <footer class="container">
-      {{ template "footer_inner" .}}
-    </footer>
-    {{ end }}
 
-    <!-- All Style Scripts Here -->
-    {{ block "style" .}}{{ end }}
+      <!-- All Style Scripts Here -->
+      {{ block "style" . }}{{ end }}
 
-    <!-- All JS Scripts Here -->
-    {{ template "libraries" . }}
-    {{ block "script" .}}{{ end }}
-  </body>
-</html>
 
+      <!-- All JS Scripts Here -->
+      {{ template "libraries" . }}
+      {{ block "script" . }}{{ end }}
+    </body>
+  </html>
 {{ end }}

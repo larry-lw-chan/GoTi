@@ -133,8 +133,8 @@ footer {
 * Reusable Component Styling
 *******************************************/
 /* Header Styling */
-.header__heading,
-.header__description {
+.dark .header__heading,
+.dark .header__description {
   color: var(--pico-contrast-inverse);
 }
 
@@ -167,15 +167,6 @@ footer {
   font-size: 1.5rem;
 }
 
-.login {
-  background-color: var(--pico-contrast-background);
-}
-
-.login__input {
-  background-color: var(--pico-contrast-background);
-  color: var(--pico-contrast-inverse);
-}
-
 .login__button,
 .register__button {
   width: 100%;
@@ -205,19 +196,27 @@ footer {
   }
 }
 
+.dark .login {
+  background-color: var(--pico-contrast-background);
+}
+
+.dark .login__input {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
 /* Register Page */
 .register {
-  background-color: var(--pico-contrast-background);
   max-width: 700px;
   margin: 0 auto;
 }
 
-.register__label {
+.dark .register__label {
   color: var(--pico-contrast-inverse);
 }
 
-.register__input,
-.register__checkbox {
+.dark .register__input,
+.dark .register__checkbox {
   background-color: var(--pico-contrast-background);
   color: var(--pico-contrast-inverse);
 }
@@ -240,14 +239,17 @@ footer {
   text-decoration: none;
 }
 
+.dark .register {
+  background-color: var(--pico-contrast-background);
+}
+
 /* Forgot Password Page */
 .forgot {
-  background-color: var(--pico-contrast-background);
   max-width: 700px;
   margin: 0 auto;
 }
 
-.forgot__input {
+.dark .forgot__input {
   background-color: var(--pico-contrast-background);
   color: var(--pico-contrast-inverse);
 }
@@ -255,4 +257,8 @@ footer {
 .forgot__button {
   width: 100%;
   margin-bottom: 0.75rem;
+}
+
+.dark .forgot {
+  background-color: var(--pico-contrast-background);
 }
