@@ -5,6 +5,15 @@
   --menu_opacity: 0.95;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--pico-primary);
+}
+
 /****************************************** 
 * Layout Styling
 *******************************************/
@@ -71,6 +80,14 @@ header {
   } */
 }
 
+[data-theme="light"] box-icon {
+  fill: var(--pico-primary);
+}
+
+[data-theme="dark"] box-icon {
+  fill: var(--pico-primary-inverse);
+}
+
 /* Hamburger Styling */
 #hamburger {
   position: fixed;
@@ -117,15 +134,17 @@ header {
 }
 
 #secondary-menu li a {
+  --pico-color: var(--pico-color);
   display: block;
   padding: 1rem;
   font-weight: 900;
   text-decoration: none;
-  color: var(--pico-primary-inverse);
+  color: var(--pico-color);
 }
 
 #secondary-menu li a:hover {
   background-color: var(--pico-secondary-hover);
+  color: var(--pico-primary-inverse);
 }
 
 /* Main Styling */
@@ -141,7 +160,8 @@ main {
 
 .username a,
 .thread a {
-  color: var(--pico-primary-inverse);
+  --pico-color: var(--pico-color);
+  color: var(--pico-color);
   text-decoration: none;
 }
 
@@ -211,6 +231,7 @@ main {
 
 .header-override__box {
   padding: 1rem;
+  color: var(--pico-primary);
 }
 
 .header-override__cancel,
@@ -242,14 +263,23 @@ form button {
   border: 1px solid #ccc;
   border-radius: 7px;
   text-decoration: none;
-  color: var(--pico-primary-inverse);
+  color: var(--pico-primary);
   display: inline-block;
   padding: 0.25rem 1.5rem;
 }
 
 .toolbar__link.active {
-  background-color: var(--pico-primary-inverse);
-  color: var(--pico-primary);
+  background-color: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+}
+
+[data-theme="dark"] .toolbar__link {
+  color: var(--pico-primary-inverse);
+}
+
+[data-theme="dark"] .toolbar__link.active {
+  background-color: var(--pico-primary);
+  color: var(--pico-primary-inverse);
 }
 
 /****************************************** 
@@ -285,7 +315,6 @@ form button {
 
 .edit-profile__button {
   width: 100%;
-  background-color: var(--pico-muted-border-color);
   font-weight: 900;
   border-color: var(--pico-secondary-border);
 }
@@ -384,4 +413,10 @@ form button {
 
 .profile__button {
   padding: 0.25rem 1rem;
+}
+
+/* Profile - Edit Page */
+#profile-photo-edit__form input::file-selector-button {
+  background-color: var(--pico-primary-background);
+  border: none;
 }

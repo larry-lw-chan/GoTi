@@ -15,7 +15,7 @@
 #hamburger .bar3 {
   width: 35px;
   height: 5px;
-  background-color: var(--pico-primary-inverse);
+  background-color: var(--pico-color);
   margin: 6px 0;
   transition: var(--transition-speed);
 }
@@ -72,7 +72,7 @@ fieldset {
   margin-bottom: 0;
 }
 
-.dark input:-webkit-autofill {
+[data-theme="dark"] input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px var(--pico-contrast-background) inset;
   -webkit-text-fill-color: var(--pico-contrast-inverse) !important;
 }

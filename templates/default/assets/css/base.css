@@ -226,6 +226,11 @@ footer {
 }
 
 /* Dark Mode Styling */
+[data-theme="dark"] input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--pico-contrast-background) inset;
+  -webkit-text-fill-color: var(--pico-contrast-inverse) !important;
+}
+
 [data-theme="dark"] .header__heading,
 [data-theme="dark"] .header__description {
   color: var(--pico-contrast-inverse);
