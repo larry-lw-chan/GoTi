@@ -28,7 +28,11 @@
       </div>
       <div class="thread__icons">
         <a href="#" hx-post="/threads/likes/{{ .ID }}" hx-swap="none">
-          <box-icon name="heart" color="white"></box-icon>
+          {{ if .Likes }}
+            <box-icon name="heart" color="white" type="solid"></box-icon>
+          {{ else }}
+            <box-icon name="heart" color="white"></box-icon>
+          {{ end }}
         </a>
         <a href="#">
           <box-icon name="chat" color="white"></box-icon>
