@@ -15,9 +15,15 @@
 #hamburger .bar3 {
   width: 35px;
   height: 5px;
-  background-color: var(--pico-color);
+  background-color: var(--pico-primary-background);
   margin: 6px 0;
   transition: var(--transition-speed);
+}
+
+[data-theme="dark"] #hamburger .bar1,
+[data-theme="dark"] #hamburger .bar2,
+[data-theme="dark"] #hamburger .bar3 {
+  background-color: var(--pico-color);
 }
 
 /* Rotate first bar */

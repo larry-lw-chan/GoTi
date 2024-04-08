@@ -5,15 +5,6 @@
   --menu_opacity: 0.95;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--pico-primary);
-}
-
 /****************************************** 
 * Layout Styling
 *******************************************/
@@ -39,6 +30,10 @@ header {
   z-index: 10;
 }
 
+[data-theme="light"] header {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 /* Logo Styling */
 #logo {
   margin-top: 0.7rem;
@@ -52,13 +47,19 @@ header {
 /* Primary Menu - fixed on bottom */
 #primary-menu {
   position: fixed;
-  bottom: -1px;
+  width: 100vw;
   height: 4rem;
+  bottom: -1px;
   background-color: var(--pico-background-color);
   opacity: var(--menu_opacity);
   transition: var(--transition-speed);
   z-index: 10;
 }
+
+[data-theme="light"] #primary-menu {
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
 #primary-menu ul {
   display: flex;
   justify-content: space-around;
@@ -134,7 +135,7 @@ header {
 }
 
 #secondary-menu li a {
-  --pico-color: var(--pico-color);
+  --pico-color: var(--pico-primary);
   display: block;
   padding: 1rem;
   font-weight: 900;
@@ -143,7 +144,11 @@ header {
 }
 
 #secondary-menu li a:hover {
-  background-color: var(--pico-secondary-hover);
+  background-color: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+}
+
+[data-theme="dark"] #secondary-menu li a {
   color: var(--pico-primary-inverse);
 }
 
@@ -226,6 +231,9 @@ main {
 .header-override {
   display: flex;
   justify-content: space-between;
+}
+
+[data-theme="dark"] .header-override {
   border-bottom: 1px solid var(--pico-secondary-border);
 }
 
