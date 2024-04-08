@@ -1,5 +1,5 @@
 # GoTi
-GoTi is a lightweight social networking app written in Go, designed to be light, easy to host and customizable.
+GoTi is a distributed social networking app written in Go, designed to be light, customizable, and easy to host.
 
 ## Getting Started
 
