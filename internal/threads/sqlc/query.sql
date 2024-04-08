@@ -5,26 +5,22 @@ RETURNING *;
 
 
 -- name: GetAllThreads :many
-SELECT threads.id, content, username, avatar, (
-    SELECT COUNT(*) 
-    FROM likes 
-    WHERE likes.thread_id=threads.id
-) AS likes
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id=threads.id
+GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc;
 
 
 
 -- name: GetUserThreads :many
-SELECT threads.id, content, username, avatar, (
-    SELECT COUNT(*) 
-    FROM likes 
-    WHERE likes.thread_id=threads.id
-) AS likes
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id=threads.id
 WHERE threads.user_id = ?
+GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc;
 
 
