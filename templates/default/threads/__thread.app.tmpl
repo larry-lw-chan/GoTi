@@ -32,7 +32,6 @@
             href="#"
             hx-post="/threads/likes/{{ .ID }}"
             hx-target="closest .thread__interactive"
-            hx-swap="outerHTML"
           >
             {{ if .Likes }}
               <box-icon name="heart" color="white" type="solid"></box-icon>

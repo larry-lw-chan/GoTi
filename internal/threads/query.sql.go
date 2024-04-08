@@ -167,6 +167,19 @@ func (q *Queries) GetThreadByID(ctx context.Context, id int64) (GetThreadByIDRow
 	return i, err
 }
 
+const getThreadLikeCount = `-- name: GetThreadLikeCount :one
+SELECT COUNT(*)
+FROM likes
+WHERE thread_id = ?
+`
+
+func (q *Queries) GetThreadLikeCount(ctx context.Context, threadID int64) (int64, error) {
+	row := q.db.QueryRowContext(ctx, getThreadLikeCount, threadID)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const getUserThreads = `-- name: GetUserThreads :many
 SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes
 FROM threads

@@ -37,6 +37,11 @@ SELECT *
 FROM likes
 WHERE thread_id = ? AND user_id = ?;
 
+-- name: GetThreadLikeCount :one
+SELECT COUNT(*)
+FROM likes
+WHERE thread_id = ?;
+
 
 -- name: InsertLike :one
 INSERT INTO likes (thread_id, user_id, created_at, updated_at)

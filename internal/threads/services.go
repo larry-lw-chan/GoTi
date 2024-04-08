@@ -3,6 +3,7 @@ package threads
 import (
 	"context"
 	"database/sql"
+	"log"
 	"time"
 
 	"github.com/larry-lw-chan/goti/database"
@@ -38,4 +39,14 @@ func likeOrUnlikeThread(context context.Context, threadId, userId int64) (likeSt
 		})
 		return false, nil
 	}
+}
+
+func getLikeCounts(context context.Context, threadId int64) (likeCount int64, err error) {
+	queries := New(database.DB)
+	likeCount, err = queries.GetThreadLikeCount(context, threadId)
+	if err != nil {
+		return 0, err
+	}
+	log.Println(likeCount)
+	return likeCount, nil
 }

@@ -128,13 +128,15 @@ func LikeThreadHandler(w http.ResponseWriter, r *http.Request) {
 	likeStatus, err := likeOrUnlikeThread(r.Context(), threadId, userId)
 	handleLikeError(w, r, err)
 
+	// Get Likes Count
+	likeCount, err := getLikeCounts(r.Context(), threadId)
+	handleLikeError(w, r, err)
+
 	// Render Result
 	data["LikeStatus"] = likeStatus
+	data["LikeCount"] = likeCount
+	data["ThreadId"] = threadId
 	render.Partial(w, data, "/threads/__icon_status.app.tmpl")
-
-	// Add Like to Flash Message
-	// flash.Set(w, r, flash.SUCCESS, message)
-	// http.Redirect(w, r, r.Referer(), http.StatusSeeOther)
 }
 
 func handleLikeError(w http.ResponseWriter, r *http.Request, err error) {
