@@ -96,19 +96,14 @@ func (q *Queries) DeleteLike(ctx context.Context, arg DeleteLikeParams) (Like, e
 }
 
 const getAllThreads = `-- name: GetAllThreads :many
-SELECT threads.id, content, username, avatar, 
-    (
-        SELECT COUNT(likes.id) 
-        FROM likes
-        WHERE likes.thread_id = threads.id
-    ) AS likes, 
-    (
-        SELECT COUNT(*)
-        FROM likes
-        WHERE likes.thread_id = threads.id AND likes.user_id = ?
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes, 
+    (SELECT COUNT(*)
+     FROM likes
+     WHERE likes.thread_id = threads.id AND likes.user_id = ?
     ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id = threads.id
 GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc
 `
@@ -153,20 +148,16 @@ func (q *Queries) GetAllThreads(ctx context.Context, userID int64) ([]GetAllThre
 }
 
 const getThreadByID = `-- name: GetThreadByID :one
-SELECT threads.id, content, username, avatar, 
-    (
-        SELECT COUNT(likes.id) 
-        FROM likes
-        WHERE likes.thread_id = threads.id
-    ) AS likes, 
-    (
-        SELECT COUNT(likes.id)
-        FROM likes
-        WHERE likes.thread_id = threads.id AND likes.user_id = ?
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes, 
+    (SELECT COUNT(likes.id)
+     FROM likes
+     WHERE likes.thread_id = threads.id AND likes.user_id = ?
     ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id = threads.id
 WHERE threads.id = ?
+GROUP BY threads.id, profiles.username, profiles.avatar
 `
 
 type GetThreadByIDParams struct {
@@ -211,19 +202,14 @@ func (q *Queries) GetThreadLikeCount(ctx context.Context, threadID int64) (int64
 }
 
 const getUserThreads = `-- name: GetUserThreads :many
-SELECT threads.id, content, username, avatar, 
-    (
-        SELECT COUNT(likes.id) 
-        FROM likes
-        WHERE likes.thread_id = threads.id
-    ) AS likes, 
-    (
-        SELECT COUNT(*)
-        FROM likes
-        WHERE likes.thread_id = threads.id AND likes.user_id = threads.user_id
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes, 
+    (SELECT COUNT(*)
+     FROM likes
+     WHERE likes.thread_id = threads.id AND likes.user_id = threads.user_id
     ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id = threads.id
 WHERE threads.user_id = ?
 GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc

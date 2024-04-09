@@ -5,38 +5,28 @@ RETURNING *;
 
 
 -- name: GetAllThreads :many
-SELECT threads.id, content, username, avatar, 
-    (
-        SELECT COUNT(likes.id) 
-        FROM likes
-        WHERE likes.thread_id = threads.id
-    ) AS likes, 
-    (
-        SELECT COUNT(*)
-        FROM likes
-        WHERE likes.thread_id = threads.id AND likes.user_id = ?
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes, 
+    (SELECT COUNT(*)
+     FROM likes
+     WHERE likes.thread_id = threads.id AND likes.user_id = ?
     ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id = threads.id
 GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc;
 
 
 
 -- name: GetUserThreads :many
-SELECT threads.id, content, username, avatar, 
-    (
-        SELECT COUNT(likes.id) 
-        FROM likes
-        WHERE likes.thread_id = threads.id
-    ) AS likes, 
-    (
-        SELECT COUNT(*)
-        FROM likes
-        WHERE likes.thread_id = threads.id AND likes.user_id = threads.user_id
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes, 
+    (SELECT COUNT(*)
+     FROM likes
+     WHERE likes.thread_id = threads.id AND likes.user_id = threads.user_id
     ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
+LEFT JOIN likes ON likes.thread_id = threads.id
 WHERE threads.user_id = ?
 GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc;
@@ -44,20 +34,16 @@ ORDER BY threads.created_at desc;
 
 
 -- name: GetThreadByID :one
-SELECT threads.id, content, username, avatar, 
-    (
-        SELECT COUNT(likes.id) 
-        FROM likes
-        WHERE likes.thread_id = threads.id
-    ) AS likes, 
-    (
-        SELECT COUNT(likes.id)
-        FROM likes
-        WHERE likes.thread_id = threads.id AND likes.user_id = ?
+SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes, 
+    (SELECT COUNT(likes.id)
+     FROM likes
+     WHERE likes.thread_id = threads.id AND likes.user_id = ?
     ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
-WHERE threads.id = ?;
+LEFT JOIN likes ON likes.thread_id = threads.id
+WHERE threads.id = ?
+GROUP BY threads.id, profiles.username, profiles.avatar;
 
 
 -- name: CheckIfUserLikedThread :one
