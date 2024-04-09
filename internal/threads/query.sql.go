@@ -96,10 +96,19 @@ func (q *Queries) DeleteLike(ctx context.Context, arg DeleteLikeParams) (Like, e
 }
 
 const getAllThreads = `-- name: GetAllThreads :many
-SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes
+SELECT threads.id, content, username, avatar, 
+    (
+        SELECT COUNT(likes.id) 
+        FROM likes
+        WHERE likes.thread_id = threads.id
+    ) AS likes, 
+    (
+        SELECT COUNT(*)
+        FROM likes
+        WHERE likes.thread_id = threads.id AND likes.user_id = ?
+    ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
-LEFT JOIN likes ON likes.thread_id=threads.id
 GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc
 `
@@ -110,10 +119,11 @@ type GetAllThreadsRow struct {
 	Username string
 	Avatar   sql.NullString
 	Likes    int64
+	Liked    int64
 }
 
-func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error) {
-	rows, err := q.db.QueryContext(ctx, getAllThreads)
+func (q *Queries) GetAllThreads(ctx context.Context, userID int64) ([]GetAllThreadsRow, error) {
+	rows, err := q.db.QueryContext(ctx, getAllThreads, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -127,6 +137,7 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 			&i.Username,
 			&i.Avatar,
 			&i.Likes,
+			&i.Liked,
 		); err != nil {
 			return nil, err
 		}
@@ -142,27 +153,46 @@ func (q *Queries) GetAllThreads(ctx context.Context) ([]GetAllThreadsRow, error)
 }
 
 const getThreadByID = `-- name: GetThreadByID :one
-SELECT threads.id, content, username, avatar
+SELECT threads.id, content, username, avatar, 
+    (
+        SELECT COUNT(likes.id) 
+        FROM likes
+        WHERE likes.thread_id = threads.id
+    ) AS likes, 
+    (
+        SELECT COUNT(likes.id)
+        FROM likes
+        WHERE likes.thread_id = threads.id AND likes.user_id = ?
+    ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
 WHERE threads.id = ?
 `
+
+type GetThreadByIDParams struct {
+	UserID int64
+	ID     int64
+}
 
 type GetThreadByIDRow struct {
 	ID       int64
 	Content  string
 	Username string
 	Avatar   sql.NullString
+	Likes    int64
+	Liked    int64
 }
 
-func (q *Queries) GetThreadByID(ctx context.Context, id int64) (GetThreadByIDRow, error) {
-	row := q.db.QueryRowContext(ctx, getThreadByID, id)
+func (q *Queries) GetThreadByID(ctx context.Context, arg GetThreadByIDParams) (GetThreadByIDRow, error) {
+	row := q.db.QueryRowContext(ctx, getThreadByID, arg.UserID, arg.ID)
 	var i GetThreadByIDRow
 	err := row.Scan(
 		&i.ID,
 		&i.Content,
 		&i.Username,
 		&i.Avatar,
+		&i.Likes,
+		&i.Liked,
 	)
 	return i, err
 }
@@ -181,10 +211,19 @@ func (q *Queries) GetThreadLikeCount(ctx context.Context, threadID int64) (int64
 }
 
 const getUserThreads = `-- name: GetUserThreads :many
-SELECT threads.id, content, username, avatar, COUNT(likes.id) AS likes
+SELECT threads.id, content, username, avatar, 
+    (
+        SELECT COUNT(likes.id) 
+        FROM likes
+        WHERE likes.thread_id = threads.id
+    ) AS likes, 
+    (
+        SELECT COUNT(*)
+        FROM likes
+        WHERE likes.thread_id = threads.id AND likes.user_id = threads.user_id
+    ) AS liked
 FROM threads
 JOIN profiles ON profiles.user_id = threads.user_id
-LEFT JOIN likes ON likes.thread_id=threads.id
 WHERE threads.user_id = ?
 GROUP BY threads.id, profiles.username, profiles.avatar
 ORDER BY threads.created_at desc
@@ -196,6 +235,7 @@ type GetUserThreadsRow struct {
 	Username string
 	Avatar   sql.NullString
 	Likes    int64
+	Liked    int64
 }
 
 func (q *Queries) GetUserThreads(ctx context.Context, userID int64) ([]GetUserThreadsRow, error) {
@@ -213,6 +253,7 @@ func (q *Queries) GetUserThreads(ctx context.Context, userID int64) ([]GetUserTh
 			&i.Username,
 			&i.Avatar,
 			&i.Likes,
+			&i.Liked,
 		); err != nil {
 			return nil, err
 		}

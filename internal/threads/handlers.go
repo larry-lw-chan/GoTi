@@ -21,9 +21,13 @@ import (
 func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]any)
 
+	// Get userID from sessions
+	userSession := auth.GetUserSession(r)
+	userId := userSession.ID
+
 	// Algo - Get all Threads
 	queries := New(database.DB)
-	threads, err := queries.GetAllThreads(r.Context())
+	threads, err := queries.GetAllThreads(r.Context(), userId)
 
 	if err != nil {
 		data["Threads"] = nil
@@ -36,7 +40,8 @@ func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
 		"/threads/__avatar.app.tmpl",
 		"/threads/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
-		"/threads/__menu_icon_status.app.tmpl")
+		"/threads/__thread_menu.app.tmpl",
+		"/threads/__thread_status.app.tmpl")
 }
 
 func NewThreadHandler(w http.ResponseWriter, r *http.Request) {
@@ -87,9 +92,13 @@ func NewPostThreadHandler(w http.ResponseWriter, r *http.Request) {
 func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data := r.Context().Value("data").(map[string]interface{})
 
+	// Get userID from sessions
+	userSession := auth.GetUserSession(r)
+	userId := userSession.ID
+
 	// Get thread_id from URL
 	thread_id := chi.URLParam(r, "thread_id")
-	id, err := strconv.ParseInt(thread_id, 10, 64)
+	threadId, err := strconv.ParseInt(thread_id, 10, 64)
 	if err != nil {
 		// Handle Error
 		flash.Set(w, r, flash.ERROR, "Failed to get thread.  Please contact support.")
@@ -99,7 +108,11 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get thread from id
 	queries := New(database.DB)
-	thread, err := queries.GetThreadByID(r.Context(), int64(id))
+	thread, err := queries.GetThreadByID(r.Context(), GetThreadByIDParams{
+		ID:     threadId,
+		UserID: userId,
+	})
+
 	if err != nil {
 		// Handle Error
 		flash.Set(w, r, flash.ERROR, "Failed to get thread.  Please contact support.")
@@ -107,15 +120,28 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if user already liked thread
+	likeStatus, err := didUserLikedThread(r.Context(), threadId, userId)
+	handleLikeError(w, r, err)
+
+	// Get Likes Count
+	likeCount, err := getLikeCounts(r.Context(), threadId)
+	if err != nil {
+		likeCount = 0
+	}
+
 	// Move stuff to thread
 	data["Thread"] = thread
+	data["LikeStatus"] = likeStatus
+	data["LikeCount"] = likeCount
 
 	render.Template(w, data,
 		"/threads/show.app.tmpl",
 		"/threads/__avatar.app.tmpl",
 		"/threads/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
-		"/threads/__menu_icon_status.app.tmpl",
+		"/threads/__thread_menu.app.tmpl",
+		"/threads/__thread_status.app.tmpl",
 	)
 }
 
@@ -190,7 +216,8 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 		"/threads/__avatar.app.tmpl",
 		"/threads/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
-		"/threads/__menu_icon_status.app.tmpl")
+		"/threads/__thread_menu.app.tmpl",
+		"/threads/__thread_status.app.tmpl")
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
@@ -221,7 +248,8 @@ func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
 		"/threads/__avatar.app.tmpl",
 		"/threads/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
-		"/threads/__menu_icon_status.app.tmpl")
+		"/threads/__thread_menu.app.tmpl",
+		"/threads/__thread_status.app.tmpl")
 }
 
 func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
@@ -251,5 +279,6 @@ func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
 		"/threads/__avatar.app.tmpl",
 		"/threads/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
-		"/threads/__menu_icon_status.app.tmpl")
+		"/threads/__thread_menu.app.tmpl",
+		"/threads/__thread_status.app.tmpl")
 }

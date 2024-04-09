@@ -1,0 +1,11 @@
+{{ define "thread-status" }}
+  <div class="thread__status">
+    <span class="thread__status__likes">
+      {{ if .Likes }}
+        {{ .Likes }} likes
+      {{ else }}
+        0 likes
+      {{ end }}
+    </span>
+  </div>
+{{ end }}

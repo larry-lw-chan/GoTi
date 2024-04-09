@@ -40,6 +40,19 @@ func likeOrUnlikeThread(context context.Context, threadId, userId int64) (likeSt
 	}
 }
 
+// Checks to see if user has liked the thread
+func didUserLikedThread(context context.Context, threadId, userId int64) (likeStatus bool, err error) {
+	queries := New(database.DB)
+	_, err = queries.CheckIfUserLikedThread(context, CheckIfUserLikedThreadParams{
+		UserID:   userId,
+		ThreadID: threadId,
+	})
+	if err == sql.ErrNoRows {
+		return false, nil
+	}
+	return true, nil
+}
+
 func getLikeCounts(context context.Context, threadId int64) (likeCount int64, err error) {
 	queries := New(database.DB)
 	likeCount, err = queries.GetThreadLikeCount(context, threadId)

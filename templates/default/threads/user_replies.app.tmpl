@@ -8,7 +8,10 @@
         <div class="thread__container">
           {{ template "username" . }}
           {{ template "thread-content" . }}
-          {{ template "menu-icon-status" . }}
+          <div class="thread__interactive">
+            {{ template "thread-menu" . }}
+            {{ template "thread-status" . }}
+          </div>
         </div>
       </article>
     {{ end }}

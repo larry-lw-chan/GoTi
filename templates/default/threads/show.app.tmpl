@@ -1,13 +1,18 @@
 {{ define "title" }}Show Thread{{ end }}
 
 {{ define "content" }}
-  <article class="thread">
-    <aside class="thread__aside">
+  <article class="thread-show">
+    <div class="thread-show__user">
       {{ template "avatar" .Thread.Avatar }}
-    </aside>
-    <div class="thread__container">
       {{ template "username" .Thread }}
+    </div>
+
+    <div class="thread__container">
       {{ template "thread-content" .Thread }}
-      {{ template "menu-icon-status" . }}
+      <div class="thread__interactive">
+        {{ template "thread-menu" .Thread }}
+        {{ template "thread-status" .Thread }}
+      </div>
+    </div>
   </article>
 {{ end }}

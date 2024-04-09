@@ -157,23 +157,6 @@ main {
   margin-top: calc(var(--header-height) + 1rem);
 }
 
-/* Thread Styling */
-/* Username & Thread */
-.username {
-  margin-bottom: 0.2rem;
-}
-
-.username a,
-.thread a {
-  --pico-color: var(--pico-color);
-  color: var(--pico-color);
-  text-decoration: none;
-}
-
-.username a:hover {
-  text-decoration: underline;
-}
-
 /****************************************** 
 * Reusable Component Styling
 *******************************************/
@@ -225,6 +208,31 @@ main {
   display: flex;
   gap: 0.8rem;
   margin-bottom: 0.5rem;
+}
+
+/* Thread-Show Styling */
+.thread-show__user {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Thread Username Styling */
+.thread__username {
+  margin-bottom: 0.2rem;
+}
+
+.thread__username a,
+.thread__content a,
+.thread a {
+  --pico-color: var(--pico-color);
+  color: var(--pico-color);
+  text-decoration: none;
+}
+
+.thread__username a:hover {
+  text-decoration: underline;
 }
 
 /* Header Override */
