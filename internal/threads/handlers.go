@@ -121,8 +121,7 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if user already liked thread
-	likeStatus, err := didUserLikedThread(r.Context(), threadId, userId)
-	handleLikeError(w, r, err)
+	likeStatus := didUserLikedThread(r.Context(), threadId, userId)
 
 	// Get Likes Count
 	likeCount, err := getLikeCounts(r.Context(), threadId)
