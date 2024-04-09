@@ -3,49 +3,11 @@
 {{ define "content" }}
   <article class="thread">
     <aside class="thread__aside">
-      {{ if .Thread.Avatar.Valid }}
-        <div class="avatar">
-          <img
-            src="{{ .Thread.Avatar.String }}"
-            alt="{{ .Thread.Avatar.String }}"
-          />
-        </div>
-      {{ else }}
-        <div class="avatar">
-          <box-icon
-            name="user"
-            color="white"
-            type="solid"
-            size="2.5rem"
-            class="avatar-placeholder__icon"
-          ></box-icon>
-        </div>
-      {{ end }}
+      {{ template "avatar" .Thread.Avatar }}
     </aside>
     <div class="thread__container">
-      <h5 class="thread__username">
-        <a href="/profiles/{{ .Thread.Username }}">{{ .Thread.Username }}</a>
-      </h5>
-      <div class="thread__content">
-        <a href="/threads/{{ .Thread.ID }}">
-          {{ .Thread.Content }}
-        </a>
-      </div>
-
-      <div class="thread__icons">
-        <a href="#">
-          <box-icon name="heart" color="white"></box-icon>
-        </a>
-        <a href="#">
-          <box-icon name="chat" color="white"></box-icon>
-        </a>
-        <a href="#">
-          <box-icon name="repost" color="white"></box-icon>
-        </a>
-        <a href="#">
-          <box-icon name="share" color="white"></box-icon>
-        </a>
-      </div>
-    </div>
+      {{ template "username" .Thread }}
+      {{ template "thread-content" .Thread }}
+      {{ template "menu-icon-status" . }}
   </article>
 {{ end }}

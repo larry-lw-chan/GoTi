@@ -1,0 +1,17 @@
+{{ define "avatar" }}
+  {{ if .Valid }}
+    <div class="avatar">
+      <img src="{{ .String }}" alt="{{ .String }}" />
+    </div>
+  {{ else }}
+    <div class="avatar">
+      <box-icon
+        name="user"
+        color="white"
+        type="solid"
+        size="2.5rem"
+        class="avatar-placeholder__icon"
+      ></box-icon>
+    </div>
+  {{ end }}
+{{ end }}

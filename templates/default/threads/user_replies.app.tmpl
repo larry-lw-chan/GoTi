@@ -1,7 +1,16 @@
 <div id="user-replies">
   {{ if .Threads }}
     {{ range .Threads }}
-      {{ template "thread" . }}
+      <article class="thread">
+        <aside class="thread__aside">
+          {{ template "avatar" .Avatar }}
+        </aside>
+        <div class="thread__container">
+          {{ template "username" . }}
+          {{ template "thread-content" . }}
+          {{ template "menu-icon-status" . }}
+        </div>
+      </article>
     {{ end }}
   {{ else }}
     <a href="/threads/new">

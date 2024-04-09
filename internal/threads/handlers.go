@@ -31,8 +31,12 @@ func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Template(w, data, "/threads/index.app.tmpl", "/threads/__thread.app.tmpl")
-
+	render.Template(w, data,
+		"/threads/index.app.tmpl",
+		"/threads/__avatar.app.tmpl",
+		"/threads/__username.app.tmpl",
+		"/threads/__thread_content.app.tmpl",
+		"/threads/__menu_icon_status.app.tmpl")
 }
 
 func NewThreadHandler(w http.ResponseWriter, r *http.Request) {
@@ -106,7 +110,13 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 	// Move stuff to thread
 	data["Thread"] = thread
 
-	render.Template(w, data, "/threads/show.app.tmpl")
+	render.Template(w, data,
+		"/threads/show.app.tmpl",
+		"/threads/__avatar.app.tmpl",
+		"/threads/__username.app.tmpl",
+		"/threads/__thread_content.app.tmpl",
+		"/threads/__menu_icon_status.app.tmpl",
+	)
 }
 
 /********************************************************
@@ -175,7 +185,12 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Partial(w, data, "/threads/user_threads.app.tmpl", "/threads/__thread.app.tmpl")
+	render.Partial(w, data,
+		"/threads/user_threads.app.tmpl",
+		"/threads/__avatar.app.tmpl",
+		"/threads/__username.app.tmpl",
+		"/threads/__thread_content.app.tmpl",
+		"/threads/__menu_icon_status.app.tmpl")
 }
 
 func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
@@ -201,7 +216,12 @@ func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		data["Threads"] = threads
 	}
-	render.Partial(w, data, "/threads/user_replies.app.tmpl", "/threads/__thread.app.tmpl")
+	render.Partial(w, data,
+		"/threads/user_replies.app.tmpl",
+		"/threads/__avatar.app.tmpl",
+		"/threads/__username.app.tmpl",
+		"/threads/__thread_content.app.tmpl",
+		"/threads/__menu_icon_status.app.tmpl")
 }
 
 func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
@@ -226,5 +246,10 @@ func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
 		data["Threads"] = threads
 	}
 
-	render.Partial(w, data, "/threads/user_repost.app.tmpl", "/threads/__thread.app.tmpl")
+	render.Partial(w, data,
+		"/threads/user_repost.app.tmpl",
+		"/threads/__avatar.app.tmpl",
+		"/threads/__username.app.tmpl",
+		"/threads/__thread_content.app.tmpl",
+		"/threads/__menu_icon_status.app.tmpl")
 }

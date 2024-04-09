@@ -1,0 +1,35 @@
+{{ define "menu-icon-status" }}
+  <div class="thread__interactive">
+    <div class="thread__icons">
+      <a
+        href="#"
+        hx-post="/threads/likes/{{ .ID }}"
+        hx-target="closest .thread__interactive"
+      >
+        <box-icon
+          name="heart"
+          color="white"
+          {{ if .Likes }}type="solid"{{ end }}
+        ></box-icon>
+      </a>
+      <a href="#">
+        <box-icon name="chat" color="white"></box-icon>
+      </a>
+      <a href="#">
+        <box-icon name="repost" color="white"></box-icon>
+      </a>
+      <a href="#">
+        <box-icon name="share" color="white"></box-icon>
+      </a>
+    </div>
+    <div class="thread__status">
+      <span class="thread__status__likes">
+        {{ if .Likes }}
+          {{ .Likes }} likes
+        {{ else }}
+          0 likes
+        {{ end }}
+      </span>
+    </div>
+  </div>
+{{ end }}

@@ -4,7 +4,16 @@
   <h1>Timeline Index</h1>
   {{ if .Threads }}
     {{ range .Threads }}
-      {{ template "thread" . }}
+      <article class="thread">
+        <aside class="thread__aside">
+          {{ template "avatar" .Avatar }}
+        </aside>
+        <div class="thread__container">
+          {{ template "username" . }}
+          {{ template "thread-content" . }}
+          {{ template "menu-icon-status" . }}
+        </div>
+      </article>
     {{ end }}
   {{ else }}
     <p>No timelines found.</p>
