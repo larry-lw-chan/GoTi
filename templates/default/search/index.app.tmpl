@@ -23,19 +23,8 @@
             </div>
           </aside>
           <div class="trend__container">
-            <h6 class="trend__username">
-              <a
-                href="/profiles/show/{{ $t.Username }}"
-                class="trend-username__link"
-              >
-                {{ $t.Username }}
-              </a>
-            </h6>
-            <div class="trend__content">
-              <a href="/threads/show/{{ $t.ID }}" class="trend-content__link">
-                {{ $t.Content }}
-              </a>
-            </div>
+            {{ template "username" $t }}
+            {{ template "thread-content" $t }}
           </div>
         </article>
       {{ end }}

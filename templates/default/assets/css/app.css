@@ -373,6 +373,12 @@ form button {
   margin-bottom: 1rem;
 }
 
+.trend a {
+  --pico-color: var(--pico-color);
+  color: var(--pico-color);
+  text-decoration: none;
+}
+
 .trend__ranking {
   border: 1px solid var(--pico-secondary-background);
   padding: 0.5rem 1rem;
