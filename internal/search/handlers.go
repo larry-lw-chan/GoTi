@@ -28,7 +28,7 @@ func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
 	data["Threads"] = threads[:5]
 	render.Template(w, data,
 		"/search/index.app.tmpl",
-		"/threads/__username.app.tmpl",
+		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 	)
 }

@@ -37,8 +37,8 @@ func IndexThreadHandler(w http.ResponseWriter, r *http.Request) {
 
 	render.Template(w, data,
 		"/threads/index.app.tmpl",
-		"/threads/__avatar.app.tmpl",
-		"/threads/__username.app.tmpl",
+		"/partials/__avatar.app.tmpl",
+		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 		"/threads/__thread_menu.app.tmpl",
 		"/threads/__thread_status.app.tmpl")
@@ -136,8 +136,8 @@ func ShowThreadHandler(w http.ResponseWriter, r *http.Request) {
 
 	render.Template(w, data,
 		"/threads/show.app.tmpl",
-		"/threads/__avatar.app.tmpl",
-		"/threads/__username.app.tmpl",
+		"/partials/__avatar.app.tmpl",
+		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 		"/threads/__thread_menu.app.tmpl",
 		"/threads/__thread_status.app.tmpl",
@@ -212,8 +212,8 @@ func UserThreadsHandler(w http.ResponseWriter, r *http.Request) {
 
 	render.Partial(w, data,
 		"/threads/user_threads.app.tmpl",
-		"/threads/__avatar.app.tmpl",
-		"/threads/__username.app.tmpl",
+		"/partials/__avatar.app.tmpl",
+		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 		"/threads/__thread_menu.app.tmpl",
 		"/threads/__thread_status.app.tmpl")
@@ -244,8 +244,8 @@ func UserRepliesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	render.Partial(w, data,
 		"/threads/user_replies.app.tmpl",
-		"/threads/__avatar.app.tmpl",
-		"/threads/__username.app.tmpl",
+		"/partials/__avatar.app.tmpl",
+		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 		"/threads/__thread_menu.app.tmpl",
 		"/threads/__thread_status.app.tmpl")
@@ -275,8 +275,8 @@ func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
 
 	render.Partial(w, data,
 		"/threads/user_repost.app.tmpl",
-		"/threads/__avatar.app.tmpl",
-		"/threads/__username.app.tmpl",
+		"/partial/__avatar.app.tmpl",
+		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 		"/threads/__thread_menu.app.tmpl",
 		"/threads/__thread_status.app.tmpl")

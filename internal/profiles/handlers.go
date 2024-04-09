@@ -55,7 +55,9 @@ func ShowHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Load user into profile
-	render.Template(w, data, "/profiles/show.app.tmpl")
+	render.Template(w, data,
+		"/profiles/show.app.tmpl",
+		"/partials/__avatar.app.tmpl")
 }
 
 func EditHandler(w http.ResponseWriter, r *http.Request) {
