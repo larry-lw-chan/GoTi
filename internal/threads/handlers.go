@@ -275,7 +275,7 @@ func UserRepostHandler(w http.ResponseWriter, r *http.Request) {
 
 	render.Partial(w, data,
 		"/threads/user_repost.app.tmpl",
-		"/partial/__avatar.app.tmpl",
+		"/partials/__avatar.app.tmpl",
 		"/partials/__username.app.tmpl",
 		"/threads/__thread_content.app.tmpl",
 		"/threads/__thread_menu.app.tmpl",
